@@ -6,7 +6,7 @@
 package com.mycompany.DAO;
 
 import com.mycompany.db.ConnectionToDb;
-import com.mycompany.model.ModelProduto;
+import com.mycompany.model.ProdutoModel;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -19,52 +19,58 @@ import java.util.logging.Logger;
  */
 public class ProdutoDAO {
 
-    public static boolean CadastrarProduto(ModelProduto prod) {
-        boolean ok = false;
+    public static String cadastrarProduto(ProdutoModel prod) throws SQLException {
+        String ok = "DAO ok!";
         Connection con;
 
         try {
             con = ConnectionToDb.obterConexao();
-            String sql = "insert into tb_produto (id_usuario, id_filial, tipo, nome, qtde, descricao, valor)"
+            String sql = "insert into tb_produto (nome, qtde, marca, categoria, descricao, valor, faq)"
                     + " values (?,?,?,?,?,?,?)";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, prod.getNomeProduto());
-            ps.setString(2, prod.getMarca());
-            ps.setString(3, prod.getCategoria());
-            ps.setFloat(4, prod.getValor());
-            ps.setString(5, prod.getFaq());
-            ps.setInt(6, prod.getQtde());
-            ps.execute();
-            ok = true;
+            ps.setInt(2, prod.getQtde());
+            ps.setString(3, prod.getMarca());
+            ps.setString(4, prod.getCategoria());
+            ps.setString(5, prod.getDescricao());
+            ps.setFloat(6, prod.getValor());
+            ps.setString(7, prod.getFaq());
+            boolean resultado = ps.execute();
+            ok = "{'resultado' : 'sucesso', 'mensagem' : 'Insercao no banco realizado. Erro: "+resultado+"' }" ;
 
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(ProdutoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            ok = "{'resultado' : 'erro', 'mensagem' : 'erro em DAO de Cadastro do Produto' }" ;
+            return ok;
         }
 
         return ok;
     }
 
-    public static boolean atualizarProduto(ModelProduto prod) {
-        boolean ok = false;
+    public static String atualizarProduto(ProdutoModel prod) {
+        String ok = "DAO ok";
         Connection con;
 
         try {
             con = ConnectionToDb.obterConexao();
-            String sql = "update tb_produto set id_usuario = ?, qtde = ?, marca = ?, categoria = ?, "
+            String sql = "UPDATE tb_produto SET nome = ?, qtde = ?, marca = ?, categoria = ?, "
                     + "descricao = ?, valor = ?, faq = ? where id_produto = ?";
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(1, prod.getNomeProduto());
-            ps.setString(2, prod.getMarca());
-            ps.setString(3, prod.getCategoria());
-            ps.setFloat(4, prod.getValor());
-            ps.setString(5, prod.getFaq());
-            ps.setInt(6, prod.getQtde());
-            ps.setInt(7, prod.getIdProduto());
+            ps.setString(1, prod.getNomeProduto()); 
+            ps.setInt(2, prod.getQtde()); 
+            ps.setString(3, prod.getMarca());
+            ps.setString(4, prod.getCategoria());
+            ps.setString(5, prod.getDescricao());
+            ps.setFloat(6, prod.getValor());
+            ps.setString(7, prod.getFaq()); 
+            ps.setInt(8, prod.getIdProduto()); 
             ps.executeUpdate();
-            ok = true;
-
+            boolean resultado = ps.execute();
+            ok = "{'resultado' : 'sucesso', 'mensagem' : 'Insercao no banco realizado. Erro: "+resultado+"' }" ;
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(ProdutoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            ok = "{'resultado' : 'erro', 'mensagem' : 'erro em DAO de Cadastro do Produto' }" ;
+            return ok;
         }
 
         return ok;

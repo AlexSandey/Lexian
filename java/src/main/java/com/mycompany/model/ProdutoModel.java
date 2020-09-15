@@ -9,14 +9,15 @@ package com.mycompany.model;
  *
  * @author Devakian
  */
-public class ModelProduto {
+public class ProdutoModel {
    private int idProduto;
    private String nomeProduto;
+   private int qtde;
    private String marca;
-   private String Categoria;
+   private String categoria;
+   private String descricao;
    private float valor;
    private String faq;
-   private int qtde;
 
     public int getIdProduto() {
         return idProduto;
@@ -43,13 +44,21 @@ public class ModelProduto {
     }
 
     public String getCategoria() {
-        return Categoria;
+        return categoria;
     }
 
-    public void setCategoria(String Categoria) {
-        this.Categoria = Categoria;
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+    
+    public String getDescricao() {
+        return descricao;
     }
 
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+    
     public float getValor() {
         return valor;
     }
@@ -72,8 +81,5 @@ public class ModelProduto {
 
     public void setQtde(int qtde) {
         this.qtde = qtde;
-    }
-   
-   
-    
+    }   
 }

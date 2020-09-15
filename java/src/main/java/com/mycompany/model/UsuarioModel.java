@@ -11,7 +11,7 @@ import java.util.Date;
  *
  * @author Devakian
  */
-public class ModelUsuario {
+public class UsuarioModel {
     private int idUsuario;
     private int id_Perfil;// Chave estrangeira... OBS:Checar se será utilizada
     private int idEndereco;// Chave estrangeira

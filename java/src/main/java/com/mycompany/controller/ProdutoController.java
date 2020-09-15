@@ -6,17 +6,21 @@
 package com.mycompany.controller;
 
 import com.mycompany.DAO.ProdutoDAO;
-import com.mycompany.model.ModelProduto;
+import com.mycompany.model.ProdutoModel;
+import java.sql.SQLException;
 
 /**
  *
  * @author Devakian
  */
 public class ProdutoController {
-    public boolean atualizar(ModelProduto prod){
+    
+    public String cadastrar(ProdutoModel prod) throws SQLException{
+        return ProdutoDAO.cadastrarProduto(prod);
+    }
+    
+    public String atualizar(ProdutoModel prod){
         return ProdutoDAO.atualizarProduto(prod);
     }
-    public boolean save(ModelProduto prod){
-        return ProdutoDAO.CadastrarProduto(prod);
-    }
+
 }
