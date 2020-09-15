@@ -103,8 +103,72 @@ public class ProdutoServlet extends HttpServlet {
         }
         out.print(RespController);
     }
+    
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        processRequest(req, resp);
+        PrintWriter out = resp.getWriter();
 
+        int id = Integer.parseInt(req.getParameter("id"));
+        String nomeProduto = req.getParameter("nomeProduto");
+        int qtde = Integer.parseInt(req.getParameter("qtde"));
+        String marca = req.getParameter("marca");
+        String categoria = req.getParameter("categoria");      
+        String descricao = req.getParameter("descricao");
+        float valor = Float.parseFloat(req.getParameter("valor"));
+        String faq = req.getParameter("faq");
 
+        ProdutoController produtoController = new ProdutoController();
+
+        
+
+        String RespController = null;
+        RespController = produtoController.deletar(id);
+        out.print(RespController);
+        
+    }
+
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        doPut(req, resp);
+        
+        processRequest(req, resp);
+        PrintWriter out = resp.getWriter();
+
+        int id = Integer.parseInt(req.getParameter("id"));
+        String nomeProduto = req.getParameter("nomeProduto");
+        int qtde = Integer.parseInt(req.getParameter("qtde"));
+        String marca = req.getParameter("marca");
+        String categoria = req.getParameter("categoria");      
+        String descricao = req.getParameter("descricao");
+        float valor = Float.parseFloat(req.getParameter("valor"));
+        String faq = req.getParameter("faq");
+
+        ProdutoController produtoController = new ProdutoController();
+        ProdutoModel produtoModel = new ProdutoModel();
+        
+        produtoModel.setIdProduto(id);
+        produtoModel.setNomeProduto(nomeProduto);
+        produtoModel.setQtde(qtde);
+        produtoModel.setMarca(marca);
+        produtoModel.setCategoria(categoria);
+        produtoModel.setDescricao(descricao);
+        produtoModel.setValor(valor);
+        produtoModel.setFaq(faq);
+        
+        String RespController = null;
+        if(req.getParameter("attQtde").equals("attQtde")){
+        RespController = produtoController.atualizarQtde(id, qtde);
+        }
+        if(req.getParameter("attProd").equals("attProd")){
+        RespController = produtoController.atualizar(produtoModel);
+        }
+        out.print(RespController);
+        
+
+    }
+    
     @Override
     public String getServletInfo() {
         return "Short description";

@@ -22,5 +22,14 @@ public class ProdutoController {
     public String atualizar(ProdutoModel prod){
         return ProdutoDAO.atualizarProduto(prod);
     }
+    
+    public String deletar(int id){
+        return ProdutoDAO.DeletarProduto(id);
+    }
+    
+    public String atualizarQtde(int id ,int qtde){
+        return ProdutoDAO.atualizarQtde(id,qtde);
+        
+    }
 
 }
