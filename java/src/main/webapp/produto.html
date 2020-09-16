@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <title>Produto</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+
+<body>
+    <div>
+
+
+        <form action="/action_page.php" method="post" id="formCadastro">
+            <h1>Cadastro de Produto</h1>
+            <label>Nome: <input type="text" id="nomeProduto"></label><br>
+            <label>Quantidade: <input type="text" id="qtde"></label><br>
+            <label>Marca<input type="text"  id="marca"></label><br>
+            <label>Categoria: <input type="text" id="categoria"></label><br>
+            <label>Descricao: <input type="text" id="descricao"></label><br>
+            <label>Valor: <input type="text" id="valor"></label><br>
+            <label>FAQ: <input type="text" id="faq"></label><br>
+
+            <button onclick="cadastrarProduto()">Cadastrar</button>
+
+        </form>
+
+    </div>
+
+
+
+</body>
+
+<script>
+  
+
+
+    function cadastrarProduto() {
+        var nome = document.getElementById("nomeProduto")
+        var qtde = document.getElementById("qtde")
+        var marca = document.getElementById("marca")
+        var categoria = document.getElementById("categoria")
+        var descricao = document.getElementById("descricao")
+        var valor = document.getElementById("valor")
+        var faq = document.getElementById("faq")
+
+        axios.post('http://localhost:8091/produto', { nomeProduto: this.nome, qtde: this.qtde, marca: this.marca,  categoria: this.categoria,  descricao: this.descricao, valor: this.valor, faq: this.faq})
+            .then(function (response) {
+                console.log(response)
+            });
+    }
+
+    document.getElementById("formCadastro").addEventListener("click", function (event) {
+        event.preventDefault()
+    });
+</script>
+
+</html>

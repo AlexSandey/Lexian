@@ -1,10 +1,74 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Start Page</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    </head>
-    <body>
-        <h1>Pagina Inial da Loja</h1>
-    </body>
+
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <title>Produto</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+
+<body>
+    <div>
+
+
+        <form action="/action_page.php" method="post" id="formCadastro">
+            <h1>Cadastro de Produto</h1>
+            <label>Nome: <input type="text" id="nome_produto"></label><br>
+            <label>Quantidade: <input type="text" id="qtde_produto"></label><br>
+            <label>Marca<input type="text"  id="marca_produto"></label><br>
+            <label>Categoria: <input type="text" id="categoria_produto"></label><br>
+            <label>Descricao: <input type="text" id="descricao_produto"></label><br>
+            <label>Valor: <input type="text" id="valor_produto"></label><br>
+            <label>FAQ: <input type="text" id="faq_produto"></label><br>
+
+            <button onclick="cadastrarProduto()">Cadastrar</button>
+
+        </form>
+
+    </div>
+
+
+
+</body>
+
+<script>
+    function cadastrarProduto() {
+        var nome_produto = document.getElementById("nome_produto").value;
+        var qtde_produto = document.getElementById("qtde_produto").value;
+        var marca_produto = document.getElementById("marca_produto").value;
+        var categoria_produto = document.getElementById("categoria_produto").value;
+        var descricao_produto = document.getElementById("descricao_produto").value;
+        var valor_produto = document.getElementById("valor_produto").value;
+        var faq_produto = document.getElementById("faq_produto").value;
+        console.log(nome_produto)
+        axios({
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            url: "/produto",
+            params:{
+                nomeProduto: nome_produto,
+                qtde: qtde_produto,
+                marca: marca_produto,
+                categoria: categoria_produto,
+                descricao: descricao_produto,
+                valor: valor_produto,
+                faq: faq_produto
+            }
+        })
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function(error){
+                console.log(error.response)
+            });
+    }
+
+    document.getElementById("formCadastro").addEventListener("click", function (event) {
+        event.preventDefault();
+    });
+</script>
+
 </html>

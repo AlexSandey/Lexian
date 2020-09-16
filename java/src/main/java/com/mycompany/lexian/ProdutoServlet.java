@@ -74,6 +74,7 @@ public class ProdutoServlet extends HttpServlet {
             throws ServletException, IOException {
         processRequest(req, resp);
         PrintWriter out = resp.getWriter();
+        out.print("okay");
 
         String nomeProduto = req.getParameter("nomeProduto");
         int qtde = Integer.parseInt(req.getParameter("qtde"));
