@@ -31,5 +31,9 @@ public class ProdutoController {
         return ProdutoDAO.atualizarQtde(id,qtde);
         
     }
+    
+    public String statusProd(int id, int ativo){
+        return ProdutoDAO.statusProd(id,ativo);
+    }
 
 }

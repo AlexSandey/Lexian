@@ -72,7 +72,7 @@ public class ProdutoDAO {
             ok = "{'resultado' : 'sucesso', 'mensagem' : 'Insercao no banco realizado. Erro: " + resultado + "' }";
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(ProdutoDAO.class.getName()).log(Level.SEVERE, null, ex);
-            ok = "{'resultado' : 'erro', 'mensagem' : 'erro em DAO de Cadastro do Produto' }";
+            ok = "{'resultado' : 'erro', 'mensagem' : 'erro em DAO de Cadastro do Produto:"+ex+"' }";
             return ok;
         }
 
@@ -93,7 +93,7 @@ public class ProdutoDAO {
             ok = "{'resultado' : 'sucesso', 'mensagem' : 'Insercao no banco realizado. Erro: " + resultado + "' }";
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(ProdutoDAO.class.getName()).log(Level.SEVERE, null, ex);
-            ok = "{'resultado' : 'erro', 'mensagem' : 'erro em DAO de excluir Produto' }";
+            ok = "{'resultado' : 'erro', 'mensagem' : 'erro em DAO de excluir Produto: "+ex+"' }";
             return ok;
         }
 
@@ -113,11 +113,33 @@ public class ProdutoDAO {
             ok = "{'resultado' : 'sucesso', 'mensagem' : 'Insercao no banco realizado. Erro: " + resultado + "' }";
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(ProdutoDAO.class.getName()).log(Level.SEVERE, null, ex);
-            ok = "{'resultado' : 'erro', 'mensagem' : 'erro em DAO de Atualizar Qtde Produto' }";
+            ok = "{'resultado' : 'erro', 'mensagem' : 'erro em DAO de Atualizar Qtde Produto:"+ex+"' }";
             return ok;
         }
 
         return ok;
     }
+
+    public static String statusProd(int id,int ativo) {
+                String ok = "DAO ok";
+        Connection con;
+
+        try {
+            con = ConnectionToDb.obterConexao();
+            PreparedStatement ps = con.prepareStatement("UPDATE tb_produto set ativo = ? WHERE id_produto = ?");
+            ps.setInt(0, ativo);
+            ps.setInt(1, id);
+            boolean resultado = ps.execute();
+            ok = "{'resultado' : 'sucesso', 'mensagem' : 'Alteração no banco realizada. Erro: " + resultado + "' }";
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(ProdutoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            ok = "{'resultado' : 'erro', 'mensagem' : 'erro em DAO de excluir Produto: "+ex+"' }";
+            return ok;
+        }
+
+        return ok;
+        
+    }
+        
 
 }
