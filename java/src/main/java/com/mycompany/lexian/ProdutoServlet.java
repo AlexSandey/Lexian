@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -16,6 +17,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import com.google.gson.Gson;
+
 
 /**
  *
@@ -36,36 +39,13 @@ public class ProdutoServlet extends HttpServlet {
         
         processRequest(req, resp);
         PrintWriter out = resp.getWriter();
+        List<ProdutoModel> produtos = ProdutoController.listar();
+               
+        Gson gson = new Gson();
         
-        int idProduto = Integer.parseInt(req.getParameter("idProduto"));
-        String nomeProduto = req.getParameter("nomeProduto");
-        int qtde = Integer.parseInt(req.getParameter("qtde"));
-        String marca = req.getParameter("marca");
-        String categoria = req.getParameter("categoria");      
-        String descricao = req.getParameter("descricao");
-        float valor = Float.parseFloat(req.getParameter("valor"));
-        String faq = req.getParameter("faq");
+        String produtosJson = gson.toJson(produtos);
 
-        
-        ProdutoModel produtoModel = new ProdutoModel();
-        ProdutoController produtoController = new ProdutoController();
-
-        produtoModel.setIdProduto(idProduto);
-        produtoModel.setNomeProduto(nomeProduto);
-        produtoModel.setQtde(qtde);
-        produtoModel.setMarca(marca);
-        produtoModel.setCategoria(categoria);
-        produtoModel.setDescricao(descricao);
-        produtoModel.setValor(valor);
-        produtoModel.setFaq(faq);
-        
-        String RespController = null;
-        try {
-            RespController = produtoController.cadastrar(produtoModel);
-        } catch (SQLException ex) {
-            Logger.getLogger(ProdutoServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        out.print(RespController);
+        out.print(produtosJson);
     }
 
     
@@ -83,8 +63,10 @@ public class ProdutoServlet extends HttpServlet {
         String descricao = req.getParameter("descricao");
         float valor = Float.parseFloat(req.getParameter("valor"));
         String faq = req.getParameter("faq");
-        boolean ativo = Boolean.parseBoolean(req.getParameter("ativo"));
-
+        String ativoString = req.getParameter("ativo");
+                
+        boolean ativo = "".equals(ativoString);
+        
         
         ProdutoModel produtoModel = new ProdutoModel();
         ProdutoController produtoController = new ProdutoController();

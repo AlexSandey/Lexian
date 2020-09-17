@@ -11,6 +11,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -43,7 +45,7 @@ public class ProdutoDAO {
 
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(ProdutoDAO.class.getName()).log(Level.SEVERE, null, ex);
-            ok = "{'resultado' : 'erro', 'mensagem' : 'erro em DAO de Cadastro do Produto'"+ex+" }";
+            ok = "{'resultado' : 'erro', 'mensagem' : 'erro em DAO de Cadastro do Produto'" + ex + " }";
             return ok;
         }
 
@@ -67,7 +69,7 @@ public class ProdutoDAO {
             ps.setFloat(6, prod.getValor());
             ps.setString(7, prod.getFaq());
             ps.setInt(8, prod.getIdProduto());
-            
+
             int resultado = ps.executeUpdate();//Tratar posteriormente         
             ok = "{'resultado' : 'sucesso', 'mensagem' : 'Insercao no banco realizado. Erro: " + resultado + "' }";
         } catch (ClassNotFoundException | SQLException ex) {
@@ -99,8 +101,8 @@ public class ProdutoDAO {
 
         return ok;
     }
-    
-    public static String atualizarQtde(int id, int qtde){
+
+    public static String atualizarQtde(int id, int qtde) {
         String ok = "DAO ok";
         Connection con;
 
@@ -118,6 +120,43 @@ public class ProdutoDAO {
         }
 
         return ok;
+    }
+
+    public static List<ProdutoModel> listarProdutos(/* inserir pagina e quantidade, tratar AQUI o retorno*/) {
+        String ok = "DAO ok";
+        
+        List<ProdutoModel> produtos = new ArrayList<>();
+       
+        Connection con;
+
+        try {
+            String sqlState = "SELECT * FROM tb_produto ORDER BY ativo DESC";
+
+            con = ConnectionToDb.obterConexao();
+
+            PreparedStatement ps = con.prepareStatement(sqlState,
+                    ResultSet.TYPE_SCROLL_SENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                ProdutoModel produto = new ProdutoModel();
+                produto.setIdProduto(rs.getInt("id_produto"));
+                produto.setNomeProduto(rs.getString("nome"));
+                produto.setQtde(rs.getInt("qtde"));
+                produto.setMarca(rs.getString("marca"));
+                produto.setCategoria(rs.getString("categoria"));
+                produto.setDescricao(rs.getString("descricao"));
+                produto.setValor(rs.getFloat("valor"));
+                produto.setFaq(rs.getString("faq"));
+                produto.setAtivo(rs.getBoolean("ativo"));
+
+                produtos.add(produto);
+            }
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(ProdutoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return produtos;
     }
 
 }
