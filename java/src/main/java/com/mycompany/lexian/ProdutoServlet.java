@@ -74,7 +74,7 @@ public class ProdutoServlet extends HttpServlet {
             throws ServletException, IOException {
         processRequest(req, resp);
         PrintWriter out = resp.getWriter();
-        out.print("okay");
+        
 
         String nomeProduto = req.getParameter("nomeProduto");
         int qtde = Integer.parseInt(req.getParameter("qtde"));
@@ -83,6 +83,7 @@ public class ProdutoServlet extends HttpServlet {
         String descricao = req.getParameter("descricao");
         float valor = Float.parseFloat(req.getParameter("valor"));
         String faq = req.getParameter("faq");
+        boolean ativo = Boolean.parseBoolean(req.getParameter("ativo"));
 
         
         ProdutoModel produtoModel = new ProdutoModel();
@@ -95,7 +96,8 @@ public class ProdutoServlet extends HttpServlet {
         produtoModel.setDescricao(descricao);
         produtoModel.setValor(valor);
         produtoModel.setFaq(faq);
-        
+        produtoModel.setAtivo(ativo);
+
         String RespController = null;
         try {
             RespController = produtoController.cadastrar(produtoModel);
@@ -112,13 +114,7 @@ public class ProdutoServlet extends HttpServlet {
         PrintWriter out = resp.getWriter();
 
         int id = Integer.parseInt(req.getParameter("id"));
-        String nomeProduto = req.getParameter("nomeProduto");
-        int qtde = Integer.parseInt(req.getParameter("qtde"));
-        String marca = req.getParameter("marca");
-        String categoria = req.getParameter("categoria");      
-        String descricao = req.getParameter("descricao");
-        float valor = Float.parseFloat(req.getParameter("valor"));
-        String faq = req.getParameter("faq");
+
 
         ProdutoController produtoController = new ProdutoController();
 

@@ -18,6 +18,7 @@ public class ProdutoModel {
    private String descricao;
    private float valor;
    private String faq;
+   private boolean ativo;
 
     public int getIdProduto() {
         return idProduto;
@@ -82,4 +83,11 @@ public class ProdutoModel {
     public void setQtde(int qtde) {
         this.qtde = qtde;
     }   
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
+    }
 }

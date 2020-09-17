@@ -26,8 +26,8 @@ public class ProdutoDAO {
 
         try {
             con = ConnectionToDb.obterConexao();
-            String sql = "insert into tb_produto (nome, qtde, marca, categoria, descricao, valor, faq)"
-                    + " values (?,?,?,?,?,?,?)";
+            String sql = "insert into tb_produto (nome, qtde, marca, categoria, descricao, valor, faq, ativo)"
+                    + " values (?,?,?,?,?,?,?,?)";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, prod.getNomeProduto());
             ps.setInt(2, prod.getQtde());
@@ -36,12 +36,14 @@ public class ProdutoDAO {
             ps.setString(5, prod.getDescricao());
             ps.setFloat(6, prod.getValor());
             ps.setString(7, prod.getFaq());
+            ps.setBoolean(8, prod.isAtivo());
+
             boolean resultado = ps.execute();
-            ok = "{'resultado' : 'sucesso', 'mensagem' : 'Insercao no banco realizado. Erro: " + resultado + "' }";
+            ok = "{'resultado' : 'sucesso', 'mensagem' : 'Insercao no banco realizado. Erro: " + prod.isAtivo() + "' }";
 
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(ProdutoDAO.class.getName()).log(Level.SEVERE, null, ex);
-            ok = "{'resultado' : 'erro', 'mensagem' : 'erro em DAO de Cadastro do Produto' }";
+            ok = "{'resultado' : 'erro', 'mensagem' : 'erro em DAO de Cadastro do Produto'"+ex+" }";
             return ok;
         }
 

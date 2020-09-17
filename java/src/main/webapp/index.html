@@ -21,9 +21,10 @@
             <label>Descricao: <input type="text" id="descricao_produto"></label><br>
             <label>Valor: <input type="text" id="valor_produto"></label><br>
             <label>FAQ: <input type="text" id="faq_produto"></label><br>
+            <label>Cadastrar Ativo?: <input type="text" id="ativo_produto"></label><br>
 
             <button onclick="cadastrarProduto()">Cadastrar</button>
-
+            <button onclick="deletarProduto()">Deletar</button>
         </form>
 
     </div>
@@ -33,6 +34,10 @@
 </body>
 
 <script>
+    document.getElementById("formCadastro").addEventListener("click", function (event) {
+        event.preventDefault();
+    });
+    
     function cadastrarProduto() {
         var nome_produto = document.getElementById("nome_produto").value;
         var qtde_produto = document.getElementById("qtde_produto").value;
@@ -41,9 +46,37 @@
         var descricao_produto = document.getElementById("descricao_produto").value;
         var valor_produto = document.getElementById("valor_produto").value;
         var faq_produto = document.getElementById("faq_produto").value;
-        console.log(nome_produto)
+        var ativo_produto = document.getElementById("ativo_produto").value;
+
         axios({
             method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            url: "/produto",
+            params:{
+                nomeProduto: nome_produto,
+                qtde: qtde_produto,
+                marca: marca_produto,
+                categoria: categoria_produto,
+                descricao: descricao_produto,
+                valor: valor_produto,
+                faq: faq_produto,
+                ativo: ativo_produto
+
+            }
+        })
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function(error){
+                console.log(error.response)
+            });
+    }
+
+    function deletarProduto(id_produto){
+        axios({
+            method: "DELETE",
             headers: {
                 "Content-Type": "application/json"
             },
@@ -65,10 +98,11 @@
                 console.log(error.response)
             });
     }
-
-    document.getElementById("formCadastro").addEventListener("click", function (event) {
-        event.preventDefault();
-    });
+    
+    
+    
+    
+    
 </script>
 
 </html>
