@@ -20,7 +20,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
-
 /**
  *
  * @author AlexSandey, Devakian
@@ -40,10 +39,11 @@ public class ProdutoServlet extends HttpServlet {
         processRequest(req, resp);
         PrintWriter out = resp.getWriter();
 
-        List<ProdutoModel> produtos = ProdutoController.listar();
                
+        List<ProdutoModel> produtos = ProdutoController.listar();
+
         Gson gson = new Gson();
-        
+
         String produtosJson = gson.toJson(produtos);
 
         out.print(produtosJson);
@@ -114,38 +114,45 @@ public class ProdutoServlet extends HttpServlet {
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doPut(req, resp);
+        super.doPut(req, resp);
 
         processRequest(req, resp);
         PrintWriter out = resp.getWriter();
 
-        int id = Integer.parseInt(req.getParameter("id"));
-        String nomeProduto = req.getParameter("nomeProduto");
-        int qtde = Integer.parseInt(req.getParameter("qtde"));
-        String marca = req.getParameter("marca");
-        String categoria = req.getParameter("categoria");
-        String descricao = req.getParameter("descricao");
-        float valor = Float.parseFloat(req.getParameter("valor"));
-        String faq = req.getParameter("faq");
-
-        ProdutoController produtoController = new ProdutoController();
-        ProdutoModel produtoModel = new ProdutoModel();
-
-        produtoModel.setIdProduto(id);
-        produtoModel.setNomeProduto(nomeProduto);
-        produtoModel.setQtde(qtde);
-        produtoModel.setMarca(marca);
-        produtoModel.setCategoria(categoria);
-        produtoModel.setDescricao(descricao);
-        produtoModel.setValor(valor);
-        produtoModel.setFaq(faq);
-
         String RespController = null;
-        if (req.getParameter("attQtde").equals("attQtde")) {
-            RespController = produtoController.atualizarQtde(id, qtde);
+        String solicitacao = req.getParameter("solicitacao");
+
+        if (solicitacao.equals("attQtde")) {
+            int id = Integer.parseInt(req.getParameter("idProduto"));
+            int quantidade = Integer.parseInt(req.getParameter("qtde"));
+
+            ProdutoController produtoController = new ProdutoController();
+            RespController = produtoController.atualizarQtde(id, quantidade);
         }
-        if (req.getParameter("attProd").equals("attProd")) {
+        if (solicitacao.equals("attProduto")) {
+            ProdutoModel produtoModel = new ProdutoModel();
+
+            int id = Integer.parseInt(req.getParameter("id"));
+            String nomeProduto = req.getParameter("nomeProduto");
+            int qtde = Integer.parseInt(req.getParameter("qtde"));
+            String marca = req.getParameter("marca");
+            String categoria = req.getParameter("categoria");
+            String descricao = req.getParameter("descricao");
+            float valor = Float.parseFloat(req.getParameter("valor"));
+            String faq = req.getParameter("faq");
+
+            produtoModel.setIdProduto(id);
+            produtoModel.setNomeProduto(nomeProduto);
+            produtoModel.setQtde(qtde);
+            produtoModel.setMarca(marca);
+            produtoModel.setCategoria(categoria);
+            produtoModel.setDescricao(descricao);
+            produtoModel.setValor(valor);
+            produtoModel.setFaq(faq);
+
+            ProdutoController produtoController = new ProdutoController();
             RespController = produtoController.atualizar(produtoModel);
+
         }
         out.print(RespController);
 

@@ -108,7 +108,7 @@ public class ProdutoDAO {
 
         try {
             con = ConnectionToDb.obterConexao();
-            PreparedStatement ps = con.prepareStatement("UPDATE tb_produto SET qtde = ? WHERE id_produto=?");
+            PreparedStatement ps = con.prepareStatement("UPDATE tb_produto SET qtde = qtde+? WHERE id_produto=?");
             ps.setInt(1, qtde);
             ps.setInt(2, id);
             boolean resultado = ps.execute();
@@ -122,13 +122,14 @@ public class ProdutoDAO {
         return ok;
     }
 
-    public static List<ProdutoModel> listarProdutos(/* inserir pagina e quantidade, tratar AQUI o retorno*/) {
+    public static List<ProdutoModel> listarProdutos() {
         String ok = "DAO ok";
         
         List<ProdutoModel> produtos = new ArrayList<>();
        
         Connection con;
-
+             
+        
         try {
             String sqlState = "SELECT * FROM tb_produto ORDER BY ativo DESC";
 

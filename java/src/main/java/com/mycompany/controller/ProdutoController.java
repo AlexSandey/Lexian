@@ -24,7 +24,7 @@ public class ProdutoController {
         return ProdutoDAO.atualizarProduto(prod);
     }
     
-    public static List<ProdutoModel> listar(/* inserir pagina e quantidade, tratar na DAO o retorno*/){
+    public static List<ProdutoModel> listar(){
         return ProdutoDAO.listarProdutos();
     }
     
