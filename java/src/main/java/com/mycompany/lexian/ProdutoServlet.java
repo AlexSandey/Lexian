@@ -39,7 +39,6 @@ public class ProdutoServlet extends HttpServlet {
 
         processRequest(req, resp);
         PrintWriter out = resp.getWriter();
-<<<<<<< HEAD
         List<ProdutoModel> produtos = ProdutoController.listar();
                
         Gson gson = new Gson();
@@ -47,7 +46,6 @@ public class ProdutoServlet extends HttpServlet {
         String produtosJson = gson.toJson(produtos);
 
         out.print(produtosJson);
-=======
 
         int idProduto = Integer.parseInt(req.getParameter("idProduto"));
         String nomeProduto = req.getParameter("nomeProduto");
@@ -77,7 +75,6 @@ public class ProdutoServlet extends HttpServlet {
             Logger.getLogger(ProdutoServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
         out.print(RespController);
->>>>>>> fff27e0e624e5696cb880d2a92eb7b7a0e94aadb
     }
 
     @Override
@@ -93,16 +90,7 @@ public class ProdutoServlet extends HttpServlet {
         String descricao = req.getParameter("descricao");
         float valor = Float.parseFloat(req.getParameter("valor"));
         String faq = req.getParameter("faq");
-<<<<<<< HEAD
-        String ativoString = req.getParameter("ativo");
-                
-        boolean ativo = "".equals(ativoString);
-        
-        
-=======
         String ativo = req.getParameter("ativo");
-
->>>>>>> fff27e0e624e5696cb880d2a92eb7b7a0e94aadb
         ProdutoModel produtoModel = new ProdutoModel();
         ProdutoController produtoController = new ProdutoController();
         verificaStatus verifica = new verificaStatus();

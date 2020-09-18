@@ -122,7 +122,6 @@ public class ProdutoDAO {
         return ok;
     }
 
-<<<<<<< HEAD
     public static List<ProdutoModel> listarProdutos(/* inserir pagina e quantidade, tratar AQUI o retorno*/) {
         String ok = "DAO ok";
         
@@ -159,7 +158,7 @@ public class ProdutoDAO {
 
         return produtos;
     }
-=======
+
     public static String statusProd(int id,int ativo) {
                 String ok = "DAO ok";
         Connection con;
@@ -181,6 +180,5 @@ public class ProdutoDAO {
         
     }
         
->>>>>>> fff27e0e624e5696cb880d2a92eb7b7a0e94aadb
 
 }
