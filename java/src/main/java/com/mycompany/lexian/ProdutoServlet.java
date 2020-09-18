@@ -39,6 +39,7 @@ public class ProdutoServlet extends HttpServlet {
 
         processRequest(req, resp);
         PrintWriter out = resp.getWriter();
+
         List<ProdutoModel> produtos = ProdutoController.listar();
                
         Gson gson = new Gson();
@@ -47,34 +48,6 @@ public class ProdutoServlet extends HttpServlet {
 
         out.print(produtosJson);
 
-        int idProduto = Integer.parseInt(req.getParameter("idProduto"));
-        String nomeProduto = req.getParameter("nomeProduto");
-        int qtde = Integer.parseInt(req.getParameter("qtde"));
-        String marca = req.getParameter("marca");
-        String categoria = req.getParameter("categoria");
-        String descricao = req.getParameter("descricao");
-        float valor = Float.parseFloat(req.getParameter("valor"));
-        String faq = req.getParameter("faq");
-
-        ProdutoModel produtoModel = new ProdutoModel();
-        ProdutoController produtoController = new ProdutoController();
-
-        produtoModel.setIdProduto(idProduto);
-        produtoModel.setNomeProduto(nomeProduto);
-        produtoModel.setQtde(qtde);
-        produtoModel.setMarca(marca);
-        produtoModel.setCategoria(categoria);
-        produtoModel.setDescricao(descricao);
-        produtoModel.setValor(valor);
-        produtoModel.setFaq(faq);
-
-        String RespController = null;
-        try {
-            RespController = produtoController.cadastrar(produtoModel);
-        } catch (SQLException ex) {
-            Logger.getLogger(ProdutoServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        out.print(RespController);
     }
 
     @Override
@@ -90,7 +63,9 @@ public class ProdutoServlet extends HttpServlet {
         String descricao = req.getParameter("descricao");
         float valor = Float.parseFloat(req.getParameter("valor"));
         String faq = req.getParameter("faq");
+
         String ativo = req.getParameter("ativo");
+
         ProdutoModel produtoModel = new ProdutoModel();
         ProdutoController produtoController = new ProdutoController();
         verificaStatus verifica = new verificaStatus();

@@ -3,11 +3,9 @@
 
     <head>
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<<<<<<< HEAD
         <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-        <script src="https://unpkg.com/bootstrap-table@1.17.1/dist/bootstrap-table.min.js"></script>
-=======
->>>>>>> fff27e0e624e5696cb880d2a92eb7b7a0e94aadb
+
+        
 
         <title>Produto</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -17,13 +15,9 @@
         <div>
 
 
-<<<<<<< HEAD
-            <form id="formCadastro"> 
-                <h1 id="teste">Cadastro de Produto</h1>
-=======
+            
             <form action="/action_page.php" method="post" id="formCadastro">
                 <h1>Cadastro de Produto</h1>
->>>>>>> fff27e0e624e5696cb880d2a92eb7b7a0e94aadb
                 <label>Nome: <input type="text" id="nome_produto"></label><br>
                 <label>Quantidade: <input type="text" id="qtde_produto"></label><br>
                 <label>Marca<input type="text"  id="marca_produto"></label><br>
@@ -34,7 +28,6 @@
                 <label>Cadastrar Ativo?: <input type="text" id="ativo_produto"></label><br>
 
                 <button onclick="cadastrarProduto()">Cadastrar</button>
-<<<<<<< HEAD
                 <button onclick="deletarProduto()">Deletar</button> 
                 <button onclick="listarProdutos()">Listar Produtos</button> 
 
@@ -59,10 +52,6 @@
         </div>
 
 
-
-
-
-</body>
 
 <script>
     document.getElementById("formCadastro").addEventListener("click", function (event) {
@@ -149,11 +138,13 @@
             $.each(data, function (key, item) {
                 console.log(item)
     $("#table tbody").append(
+            
                         "<tr>" +
                         "<td>"+item.ativo+"</td>" +
                         "<td>"+item.idProduto+"</td>" +
                         "<td>"+item.nomeProduto+"</td>" +
                         "<td>"+item.valor+"</td>" +
+                        "<td><input type='radio'>"+
                         "</tr>");
 
 
@@ -163,103 +154,10 @@
     }
 
 </script>
-=======
-                <button onclick="deletarProduto()" value="0" id="k">Deletar</button>
-            </form>
 
-        </div>
+</body>
 
 
 
-    </body>
-
-    <script>
-        document.getElementById("formCadastro").addEventListener("click", function (event) {
-            event.preventDefault();
-        });
-
-        function cadastrarProduto() {
-            var nome_produto = document.getElementById("nome_produto").value;
-            var qtde_produto = document.getElementById("qtde_produto").value;
-            var marca_produto = document.getElementById("marca_produto").value;
-            var categoria_produto = document.getElementById("categoria_produto").value;
-            var descricao_produto = document.getElementById("descricao_produto").value;
-            var valor_produto = document.getElementById("valor_produto").value;
-            var faq_produto = document.getElementById("faq_produto").value;
-            var ativo_produto = document.getElementById("ativo_produto").value;
-
-
-            axios({
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                url: "/produto",
-                params: {
-                    nomeProduto: nome_produto,
-                    qtde: qtde_produto,
-                    marca: marca_produto,
-                    categoria: categoria_produto,
-                    descricao: descricao_produto,
-                    valor: valor_produto,
-                    faq: faq_produto,
-                    ativo: ativo_produto
-
-                }
-            })
-                    .then(function (response) {
-                        console.log(response);
-                    })
-                    .catch(function (error) {
-                        console.log(error.response)
-                    });
-        }
-        function alterarStatus(id_produto) {
-            axios({
-                method: "DELETE",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                url: "/produto",
-                params: {
-                    idProduto: id_produto,
-                    ativo: 0
-                                        
-                }
-            })
-                    .then(function (response) {
-                        console.log(response);
-                    })
-                    .catch(function (error) {
-                        console.log(error.response)
-                    });
-        }
-
-        function deletarProduto(id_produto) {
-            axios({
-                method: "DELETE",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                url: "/produto",
-                params: {
-                    idProduto: id_produto,
-                    ativo: 3
-                }
-            })
-                    .then(function (response) {
-                        console.log(response);
-                    })
-                    .catch(function (error) {
-                        console.log(error.response)
-                    });
-        }
-
-
-
-
-
-    </script>
->>>>>>> fff27e0e624e5696cb880d2a92eb7b7a0e94aadb
 
 </html>
