@@ -63,7 +63,6 @@ public class ProdutoServlet extends HttpServlet {
         String descricao = req.getParameter("descricao");
         float valor = Float.parseFloat(req.getParameter("valor"));
         String faq = req.getParameter("faq");
-
         String ativo = req.getParameter("ativo");
 
         ProdutoModel produtoModel = new ProdutoModel();

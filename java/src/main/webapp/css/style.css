@@ -1,0 +1,30 @@
+*{
+    margin: 0 auto;
+}
+
+header{
+        text-align: center;
+        border: 1px red solid;
+        padding: 50px;
+
+}
+
+#conteudo{
+    text-align: center;
+    width: 70%;
+    border: 1px red solid;
+}
+#conteudo label{
+    margin: 15px;
+}
+#conteudo #campos-cadastro{
+    display: flex;
+}
+#conteudo h1{
+    text-align: center;
+    border: 1px red solid;
+}
+#conteudo label{
+    border: 1px red solid;
+    
+}
