@@ -1,18 +1,27 @@
 *{
     margin: 0 auto;
 }
+body{
+    background: url(https://themes.kabum.com.br/conteudo/layout/1413/bg.jpg?int_banner_name=THEME-RTX-SERIE30&int_banner_position=tematizacao_listagem);
+    
+}
+
+ 
 
 header{
         text-align: center;
         border: 1px red solid;
         padding: 50px;
-
+        background: url(https://img.freepik.com/vetores-gratis/projeto-do-fundo-multicolor_1117-99.jpg?size=338&ext=jpg);
+        color: white    
 }
 
 #conteudo{
     text-align: center;
     width: 70%;
     border: 1px red solid;
+    background-color: white;
+    height: 5000px
 }
 #conteudo label{
     margin: 15px;
@@ -26,5 +35,4 @@ header{
 }
 #conteudo label{
     border: 1px red solid;
-    
 }
