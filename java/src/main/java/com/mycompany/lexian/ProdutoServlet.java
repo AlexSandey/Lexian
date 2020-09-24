@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
+import com.mycompany.model.FaqModel;
 
 /**
  *
@@ -62,7 +63,6 @@ public class ProdutoServlet extends HttpServlet {
         String categoria = req.getParameter("categoria");
         String descricao = req.getParameter("descricao");
         float valor = Float.parseFloat(req.getParameter("valor"));
-        String faq = req.getParameter("faq");
         String ativo = req.getParameter("ativo");
 
         ProdutoModel produtoModel = new ProdutoModel();
@@ -75,8 +75,9 @@ public class ProdutoServlet extends HttpServlet {
         produtoModel.setCategoria(categoria);
         produtoModel.setDescricao(descricao);
         produtoModel.setValor(valor);
-        produtoModel.setFaq(faq);
         produtoModel.setAtivo(verifica.verifica(ativo));
+        
+        
 
         String RespController = null;
         try {
@@ -147,7 +148,6 @@ public class ProdutoServlet extends HttpServlet {
             produtoModel.setCategoria(categoria);
             produtoModel.setDescricao(descricao);
             produtoModel.setValor(valor);
-            produtoModel.setFaq(faq);
 
             ProdutoController produtoController = new ProdutoController();
             RespController = produtoController.atualizar(produtoModel);

@@ -28,7 +28,7 @@ public class ProdutoDAO {
 
         try {
             con = ConnectionToDb.obterConexao();
-            String sql = "insert into tb_produto (nome, qtde, marca, categoria, descricao, valor, faq, ativo)"
+            String sql = "insert into tb_produto (nome, qtde, marca, categoria, descricao, valor, ativo)"
                     + " values (?,?,?,?,?,?,?,?)";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, prod.getNomeProduto());
@@ -37,7 +37,6 @@ public class ProdutoDAO {
             ps.setString(4, prod.getCategoria());
             ps.setString(5, prod.getDescricao());
             ps.setFloat(6, prod.getValor());
-            ps.setString(7, prod.getFaq());
             ps.setBoolean(8, prod.isAtivo());
 
             boolean resultado = ps.execute();
@@ -59,7 +58,7 @@ public class ProdutoDAO {
         try {
             con = ConnectionToDb.obterConexao();
             String sql = "UPDATE tb_produto SET nome = ?, qtde = ?, marca = ?, categoria = ?, "
-                    + "descricao = ?, valor = ?, faq = ? where id_produto = ?";
+                    + "descricao = ?, valor = ? where id_produto = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, prod.getNomeProduto());
             ps.setInt(2, prod.getQtde());
@@ -67,7 +66,6 @@ public class ProdutoDAO {
             ps.setString(4, prod.getCategoria());
             ps.setString(5, prod.getDescricao());
             ps.setFloat(6, prod.getValor());
-            ps.setString(7, prod.getFaq());
             ps.setInt(8, prod.getIdProduto());
 
             int resultado = ps.executeUpdate();//Tratar posteriormente         
@@ -148,7 +146,6 @@ public class ProdutoDAO {
                 produto.setCategoria(rs.getString("categoria"));
                 produto.setDescricao(rs.getString("descricao"));
                 produto.setValor(rs.getFloat("valor"));
-                produto.setFaq(rs.getString("faq"));
                 produto.setAtivo(rs.getBoolean("ativo"));
 
                 produtos.add(produto);

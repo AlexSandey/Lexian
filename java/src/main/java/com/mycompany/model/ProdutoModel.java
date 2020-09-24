@@ -17,7 +17,6 @@ public class ProdutoModel {
    private String categoria;
    private String descricao;
    private float valor;
-   private String faq;
    private boolean ativo;
 
     public int getIdProduto() {
@@ -66,14 +65,6 @@ public class ProdutoModel {
 
     public void setValor(float valor) {
         this.valor = valor;
-    }
-
-    public String getFaq() {
-        return faq;
-    }
-
-    public void setFaq(String faq) {
-        this.faq = faq;
     }
 
     public int getQtde() {
