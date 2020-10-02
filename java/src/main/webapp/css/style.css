@@ -10,7 +10,6 @@ body{
 
 header{
         text-align: center;
-        border: 1px red solid;
         padding: 50px;
         background: url(https://img.freepik.com/vetores-gratis/projeto-do-fundo-multicolor_1117-99.jpg?size=338&ext=jpg);
         color: white    
@@ -19,7 +18,6 @@ header{
 #conteudo{
     text-align: center;
     width: 70%;
-    border: 1px red solid;
     background-color: white;
     height: 5000px
 }
@@ -31,8 +29,11 @@ header{
 }
 #conteudo h1{
     text-align: center;
-    border: 1px red solid;
 }
 #conteudo label{
-    border: 1px red solid;
+}
+
+#div_image{
+    background-color: darkgray;
+    width: 40%;
 }

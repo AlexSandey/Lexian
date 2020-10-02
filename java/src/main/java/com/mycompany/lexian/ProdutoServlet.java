@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.mycompany.model.FaqModel;
+import java.util.Enumeration;
 
 /**
  *
@@ -54,7 +55,7 @@ public class ProdutoServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        processRequest(req, resp);
+        processRequest(req, resp); 
         PrintWriter out = resp.getWriter();
 
         String nomeProduto = req.getParameter("nomeProduto");
@@ -64,7 +65,9 @@ public class ProdutoServlet extends HttpServlet {
         String descricao = req.getParameter("descricao");
         float valor = Float.parseFloat(req.getParameter("valor"));
         String ativo = req.getParameter("ativo");
+        String imagem1m = req.getParameter("imagem1m");
 
+        
         ProdutoModel produtoModel = new ProdutoModel();
         ProdutoController produtoController = new ProdutoController();
         verificaStatus verifica = new verificaStatus();
