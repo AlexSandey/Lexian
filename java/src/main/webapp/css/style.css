@@ -16,16 +16,14 @@ header{
 }
 
 #conteudo{
+    display: block;
     text-align: center;
     width: 70%;
     background-color: white;
-    height: 5000px
+
 }
 #conteudo label{
     margin: 15px;
-}
-#conteudo #campos-cadastro{
-    display: flex;
 }
 #conteudo h1{
     text-align: center;
@@ -37,3 +35,98 @@ header{
     background-color: darkgray;
     width: 40%;
 }
+
+
+#dadosProduto{
+    display: flex;
+    text-align: center;
+    width: 100%;
+    border: 1px green solid;
+    padding: 60px 0px;
+    
+}
+
+#fotosProduto{
+    display: block;
+    text-align: center;
+    width: 60%;
+    border: 1px grey solid;
+    margin-right: 10px;
+    border-radius: 4%;
+
+}
+#valoresProduto{
+    text-align: center;
+    width: 40%;
+    border: 1px orange solid;
+    background-color: purple;
+
+    
+}
+#caixaMarcaProduto{
+    text-align: center flex;
+    width: 20%;
+    border: 1px orange solid;
+    background-color: white;
+
+    
+}
+
+#descProduto{
+    text-align: center;
+    width: 99%;
+    border: 1px orange solid;
+    background-color: purple;
+
+    
+}
+#abaDesc{
+    left: 0%;
+    text-align: center;
+    width: 10%;
+    border: 1px green solid;
+    background-color: green;
+
+}
+#imagem img{
+    border: grey solid 1px;
+    border-radius: 4%;
+    width: 100%;
+}
+#imagem{
+    margin:10px
+}
+#galeria{
+    display: flex;
+    margin-bottom: 15px;
+    width: 100%;
+    margin: 2px;
+    border: rebeccapurple solid 1;
+}
+
+
+.miniatura{
+    border: grey solid 1px;
+    margin: 10px;
+}
+.miniatura img{
+    width: 100%;
+      
+}
+
+#conteudoGaleria{
+    width:70%;
+    display: flex;
+}
+
+@media only screen and (max-width: 1300px) {
+    #conteudo{
+        width: 100%;
+    }
+    #dadosProduto{
+        display: block;
+    }
+    #fotosProduto{
+        width: 100%;
+    }
+   }

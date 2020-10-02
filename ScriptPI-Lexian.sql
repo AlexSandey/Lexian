@@ -36,4 +36,15 @@ CREATE TABLE `tb_faq` (
   CONSTRAINT `fk_id_produto` FOREIGN KEY (`id_produto`) REFERENCES `tb_produto` (`id_produto`)
 );
 
+CREATE TABLE `tb_imagem` (
+  `id_imagem` int(11) NOT NULL AUTO_INCREMENT,
+  `imagem_b64` varchar(65535),
+  `id_produto` int (11) NOT NULL,
+  `tamanho` varchar(2),
+  `ordem` int(11) NOT NULL,
+  PRIMARY KEY (`id_imagem`),
+  KEY `fk_id_produto` (`id_produto`),
+  CONSTRAINT `fk_id_produto` FOREIGN KEY (`id_produto`) REFERENCES `tb_produto` (`id_produto`)
+);
+
 INSERT INTO tb_faq (id_produto, pergunta, resposta) VALUES ( '2', 'sadsa', 'sada');
