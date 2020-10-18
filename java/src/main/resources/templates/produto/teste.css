@@ -1,0 +1,11 @@
+#teste_modal{
+    width: 70%;
+    position: fixed;
+    top: 35%;
+    left: 10%;
+    border: red 1px solid;
+    background-color: aqua;
+}
+body{
+    background-color: aqua;
+}

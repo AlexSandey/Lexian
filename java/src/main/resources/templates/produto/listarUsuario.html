@@ -1,0 +1,145 @@
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link th:href="@{/css/style.css}" rel="stylesheet" />
+    <script th:href="@{/scripts/produto.js}" type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="images/icons/favicon.ico" />
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css"  th:href="@{/vendor/bootstrap/css/bootstrap.min.css}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" th:href="@{/fonts/font-awesome-4.7.0/css/font-awesome.min.css}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" th:href="@{/vendor/animate/animate.css}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" th:href="@{/vendor/select2/select2.min.css}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" th:href="@{/vendor/perfect-scrollbar/perfect-scrollbar.css}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/util.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
+    <!--===============================================================================================-->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+
+    <title>Lista Usuarios</title>
+</head>
+
+<body>
+    <header>
+        <div>
+            <h1>Header: Cadastro de Administrador</h1>
+        </div>
+    </header>
+        <div id="ex1" class="modal">
+        <p>Thanks for clicking. That felt good.</p>
+        <a href="#" rel="modal:close">Close</a>
+      </div>
+      
+    <div id="conteudo">
+        <div id="cadastrar-produto">
+            <h1>Lista de Usuarios</h1>
+            <div class="container-table100">
+                <div class="wrap-table100">
+                    <div class="table100 ver1 m-b-110">
+                        <div class="table100-head">
+                            <table id="table">
+                                <thead>
+                                    <tr class="row100 head">
+                                        <th class="cell100 column1">Status</th>
+                                        <th class="cell100 column2">Nome</th>
+                                        <th class="cell100 column3">CPF</th>
+                                        <th class="cell100 column4">Email</th>
+                                        <th class="cell100 column5">Perfil</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+
+
+                        <div class="table100-body js-pscroll">
+                            <table id="table">
+
+                                <tbody th:if="${usuarios != null}">
+                                    <tr class='row100 body' th:each="user, stat: ${usuarios}" th:onclick="|ativarmodal('${user.idUsuario}')|">
+                                        <td class='cell100 column1' th:if="${user.status == false}">Inativo</td>
+                                        <td class='cell100 column1' th:if="${user.status == true}">Ativo</td>
+                                        <td class='cell100 column2' th:text="${user.nome}"></td>
+                                        <td class='cell100 column3' th:text="${user.cpf}"></td>
+                                        <td class='cell100 column4' th:text="${user.email}"></td>
+                                        <td class='cell100 column5' th:text="${user.perfil}"></td>
+                                    </tr>
+                                </tbody>
+                            </table >
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id='modal_acoes'>
+
+        <h1>Selecione uma ação</h1>
+        <input type="text" id="modal_idProduto" value="Teste ID" disabled><br>
+        
+
+        <form action="" id="atualizar_produto">
+
+            <button>ATUALIZAR</button>
+        </form>
+
+        <form action="" id="desativar_produto" method="post">
+
+            <button onclick="return confirm('Tem certeza que deseja desativar este usuario?')">DESATIVAR</button>
+        </form>
+        
+        
+        <button onclick="desativarmodal()">Fechar X</button>
+    </div>
+<!--===============================================================================================-->	
+<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/bootstrap/js/popper.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+	<script>
+		$('.js-pscroll').each(function(){
+			var ps = new PerfectScrollbar(this);
+
+			$(window).on('resize', function(){
+				ps.update();
+			})
+		});
+			
+        function ativarmodal(id){
+            document.getElementById("modal_idProduto").value = "O ID do usuario é: "+id;
+            
+            document.getElementById("atualizar_produto").action = "./atualizar/"+id;
+            document.getElementById("desativar_produto").action = "./desativar/"+id;
+            
+            document.getElementById("modal_acoes").style.display = "block";
+
+
+        }
+        
+        function desativarmodal(){
+            document.getElementById("modal_acoes").style.display = "none";
+        }
+
+		
+	</script>
+<!--===============================================================================================-->
+	<script src="js/main.js"></script>
+
+</body>
+
+</html>

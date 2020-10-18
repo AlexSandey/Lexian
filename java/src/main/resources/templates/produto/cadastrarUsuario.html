@@ -1,0 +1,97 @@
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link th:href="@{/css/style.css}" rel="stylesheet" />
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+
+    <title>Cadastro de Usuario</title>
+</head>
+
+<body>
+    <header>
+        <div>
+            <h1>Header: Cadastro de Administrador</h1>
+        </div>
+    </header>
+
+    <div id="conteudo">
+
+        <div id="cadastrar-produto">
+            <h1>Cadastro de Usuario:</h1>
+
+            <form action=""  id="campos-cadastro" method="POST" enctype="multipart/form-data">
+                <input type="text" id="nome_usuario" name="nome_usuario" placeholder="Nome do Usuario"><br>
+                <input type="text" id="email_usuario" name="email_usuario" placeholder="Email" ><br>
+                <input type="password" id="senha_usuario" name="senha_usuario" placeholder="Senha do Usuario"><br>
+                <input type="text" id="cpf_usuario" name="cpf_usuario" placeholder="CPF do Usuario"><br>
+                <select id="perfil_usuario" name="perfil_usuario" placeholder="Perfil do Usuario">
+                    <option value="">Selecione um Perfil </option>
+                    <option value="Administrador">Administrador</option>
+                    <option value="Estoquista">Estoquista</option>
+                    <option value="Cliente">Cliente</option>
+                </select><br>
+                <div id="radio-ativo">
+                    <label>Cadastrar Ativo?</label><br>
+                    <label>Sim</label> <input type="radio" name="status_usuario" value="true"><br>
+                    <label>Não</label> <input type="radio" name="status_usuario" value="false">
+                </div>
+
+            <input type="submit" value="Cadastrar Usuario" id="btn_default">
+
+
+            </form>
+            <!--
+                    <div id="div_image">
+    
+                        <div>
+                            <label>Escolha a imagem principal: </label><br>
+                            <label>Tamanho médio</label><input type="file" id="img_1_m" name="img_1_m" accept="image/png" maxlength="50000"><br>
+                            <label>Tamanho grande</label><input type="file" id="img_1_g" name="img_1_g" accept="image/png" maxlength="90000"><br>
+                        </div>
+    
+                        <div>
+                            <label>Escolha a segunda imagem: </label><br>
+                            <label>Tamanho médio</label><input type="file" id="img_2_m" name="img_2_m" accept="image/png" maxlength="50000"><br>
+                            <label>Tamanho grande</label><input type="file" id="img_2_g" name="img_2_g" accept="image/png" maxlength="90000"><br>
+                        </div>
+    
+                        <div>
+                            <label>Escolha a terceira imagem: </label><br>
+                            <label>Tamanho médio</label><input type="file" id="img_3_m" name="img_3_m" accept="image/png" maxlength="50000"><br>
+                            <label>Tamanho grande</label><input type="file" id="img_3_g" name="img_3_g" accept="image/png" maxlength="90000"><br>
+                        </div>
+    
+                        <div>
+                            <label>Escolha a quarta imagem: </label><br>
+                            <label>Tamanho médio</label><input type="file" id="img_4_m" name="img_4_m" accept="image/png" maxlength="50000"><br>
+                            <label>Tamanho grande</label><input type="file" id="img_4_g" name="img_4_g" accept="image/png" maxlength="90000"><br>
+                        </div>
+    
+                        <div>
+                            <label>Escolha a quinta imagem: </label><br>
+                            <label>Tamanho médio</label><input type="file" id="img_5_m" name="img_5_m" accept="image/png" maxlength="50000"><br>
+                            <label>Tamanho grande</label><input type="file" id="img_5_g" name="img_5_g" accept="image/png" maxlength="90000"><br>
+                        </div>
+    
+                    </div>
+                    -->
+
+        </div>
+
+
+
+
+
+
+
+    </div>
+
+
+
+</body>
+
+</html>
