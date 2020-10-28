@@ -34,7 +34,7 @@ public class enderecoController {
 
     @PostMapping("/cadastrar")
     public Endereco cadastrarEnderecoPOST(
-            @RequestParam(name = "rua") String rua,
+                @RequestParam(name = "rua") String rua,
             @RequestParam(name = "numero", required = true) int numero,
             @RequestParam(name = "bairro", required = true) String bairro,
             @RequestParam(name = "cep", required = true) String cep,
@@ -56,18 +56,6 @@ public class enderecoController {
 
     }
 
-//    @GetMapping("/cadastrar")
-//    public ModelAndView cadastrarUsuarioGET()
-//    {
-//       return new ModelAndView("produto/cadastrarUsuario"); 
-//    }
-//    
-//    @RequestMapping(method = RequestMethod.GET, path = "/lista")
-//    public ModelAndView carregarUsuarios() {
-//        List<Usuario> usuario = usuarioService.carregarUsuarios();
-//
-//        return new ModelAndView("produto/listarUsuario").addObject("usuarios", usuario); 
-//    }
     @RequestMapping(method = RequestMethod.GET, path = "/lista")
     public List<Endereco> carregarUsuarios() {
         List<Endereco> endereco = enderecoService.carregarEndereco();
@@ -75,95 +63,4 @@ public class enderecoController {
         return endereco;
     }
 
-//    
-//    @RequestMapping(value = "/atualizar/{id}", method = RequestMethod.GET)
-//    public ModelAndView atualizarUser(@PathVariable int id) {
-//        ResponseEntity<Usuario> usuarioResponse =  usuarioService.filtroID(id);
-//        
-//        Usuario usuario = usuarioResponse.getBody();
-//        
-//        return new ModelAndView("produto/atualizarUsuario").addObject("usuarios", usuario);
-//
-//    }
-//    
-//    
-//    @PostMapping("/atualizar/{id}")
-//    public String AtualizarProduto( 
-//        @PathVariable int id,
-//        @RequestParam(name = "nome_usuario", required = true) String nome,
-//        @RequestParam(name = "email_usuario", required = true) String email,
-//        @RequestParam(name = "senha_usuario", required = true) String senha,
-//        @RequestParam(name = "cpf_usuario", required = true) String cpf,
-//        @RequestParam(name = "perfil_usuario", required = true) String perfil,
-//        @RequestParam(name = "status_usuario", required = true) boolean status    
-//    ){
-//
-//        Usuario usuario =  new Usuario();
-//        usuario.setIdUsuario(id);
-//        usuario.setNome(nome);
-//        usuario.setEmail(email);   
-//        usuario.setSenha(senha);
-//        usuario.setCpf(cpf);
-//        usuario.setPerfil(perfil);
-//        usuario.setStatus(status);
-//        
-//        
-//        ResponseEntity usuarioAtualizar =  usuarioService.updateUser(id,usuario);
-//       
-//       
-//       
-//       return "<script>window.location.href = 'http://localhost:8080/usuario/lista'</script>";
-//
-//    }
-//    
-//    
-//    
-//    
-//    
-//    
-//    
-//    
-//    
-//    
-//    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-//    public ResponseEntity<Usuario> filtroID(@PathVariable int id) {
-//        return usuarioService.filtroID(id);
-//    }
-//
-//    @PostMapping("/desativar/{id}")
-//    public String DesativarUsuario( 
-//        @PathVariable int id
-//    ){
-//
-//        ResponseEntity<Usuario> usuarioResponse =  usuarioService.filtroID(id);
-//        
-//        Usuario usuario = usuarioResponse.getBody();
-//        
-//        usuario.setStatus(false);
-//
-//        
-//        
-//        ResponseEntity usuarioAtualizar =  usuarioService.updateUser(id,usuario);
-//       
-//       
-//       
-//       return "<script>window.location.href = 'http://localhost:8080/usuario/lista'</script>";
-//
-//    }
-//    
-//    @PutMapping(value = "/{id}")
-//    public ResponseEntity update(@PathVariable("id") int id,
-//            @RequestBody Usuario prod) {
-//        return usuarioService.updateUser(id, prod);
-//    }
-//    
-//   @RequestMapping(value = "/filtroNome/{nome}", method = RequestMethod.GET)
-//    public List<Usuario> findByNome(@PathVariable String nome) {
-//        return usuarioService.filtroNome(nome);
-//    }
-//    
-//    @RequestMapping(value = "/filtroCpf/{cpf}", method = RequestMethod.GET)
-//    public List<Usuario> findByCpf(@PathVariable String cpf) {
-//        return usuarioService.filtroCpf(cpf);
-//    }
 }

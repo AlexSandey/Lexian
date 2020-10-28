@@ -26,6 +26,11 @@ public class usuarioService {
         return usuario;
     }
     
+    public Usuario logarUsuario(String email, String senha) throws ServiceExc{
+        Usuario usuario = usuarioRepository.BuscaLogin(email, senha);
+        return usuario;
+    }
+    
     public ResponseEntity<Usuario> filtroID(int id) {
         return usuarioRepository.findById(id).
                 map(record -> ResponseEntity.ok().body(record))
