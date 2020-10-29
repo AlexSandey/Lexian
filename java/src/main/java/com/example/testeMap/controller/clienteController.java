@@ -43,7 +43,7 @@ public class clienteController {
         this.enderecoService = enderecoService;
     }
     
-    @GetMapping
+    @GetMapping("")
     public ModelAndView loginUsuarioGET(    ) {
         return new ModelAndView("usuario/login");
     }
@@ -52,51 +52,31 @@ public class clienteController {
     public ModelAndView cadastrarClientePOST(
             @RequestParam(name = "nome_usuario", required = true) String nome,
             @RequestParam(name = "email_usuario", required = true) String email,
-            @RequestParam(name = "cpf_usuario", required = true) String senha,
-            @RequestParam(name = "senha_usuario", required = true) String cpf,
+            @RequestParam(name = "cpf_usuario", required = true) String cpf,
+            @RequestParam(name = "senha_usuario", required = true) String senha,
             @RequestParam(name = "rua") String rua,
             @RequestParam(name = "numero", required = true) int numero,
             @RequestParam(name = "bairro", required = true) String bairro,
             @RequestParam(name = "cep", required = true) String cep,
-            @RequestParam(name = "complemento") String complemento
+            @RequestParam(name = "complemento") String complemento,
+            RedirectAttributes redirAttr
     ) {
-        String teste = "teste";
         List<Usuario> validaCpf = usuarioService.validaCpf(cpf);
         
         if(!validaCpf.isEmpty()){
-            teste = "false";
+            
+            redirAttr.addFlashAttribute("msgSucesso", "Erro ao realizar Cadastro! CPF ja existente");
+            return new ModelAndView("redirect:/cliente");
         }
         
-        Usuario usuario = new Usuario();
-
-        usuario.setNome(nome);
-        usuario.setEmail(email);
-        usuario.setSenha(senha);
-        usuario.setCpf(cpf);
-        usuario.setPerfil("Cliente");
-        usuario.setStatus(true);
-        
-        
+        Usuario usuario = new Usuario(nome,email,senha,"cliente",cpf,true);
         Usuario usuarioID = usuarioService.cadastroUsuario(usuario);
 
-        Endereco enderecoCad = new Endereco();
+        Endereco enderecoCad = new Endereco(rua,numero,bairro,cep,complemento,"Faturamento",usuarioID.getIdUsuario());
+        enderecoService.cadastroEndereco(enderecoCad);
 
-        enderecoCad.setBairro(bairro);
-        enderecoCad.setCep(cep);
-        enderecoCad.setComplemento(complemento);
-        enderecoCad.setIdUsuario(usuarioID.getIdUsuario());
-        enderecoCad.setNumero(numero);
-        enderecoCad.setRua(rua);
-        enderecoCad.setTipo("Principal");
-
-        Endereco enderecoRetorno = enderecoService.cadastroEndereco(enderecoCad);
-
-        if (enderecoRetorno != null) {
-            return new ModelAndView("redirect:cliente/login");
-        }
-
-        return new ModelAndView("redirect:cliente/login");
-
+        redirAttr.addFlashAttribute("msgSucesso", "Cadastro realizado com sucesso! Realize o login Abaixo");
+        return new ModelAndView("redirect:/cliente");
     }
     
     @PostMapping("/login")

@@ -12,6 +12,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 
 @Entity
@@ -22,18 +24,19 @@ public class Usuario {
     @Column(name = "id_usuario")
     private int idUsuario;
     
-    
+    @NotEmpty @Size(min = 5)
     @Column(name = "nome")
     private String nome;
     
-    
+    @Email @NotEmpty
     @Column(name = "email")
     private String email;
     
-    
+    @NotEmpty @Size(min = 6)
     @Column(name = "senha")
     private String senha;
     
+    @NotEmpty
     @Column(name = "cpf")
     private String cpf;
     
@@ -45,6 +48,15 @@ public class Usuario {
 
     public Usuario(int idUsuario, String nome, String email, String senha, String perfil, String cpf, boolean status) {
         this.idUsuario = idUsuario;
+        this.nome = nome;
+        this.email = email;
+        this.senha = senha;
+        this.perfil = perfil;
+        this.cpf = cpf;
+        this.status = status;
+    }
+    
+     public Usuario( String nome, String email, String senha, String perfil, String cpf, boolean status) {
         this.nome = nome;
         this.email = email;
         this.senha = senha;

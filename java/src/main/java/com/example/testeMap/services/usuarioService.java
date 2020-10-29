@@ -27,7 +27,7 @@ public class usuarioService {
     }
     
     public List<Usuario> validaCpf(String cpf) {
-        List<Usuario> valida = usuarioRepository.validaCpf(cpf);
+        List valida = usuarioRepository.validaCpf(cpf);
         return valida;
     }
     

@@ -4,6 +4,8 @@
         <meta charset='UTF-8'>
         <meta name='viewport' content='width=device-width, initial-scale=1.0'>
         <link th:href="@{/css/stylesheet.css}" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+        <script src="http://localhost:8080/js/jquery.mask.min.js"></script>
 
 
         <title>Lexian - Principal</title>
@@ -47,7 +49,7 @@
                         <label>Já é cadastrado?</label><br>
                         <label>Realize o login abaixo. </label>
                     </div>
-                    
+
                     <div id='access-user-content'>
                         <form action="cliente/login" method="POST" enctype="multipart/form-data" >
                             <div id='access-user-content-header'>
@@ -76,7 +78,7 @@
                 <div id='register-user'>
                     <form action="cliente/cadastrar" method="POST" enctype="multipart/form-data">
                         <input type="hidden" id="mensagem_retorno" th:if="${msgSucesso != null}" th:value="${msgSucesso}">
-                        
+
                         <div id='register-user-header'>
                             <label>Ainda não é cadastrado?</label><br>
                             <label>Realize agora mesmo, é simples e rápido!</label>
@@ -143,40 +145,50 @@
 
     <script>
         /*function verifyForm() {
-         var noneNeigh = document.getElementById("register-user-content-neighborhood-div").style.display
-         console.log(noneNeigh)
-         if (noneNeigh = "none") {
-         displayNoneRegister(true)
-         return false
-         }
-         }*/
+        var noneNeigh = document.getElementById("register-user-content-neighborhood-div").style.display
+        console.log(noneNeigh)
+        if (noneNeigh = "none") {
+        displayNoneRegister(true)
+        return false
+        }
+        }*/
 
         function displayNoneRegister(x) {
-            if (!x) {
-                document.getElementById("register-user-content-passw-all").style.display = "none"
-                document.getElementById("register-user-content-address").style.display = "none"
-                document.getElementById("register-user-content-neighborhood-div").style.display = "none"
-                document.getElementById("register-user-content-complement-div").style.display = "none"
-                document.getElementById("register-user-content-zip-div").style.display = "none"
-            } else {
-                document.getElementById("register-user-content-passw-all").style.display = "flex"
-                document.getElementById("register-user-content-address").style.display = "flex"
-                document.getElementById("register-user-content-neighborhood-div").style.display = "block"
-                document.getElementById("register-user-content-complement-div").style.display = "block"
-                document.getElementById("register-user-content-zip-div").style.display = "block"
-            }
+        if (!x) {
+        document.getElementById("register-user-content-passw-all").style.display = "none"
+        document.getElementById("register-user-content-address").style.display = "none"
+        document.getElementById("register-user-content-neighborhood-div").style.display = "none"
+        document.getElementById("register-user-content-complement-div").style.display = "none"
+        document.getElementById("register-user-content-zip-div").style.display = "none"
+        } else {
+        document.getElementById("register-user-content-passw-all").style.display = "flex"
+        document.getElementById("register-user-content-address").style.display = "flex"
+        document.getElementById("register-user-content-neighborhood-div").style.display = "block"
+        document.getElementById("register-user-content-complement-div").style.display = "block"
+        document.getElementById("register-user-content-zip-div").style.display = "block"
+        }
 
         }
 
         function verificaRetorno() {
 
-            const verify = document.getElementById("mensagem_retorno").value;
+        const verify = document.getElementById("mensagem_retorno").value;
 
-            if (verify == "Cadastrado") {
-                alert("Usúario cadastrado com sucesso! Realize o login abaixo. ")
-            }
+        if (verify == "Cadastrado") {
+        alert("Usúario cadastrado com sucesso! Realize o login abaixo. ")
+        }
 
         }
+
+        $('#register-user-content-cpf').mask('000.000.000-00', {reverse: true});
+        $('#register-user-content-zip').mask('00000-000', {reverse: true});
+
+        $('#register-user-content-email').mask("A", {
+        translation: {
+        "A": { pattern: /[\w@\-.+]/, recursive: true }
+        }
+        });
+
 
         verificaRetorno()
 

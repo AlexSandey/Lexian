@@ -55,6 +55,16 @@ public class Endereco {
         this.idUsuario = idUsuario;
     }
     
+     public Endereco(String rua, int numero, String bairro, String cep, String complemento, String tipo, int idUsuario) {
+        this.rua = rua;
+        this.numero = numero;
+        this.bairro = bairro;
+        this.cep = cep;
+        this.complemento = complemento;
+        this.tipo = tipo;
+        this.idUsuario = idUsuario;
+    }
+    
 
 
     public int getIdEndereco() {
