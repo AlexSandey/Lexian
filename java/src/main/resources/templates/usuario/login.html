@@ -47,8 +47,9 @@
                         <label>Já é cadastrado?</label><br>
                         <label>Realize o login abaixo. </label>
                     </div>
+                    
                     <div id='access-user-content'>
-                        <form action="usuario/login" method="POST" enctype="multipart/form-data" >
+                        <form action="cliente/login" method="POST" enctype="multipart/form-data" >
                             <div id='access-user-content-header'>
                                 <label>Dados Pessoais:</label>
                             </div>
@@ -73,9 +74,9 @@
                 </div>
 
                 <div id='register-user'>
-                    <form action="usuario/cadastrar" method="POST" enctype="multipart/form-data" th:object="${retorno}">
+                    <form action="cliente/cadastrar" method="POST" enctype="multipart/form-data">
                         <input type="hidden" id="mensagem_retorno" th:if="${msgSucesso != null}" th:value="${msgSucesso}">
-                        <input type="hidden" id="mensagem_retorno" th:if="${produtos != null}" th:value="${produtos}">
+                        
                         <div id='register-user-header'>
                             <label>Ainda não é cadastrado?</label><br>
                             <label>Realize agora mesmo, é simples e rápido!</label>

@@ -26,6 +26,11 @@ public class usuarioService {
         return usuario;
     }
     
+    public List<Usuario> validaCpf(String cpf) {
+        List<Usuario> valida = usuarioRepository.validaCpf(cpf);
+        return valida;
+    }
+    
     public Usuario logarUsuario(String email, String senha) throws ServiceExc{
         Usuario usuario = usuarioRepository.BuscaLogin(email, senha);
         return usuario;
