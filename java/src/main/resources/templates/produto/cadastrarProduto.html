@@ -6,6 +6,10 @@
     <link th:href="@{/css/style.css}" rel="stylesheet" />
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+    <script src="http://localhost:8080/js/jquery.mask.min.js"></script>
 
 
     <title>Cadastro de Produto</title>
@@ -49,7 +53,7 @@
                 <input type="text" id="valor_produto" name="valor_produto" placeholder="Valor do Produto"><br>
                 <div id="radio-ativo">
                     <label>Cadastrar Ativo?</label><br>
-                    <label>Sim</label> <input type="radio" name="cadastro_ativo" value="true"><br>
+                    <label>Sim</label> <input type="radio" name="cadastro_ativo" value="true" checked><br>
                     <label>Não</label> <input type="radio" name="cadastro_ativo" value="false">
                 </div>
 
@@ -106,5 +110,74 @@
 
 
 </body>
+
+<script>
+
+        
+        $('#valor_produto').mask('000.000.000,00', {reverse: true});
+        
+        $( "#campos-cadastro" ).validate({
+        
+        rules: {
+            nome_produto: {
+                required: true,
+                minlength: 5
+            },
+            qtde_produto: {
+                required:true,
+                digits:true,
+                min:0
+            },
+            marca_produto: {
+                required:true,
+                minlength:6
+            },
+            cadastro_ativo:{
+                required:true
+            },
+            categoria_produto: {
+                required:true
+            },
+            descricao_produto: {
+                required:true,
+                minlength:10
+            },
+            valor_produto:{
+                required:true,
+            }
+        },
+        messages:{
+            nome_produto: {
+                required: "Digite o nome do produto",
+                minlength: "Nome deve conter no minimo 5 digitos"
+            },
+            qtde_produto: {
+                required:"Insira a quantidade",
+                digits:"Apenas Numeros",
+                min:"Insira valor acima de 0"
+            },
+            marca_produto: {
+                required:"Insira a Marca",
+                minlength:"No minimo 6 digitos"
+            },
+            cadastro_ativo:{
+                required:"Selecione o status"
+            },
+            categoria_produto:{
+                required:"Selecione a categoria"
+            },
+            descricao_produto: {
+                required:"Insira a descrição",
+                minlength:"No minimo 10 digitos"
+            },
+            valor_produto:{
+                required:"Insira o valor do produto"
+            }
+            }
+        });
+        
+
+    </script>
+
 
 </html>

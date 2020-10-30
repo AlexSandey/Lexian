@@ -52,7 +52,7 @@ public class produtoController {
         @RequestParam(name = "marca_produto", required = true) String marca,
         @RequestParam(name = "categoria_produto", required = true) String categoria,
         @RequestParam(name = "descricao_produto", required = true) String descricao,
-        @RequestParam(name = "valor_produto", required = true) float valor,
+        @RequestParam(name = "valor_produto", required = true) String valor,
         @RequestParam(name = "cadastro_ativo", required = true) boolean ativo,
         @RequestParam(required = true) MultipartFile imagem1,
         @RequestParam(required = true) MultipartFile imagem2,
@@ -87,19 +87,22 @@ public class produtoController {
         Path path5 = Paths.get(folderIMG + nameImagem5);
 
         
-        Files.write(path1, bytes1);
-        Files.write(path2, bytes2);
-        Files.write(path3, bytes3);
-        Files.write(path4, bytes4);
-        Files.write(path5, bytes5);
+//        Files.write(path1, bytes1);
+//        Files.write(path2, bytes2);
+//        Files.write(path3, bytes3);
+//        Files.write(path4, bytes4);
+//        Files.write(path5, bytes5);
         
         Produto produto =  new Produto();
+        
+        Float valorConvertido = Float.parseFloat(valor.replace(".", "").replace(",", "."));
+        
         produto.setNomeProduto(nomeProduto);
         produto.setQtde(qtde);   
         produto.setMarca(marca);
         produto.setCategoria(categoria);
         produto.setDescricao(descricao);
-        produto.setValor(valor);
+        produto.setValor(valorConvertido);
         produto.setAtivo(ativo);
         produto.setImagem1("http://localhost:8080/" + folderIMG_DB + nameImagem1);
         produto.setImagem2("http://localhost:8080/" + folderIMG_DB + nameImagem2);

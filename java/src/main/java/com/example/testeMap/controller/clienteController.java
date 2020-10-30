@@ -97,7 +97,7 @@ public class clienteController {
             enderecoService.cadastroEndereco(enderecoCad);
         }
         
-        if(!"".equals(rua_entrega) && !"".equals(bairro_entrega) && !"".equals(cep_entrega)){
+        if(verify==0){
             Endereco enderecoCad = new Endereco(rua_entrega,numero_entrega,bairro_entrega,cep_entrega,complemento_entrega,"Entrega",usuarioID.getIdUsuario());
             enderecoService.cadastroEndereco(enderecoCad);
         }
