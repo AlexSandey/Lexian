@@ -10,8 +10,12 @@ import com.example.testeMap.model.entidades.Usuario;
 import com.example.testeMap.services.ServiceExc;
 import com.example.testeMap.services.enderecoService;
 import com.example.testeMap.services.usuarioService;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import javax.servlet.http.HttpSession;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -59,19 +63,45 @@ public class clienteController {
             @RequestParam(name = "bairro", required = true) String bairro,
             @RequestParam(name = "cep", required = true) String cep,
             @RequestParam(name = "complemento") String complemento,
+            @RequestParam(name = "verify-revenues-choice") int verify,
+            @RequestParam(name = "rua_entrega") String rua_entrega,
+            @RequestParam(name = "numero_entrega") int numero_entrega,
+            @RequestParam(name = "bairro_entrega") String bairro_entrega,
+            @RequestParam(name = "cep_entrega") String cep_entrega,
+            @RequestParam(name = "complemento_entrega") String complemento_entrega,
             RedirectAttributes redirAttr
-    ) {
+    ) throws NoSuchAlgorithmException {
+
         List<Usuario> validaCpf = usuarioService.validaCpf(cpf);
         
         if(!validaCpf.isEmpty()){
-            
             redirAttr.addFlashAttribute("msgSucesso", "Erro ao realizar Cadastro! CPF ja existente");
             return new ModelAndView("redirect:/cliente");
         }
         
-        Usuario usuario = new Usuario(nome,email,senha,"cliente",cpf,true);
+                
+        MessageDigest md = MessageDigest.getInstance("MD5");
+        
+        byte[] messageDigest = md.digest(senha.getBytes());
+        
+        BigInteger number = new BigInteger(1, messageDigest);
+        
+        String senha_hash = number.toString(16);
+        
+        
+        Usuario usuario = new Usuario(nome,email,senha_hash,"Cliente",cpf,true);
         Usuario usuarioID = usuarioService.cadastroUsuario(usuario);
-
+        
+        if(verify == 1){
+            Endereco enderecoCad = new Endereco(rua,numero,bairro,cep,complemento,"Entrega",usuarioID.getIdUsuario());
+            enderecoService.cadastroEndereco(enderecoCad);
+        }
+        
+        if(!"".equals(rua_entrega) && !"".equals(bairro_entrega) && !"".equals(cep_entrega)){
+            Endereco enderecoCad = new Endereco(rua_entrega,numero_entrega,bairro_entrega,cep_entrega,complemento_entrega,"Entrega",usuarioID.getIdUsuario());
+            enderecoService.cadastroEndereco(enderecoCad);
+        }
+        
         Endereco enderecoCad = new Endereco(rua,numero,bairro,cep,complemento,"Faturamento",usuarioID.getIdUsuario());
         enderecoService.cadastroEndereco(enderecoCad);
 
@@ -85,21 +115,85 @@ public class clienteController {
             @RequestParam(name = "senha", required = true) String senha,
             HttpSession session,
             RedirectAttributes redirAttr
-    ) throws ServiceExc {
-
-        Usuario usuario = usuarioService.logarUsuario(email, senha);
+    ) throws ServiceExc, NoSuchAlgorithmException {
+        
+        MessageDigest md = MessageDigest.getInstance("MD5");
+        
+        byte[] messageDigest = md.digest(senha.getBytes());
+        
+        BigInteger number = new BigInteger(1, messageDigest);
+        
+        String senha_hash = number.toString(16);
+        
+        Usuario usuario = usuarioService.logarUsuario(email, senha_hash);
         
         String verificaCliente = usuario.getPerfil();
         
         if(verificaCliente.equals("Cliente")){
             session.setAttribute("usuario", usuario);
-            return new ModelAndView("redirect:cliente/painel");
+            return new ModelAndView("redirect:/cliente/painel");
         }
         
         redirAttr.addFlashAttribute("msgErro", "erroLogin");
         
-        return new ModelAndView("redirect:cliente/login");
+        return new ModelAndView("redirect:/cliente/login");
 
     }
     
+    @GetMapping("/painel")
+    public ModelAndView painelCliente(
+        HttpSession session
+    ) {
+        Usuario usuarioSessao =  (Usuario) session.getAttribute("usuario");
+        
+        ResponseEntity<Usuario> usuarioBancoResp = usuarioService.filtroID(usuarioSessao.getIdUsuario());
+        
+        Usuario usuarioBanco = usuarioBancoResp.getBody();
+        
+        
+        Endereco enderecoBanco = enderecoService.filtroTipoAndId("Faturamento", usuarioSessao.getIdUsuario());
+        
+        
+        session.removeAttribute("usuario");
+        session.removeAttribute("endereco");
+       
+        session.setAttribute("usuario", usuarioBanco);
+        session.setAttribute("endereco", enderecoBanco);
+        
+        return new ModelAndView("usuario/painel").addObject(session);
+
+    }
+    
+    @PostMapping("/atualizar")
+    public ModelAndView atualizarNomeEFaturamentoPOST(
+            @RequestParam(name = "nome_cliente", required = true) String nome,
+            
+            @RequestParam(name = "rua_cliente") String rua,
+            @RequestParam(name = "numero_cliente", required = true) int numero,
+            @RequestParam(name = "bairro_cliente", required = true) String bairro,
+            @RequestParam(name = "cep_cliente", required = true) String cep,
+            @RequestParam(name = "complemento_cliente") String complemento,
+
+            HttpSession session
+    ) {
+        session.removeAttribute("mensagem");
+        Usuario usuario = (Usuario) session.getAttribute("usuario");
+        
+        ResponseEntity usuarioResp = usuarioService.updateUserJustNome(usuario.getIdUsuario(), nome);
+        
+        Usuario usuarioReturn = (Usuario) usuarioResp.getBody();
+        
+        
+        if(usuarioReturn.getIdUsuario() == usuario.getIdUsuario()){
+            session.setAttribute("mensagem", "Atualizado com Sucesso");
+        }else{
+            session.setAttribute("mensagem", "Falha no Cadastro");
+        }
+
+        return new ModelAndView("redirect:/cliente/painel");
+    }
+    
+    
 }
+
+

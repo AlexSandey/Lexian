@@ -62,7 +62,17 @@ public class usuarioService {
                     return ResponseEntity.ok().body(updated);
                 }).orElse(ResponseEntity.notFound().build());
     }
-    
+        public ResponseEntity updateUserJustNome(int id,
+             String nome) {
+        return usuarioRepository.findById(id)
+                .map(usuarioUpdate -> {
+                    usuarioUpdate.setIdUsuario(id);
+                    usuarioUpdate.setNome(nome);
+
+                    Usuario updated = usuarioRepository.save(usuarioUpdate);
+                    return ResponseEntity.ok().body(updated);
+                }).orElse(ResponseEntity.notFound().build());
+    }
     public List<Usuario> filtroNome(String nome) {
         return usuarioRepository.filtroNome(nome);
     }

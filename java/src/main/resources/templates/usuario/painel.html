@@ -1,0 +1,188 @@
+<html lang='pt-br'>
+
+    <head>
+        <meta charset='UTF-8'>
+        <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+        <link th:href="@{/css/stylesheet.css}" rel="stylesheet"/>
+        <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+        <script src="http://localhost:8080/js/jquery.mask.min.js"></script>
+        <script src="http://jqueryvalidation.org/files/dist/jquery.validate.js"></script>
+
+
+        <title>Lexian - Principal</title>
+    </head>
+
+    <body>
+
+        <header>
+            <div id='bottons_up'>
+                <div id='login_and_register'>
+                    <button id='login_button' class='header_bottons'>LOGIN</button>
+                    <button id='register_botton' class='header_bottons'>REGISTRE-SE</button>
+                </div>
+                <div id='shopping-carts'>
+                    <button id='shopping-carts_botton' class='header_bottons'>CARRINHO</button>
+                </div>
+            </div>
+            <div id='search'>
+
+                <label for="search_input">LEXIAN</label>
+
+                <input type="text" placeholder="" id='search_input'>
+
+                <div id='search_button'>
+                    <img src="images/search_button.png" alt="">
+                </div>
+
+            </div>
+        </header>
+        <input type="hidden" name="mensagem_alert" id="mensagem_alert" th:if="${session['mensagem'] != null}" th:value="${session['mensagem']}"  > 
+        <div id='content'>
+            <div id='painel-cliente-div'>
+                <div id='painel-cliente-header'>
+                    <label> Painel do Cliente </label>
+                </div>
+
+                <div id='painel-cliente-content'>
+
+                    <div id='painel-cliente-menu-div'>
+                        <div id="painel-cliente-menu">
+                            <button class="button-painel-cliente-menu" id='painel-cliente-menu-atualizar-cadastro' onclick="alteraTela('cadastro')">
+                                Atualizar Cadastro
+                            </button>
+                        </div>
+                        <div id="painel-cliente-menu">
+                            <button class="button-painel-cliente-menu" id='painel-cliente-menu-meus-pedidos' onclick="alteraTela('senha')">
+                                Mudar Senha
+                            </button> 
+                        </div>
+                        <div id="painel-cliente-menu">
+                            <button class="button-painel-cliente-menu" id='painel-cliente-menu-endereco-entrega' onclick="alteraTela('endereco')">
+                                Endereços de Entrega
+                            </button>
+                        </div>
+                        <div id="painel-cliente-menu">
+                            <button class="button-painel-cliente-menu" id='painel-cliente-menu-meus-pedidos' onclick="alteraTela('pedidos')">
+                                Meus Pedidos
+                            </button> 
+                        </div>
+
+                    </div>
+
+                    <div id='painel-cliente-infos-view'>
+
+                        <div id='painel-cliente-infos-view-atualizar-cadastro' th:object="${session}">
+                            <form id="formLogin" action="/cliente/atualizar" method="POST" enctype="multipart/form-data" >
+                                <div id='painel-cliente-infos-view-atualizar-cadastro-dados-cadastrais'>
+                                    <div id='painel-cliente-infos-view-atualizar-cadastro-dados-cadastrais-header'>
+                                        <label>Dados Cadastrais</label>
+                                    </div>
+                                    <div id='painel-cliente-infos-view-atualizar-cadastro-dados-cadastrais-content'>
+                                        <div>
+                                            <label for="nome_cliente">Nome: </label><input type="text" name="nome_cliente" id="nome_cliente" th:value="${session['usuario'].nome}">
+                                        </div>
+                                        <div>
+                                            <label for="email_cliente">Email: </label><input type="text" name="email_cliente" id="email_cliente" value="teste@hotmail.com" th:value="${session['usuario'].email}" disabled>
+
+                                        </div>
+                                        <div>
+                                            <label for="cpf_cliente">CPF: </label><input type="text" name="cpf_cliente" id="cpf_cliente"  th:value="${session['usuario'].cpf}"  disabled>
+                                        </div>
+                                    </div> 
+                                </div>
+
+                                <div id='painel-cliente-infos-view-atualizar-cadastro-endereco-faturamento'>
+                                    <div id='painel-cliente-infos-view-atualizar-cadastro-dados-cadastrais-header'>
+                                        <label>Endereço de Faturamento</label>
+                                    </div>
+                                    <div id='painel-cliente-infos-view-atualizar-cadastro-dados-cadastrais-content'>
+                                        <div>
+                                            <label for="rua_cliente">Rua: </label><input type="text" name="rua_cliente" id="rua_cliente" th:value="${session['endereco'].rua}"  >
+                                        </div>
+                                        <div>
+                                            <label for="numero_cliente">Número: </label><input type="text" name="numero_cliente" id="numero_cliente" th:value="${session['endereco'].numero}" >
+
+                                        </div>
+                                        <div>
+                                            <label for="bairro_cliente">Bairro: </label><input type="text" name="bairro_cliente" id="bairro_cliente" th:value="${session['endereco'].bairro}" >
+                                        </div>
+                                        <div>
+                                            <label for="cep_cliente">CEP: </label><input type="text" name="cep_cliente" id="cep_cliente" th:value="${session['endereco'].cep}" >
+                                        </div>  
+                                        <div>
+                                            <label for="complemento_cliente">Complemento: </label><input type="text" name="complemento_cliente" id="complemento_cliente" th:value="${session['endereco'].complemento}" >
+                                        </div>  
+                                    </div>
+                                </div>
+                                <input type="submit" name="submit_atualizacao" id="submit_atualizacao" value="Atualizar Cadastro"></input>
+                            </form>
+                        </div>
+
+                        <div id='painel-cliente-infos-view-atualizar-endereco-entrega'  style="display: none">
+                            <form id="formLogin" action="/cliente/atualizar" method="POST" enctype="multipart/form-data" >
+                                <div id='painel-cliente-infos-view-atualizar-cadastro-dados-cadastrais'>
+                                    <div id='painel-cliente-infos-view-atualizar-cadastro-dados-cadastrais-header'>
+                                        <label>Dados Cadastrais</label>
+                                    </div>
+                                    <div id='painel-cliente-infos-view-atualizar-cadastro-dados-cadastrais-content'>
+                                        <div>
+                                            <label for="nome_cliente">Nome: </label><input type="text" name="nome_cliente" id="nome_cliente" th:value="${session['usuario'].nome}">
+                                        </div>
+                                        <div>
+                                            <label for="email_cliente">Email: </label><input type="text" name="email_cliente" id="email_cliente" value="teste@hotmail.com" th:value="${session['usuario'].email}" disabled>
+
+                                        </div>
+                                        <div>
+                                            <label for="cpf_cliente">CPF: </label><input type="text" name="cpf_cliente" id="cpf_cliente"  th:value="${session['usuario'].cpf}"  disabled>
+                                        </div>
+                                    </div> 
+                                </div>
+                            </form>
+                        </div>
+                        <div id='painel-cliente-infos-view-atualizar-mudar-senha' style="display: none"></div>
+                        <div id='painel-cliente-infos-view-atualizar-pedidos'  style="display: none"></div>
+                    </div>
+
+                </div>
+
+
+            </div>
+    </body>
+
+    <script>
+        
+           function imprimirMensagem(){
+               const mensagem = document.getElementById("mensagem_alert").value
+               if(mensagem){
+                   alert(mensagem)
+               }
+           }
+           
+           function alteraTela(tela){
+               if(tela=="cadastro"){
+                   document.getElementById("painel-cliente-infos-view-atualizar-cadastro").style.display = "block"
+                   document.getElementById("painel-cliente-infos-view-atualizar-endereco-entrega").style.display = "none"
+                   document.getElementById("painel-cliente-infos-view-atualizar-mudar-senha").style.display = "none"
+                   document.getElementById("painel-cliente-infos-view-atualizar-pedidos").style.display = "none"
+               }else if(tela=="endereco"){
+                   document.getElementById("painel-cliente-infos-view-atualizar-cadastro").style.display = "none"
+                   document.getElementById("painel-cliente-infos-view-atualizar-endereco-entrega").style.display = "block"
+                   document.getElementById("painel-cliente-infos-view-atualizar-mudar-senha").style.display = "none"
+                   document.getElementById("painel-cliente-infos-view-atualizar-pedidos").style.display = "none"
+               }else if(tela=="senha"){
+                   document.getElementById("painel-cliente-infos-view-atualizar-cadastro").style.display = "none"
+                   document.getElementById("painel-cliente-infos-view-atualizar-endereco-entrega").style.display = "none"
+                   document.getElementById("painel-cliente-infos-view-atualizar-mudar-senha").style.display = "block"
+                   document.getElementById("painel-cliente-infos-view-atualizar-pedidos").style.display = "none"
+               }else if(tela=="pedidos"){
+                   document.getElementById("painel-cliente-infos-view-atualizar-cadastro").style.display = "none"
+                   document.getElementById("painel-cliente-infos-view-atualizar-endereco-entrega").style.display = "none"
+                   document.getElementById("painel-cliente-infos-view-atualizar-mudar-senha").style.display = "none"
+                   document.getElementById("painel-cliente-infos-view-atualizar-pedidos").style.display = "block"
+               }
+           }
+           
+           imprimirMensagem()
+    </script>
+
+</html>

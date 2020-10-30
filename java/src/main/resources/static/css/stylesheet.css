@@ -428,7 +428,13 @@ header{
 
 #register-user-content-passw-div{
     margin-left: 0;
+    width: 50%;
 }
+
+#register-user-content-passw-confirm-div{
+    width: 50%;
+}
+
 #register-user-content-passw{
     margin: 15px 0 ;
     padding: 7px;
@@ -467,3 +473,152 @@ header{
     display: flex;
 }
 
+#register-revenues-address-div{
+    border: 2px #47329a solid;
+    padding: 5px;
+    border-radius: 10px;
+    margin-bottom: 50px
+}
+
+#register-revenues-address-label{
+    text-align: center;
+    font-family: Rokkit-Regular;
+    font-size: 15pt;
+    color: #fff;
+    margin-top: 30px
+}
+
+#register-revenues-address-label label{
+    background-color: #47329a;
+    border-radius: 10px 10px 0px 0;
+    padding: 5px;
+
+}
+
+#verify-revenues-choice-div{
+    display: flex
+}
+
+#verify-revenues-choice-div{
+    border: 2px #47329a solid;
+    padding: 5px;
+    border-radius: 10px;
+    margin-bottom: 15pxpx
+}
+
+#painel-cliente-header{
+    padding: 10px 0;
+    color: #45495a;
+    font-family: Rokkit-Regular;
+    font-size: 18pt;
+    background-color: #87aef8;
+    width: 100%;
+    border-radius: 10px 10px 10px 10px;
+}
+#painel-cliente-header label{
+    padding: 0 30px ;
+}
+
+#painel-cliente-content{
+    margin-top: 50px;
+    height: 800px;
+    display: flex;
+}
+
+#painel-cliente-menu-div{
+    width: 30%;
+    display: inline;
+    background-color: #87aef8;
+    border-radius: 10px 0 0 10px;
+}
+
+#painel-cliente-infos-view{
+    width: 70%;
+    border-radius: 0 10px 10px 0 ;
+    background-color: #4448AA;
+    display: flex;
+}
+
+#painel-cliente-menu{
+    display: flex;
+}
+
+.button-painel-cliente-menu{
+    border: none;
+    width: 95%;
+    height: 100px;
+    margin-top: 30px;
+    border-radius: 10px;
+    cursor: pointer;
+    color: #fff;
+    font-family: Rokkit-Regular;
+    font-size: 18pt;
+    background-color: #4448AA;
+}
+
+#painel-cliente-infos-view-atualizar-cadastro{
+    width: 90%;
+    margin-top: 50px;
+    
+}
+
+#painel-cliente-infos-view-atualizar-cadastro-endereco-faturamento{
+    margin-top: 100px;
+}
+
+#painel-cliente-infos-view-atualizar-cadastro-dados-cadastrais-header{
+    margin-bottom: 30px;
+}
+#painel-cliente-infos-view-atualizar-cadastro-dados-cadastrais-header label{
+    padding: 5px 30px 5px 80px;
+    color: #45495a;
+    font-family: Rokkit-Regular;
+    font-size: 15pt;
+    background-color: #87aef8;
+    width: 100%;
+    border-radius: 10px 10px 10px 10px;
+}
+
+#painel-cliente-infos-view-atualizar-cadastro-dados-cadastrais-content{
+    width: 100%;
+    border-radius: 10px;
+    background-color: #87aef8;
+    padding-bottom: 30px;
+
+}
+
+#painel-cliente-infos-view-atualizar-cadastro-dados-cadastrais-content div{
+    padding: 10px 0 10px 15px;
+    color: #45495a;
+    font-family: Rokkit-Regular;
+    font-size: 15pt;
+
+}
+
+#painel-cliente-infos-view-atualizar-cadastro-dados-cadastrais-content input{
+    border: none;
+    width: 70%;
+    padding: 5px;
+    border-radius: 10px;
+    margin-left: 20px;
+    font-family: Rokkit-Regular;
+    font-size: 15pt;
+    color: #45495a;
+}
+#submit_atualizacao input{
+    border: none;
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    margin-right: 30px;
+    font-family: Rokkit-Regular;
+    font-size: 15pt;
+    color: #fff;
+    background-color: #47329a;
+    margin-top: 20px;
+    cursor: pointer;
+}
+    
+#painel-cliente-infos-view-atualizar-endereco-entrega{
+    display: none
+}

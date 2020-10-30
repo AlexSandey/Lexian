@@ -50,8 +50,11 @@ public class enderecoService {
     public List<Endereco> filtroCep(String nome) {
         return enderecoRepository.filtroCEP(nome);
     }
-     public List<Endereco> filtroCpf(String tipo) {
+     public List<Endereco> filtroTipo(String tipo) {
         return enderecoRepository.filtroTipo(tipo);
+    }
+      public Endereco filtroTipoAndId(String tipo, int id) {
+        return enderecoRepository.filtroTipoAndId(tipo, id);
     }
     
     

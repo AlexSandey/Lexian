@@ -3,9 +3,10 @@
     <head>
         <meta charset='UTF-8'>
         <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-        <link th:href="@{/css/stylesheet.css}" rel="stylesheet" />
+        <link th:href="@{/css/stylesheet.css}" rel="stylesheet"/>
         <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
         <script src="http://localhost:8080/js/jquery.mask.min.js"></script>
+        <script src="http://jqueryvalidation.org/files/dist/jquery.validate.js"></script>
 
 
         <title>Lexian - Principal</title>
@@ -51,7 +52,7 @@
                     </div>
 
                     <div id='access-user-content'>
-                        <form action="cliente/login" method="POST" enctype="multipart/form-data" >
+                        <form id="formLogin" action="cliente/login" method="POST" enctype="multipart/form-data" >
                             <div id='access-user-content-header'>
                                 <label>Dados Pessoais:</label>
                             </div>
@@ -76,7 +77,7 @@
                 </div>
 
                 <div id='register-user'>
-                    <form action="cliente/cadastrar" method="POST" enctype="multipart/form-data">
+                    <form id="formCadastrar" action="cliente/cadastrar" method="POST" enctype="multipart/form-data">
                         <input type="hidden" id="mensagem_retorno" th:if="${msgSucesso != null}" th:value="${msgSucesso}">
 
                         <div id='register-user-header'>
@@ -105,32 +106,74 @@
                                     <input type="password" id='register-user-content-passw' name='senha_usuario'>
                                 </div>
                                 <div id='register-user-content-passw-confirm-div'>
-                                    <label for='register-user-content-passw-confirm'>Confirmar Senha: </label><br>
-                                    <input type="password" id='register-user-content-passw-confirm'>
+                                    <label for='register-user-content-passw-confirm' >Confirmar Senha: </label><br>
+                                    <input type="password" id='register-user-content-passw-confirm' name='confirmaSenha_usuario'>
                                 </div>
                             </div>
-                            <div id='register-user-content-address'>
-                                <div id='register-user-content-street-div'>
-                                    <label for='register-user-content-street'>Rua: </label><br>
-                                    <input type="text" id='register-user-content-street' name='rua'>
-                                </div>
-                                <div id='register-user-content-number-div'>
-                                    <label for='register-user-content-number'>N°: </label><br>
-                                    <input type="text" id='register-user-content-number' name='numero'>
-                                </div>
+                            <div id='register-revenues-address-label'>
+                                <label>Endereço de Faturamento</label>
                             </div>
+                            <div id='register-revenues-address-div'>
+                                <div id='verify-revenues-choice-div'>
+                                    <div>
+                                        <label>Deseja que o endereço de faturamento seja o mesmo da entrega?</label><br>
+                                        Sim<input type ='radio' value='1' name='verify-revenues-choice'>
+                                        Não<input type ='radio' value='0' name='verify-revenues-choice' checked>
+                                    </div>
+                                </div>
 
-                            <div id='register-user-content-neighborhood-div'>
-                                <label for='register-user-content-neighborhood'>Bairro: </label><br>
-                                <input type="text" id='register-user-content-neighborhood' name='bairro'>
+                                <div id='register-user-content-address'>
+                                    <div id='register-user-content-street-div'>
+                                        <label for='register-user-content-street'>Rua: </label><br>
+                                        <input type="text" id='register-user-content-street' name='rua'>
+                                    </div>
+                                    <div id='register-user-content-number-div'>
+                                        <label for='register-user-content-number'>N°: </label><br>
+                                        <input type="text" id='register-user-content-number' name='numero'>
+                                    </div>
+                                </div>
+
+                                <div id='register-user-content-neighborhood-div'>
+                                    <label for='register-user-content-neighborhood'>Bairro: </label><br>
+                                    <input type="text" id='register-user-content-neighborhood' name='bairro'>
+                                </div>
+                                <div id='register-user-content-complement-div'>
+                                    <label for='register-user-content-complement'>Complemento: </label><br>
+                                    <input type="text" id='register-user-content-complement' name='complemento'>
+                                </div>
+                                <div id='register-user-content-zip-div'>
+                                    <label for='register-user-content-zip'>CEP: </label><br>
+                                    <input type="text" id='register-user-content-zip' name='cep'>
+                                </div>    
                             </div>
-                            <div id='register-user-content-complement-div'>
-                                <label for='register-user-content-complement'>Complemento: </label><br>
-                                <input type="text" id='register-user-content-complement' name='complemento'>
+                            
+                            <div id='register-revenues-address-label'>
+                                <label>Endereço de Entrega</label>
                             </div>
-                            <div id='register-user-content-zip-div'>
-                                <label for='register-user-content-zip'>CEP: </label><br>
-                                <input type="text" id='register-user-content-zip' name='cep'>
+                            <div id='register-revenues-address-div'>
+                                <div id='register-user-content-address'>
+                                    <div id='register-user-content-street-div'>
+                                        <label for='register-user-content-street'>Rua: </label><br>
+                                        <input type="text" id='register-user-content-street' name='rua_entrega'>
+                                    </div>
+                                    <div id='register-user-content-number-div'>
+                                        <label for='register-user-content-number'>N°: </label><br>
+                                        <input type="text" id='register-user-content-number' name='numero_entrega'>
+                                    </div>
+                                </div>
+
+                                <div id='register-user-content-neighborhood-div'>
+                                    <label for='register-user-content-neighborhood'>Bairro: </label><br>
+                                    <input type="text" id='register-user-content-neighborhood' name='bairro_entrega'>
+                                </div>
+                                <div id='register-user-content-complement-div'>
+                                    <label for='register-user-content-complement'>Complemento: </label><br>
+                                    <input type="text" id='register-user-content-complement' name='complemento_entrega'>
+                                </div>
+                                <div id='register-user-content-zip-div'>
+                                    <label for='register-user-content-zip'>CEP: </label><br>
+                                    <input type="text" id='register-user-content-zip' name='cep_entrega'>
+                                </div>    
                             </div>
                             <input type="submit" id='register-user-content-button' value="Cadastrar"></input>
 
@@ -145,38 +188,38 @@
 
     <script>
         /*function verifyForm() {
-        var noneNeigh = document.getElementById("register-user-content-neighborhood-div").style.display
-        console.log(noneNeigh)
-        if (noneNeigh = "none") {
-        displayNoneRegister(true)
-        return false
-        }
-        }*/
+         var noneNeigh = document.getElementById("register-user-content-neighborhood-div").style.display
+         console.log(noneNeigh)
+         if (noneNeigh = "none") {
+         displayNoneRegister(true)
+         return false
+         }
+         }*/
 
         function displayNoneRegister(x) {
-        if (!x) {
-        document.getElementById("register-user-content-passw-all").style.display = "none"
-        document.getElementById("register-user-content-address").style.display = "none"
-        document.getElementById("register-user-content-neighborhood-div").style.display = "none"
-        document.getElementById("register-user-content-complement-div").style.display = "none"
-        document.getElementById("register-user-content-zip-div").style.display = "none"
-        } else {
-        document.getElementById("register-user-content-passw-all").style.display = "flex"
-        document.getElementById("register-user-content-address").style.display = "flex"
-        document.getElementById("register-user-content-neighborhood-div").style.display = "block"
-        document.getElementById("register-user-content-complement-div").style.display = "block"
-        document.getElementById("register-user-content-zip-div").style.display = "block"
-        }
+            if (!x) {
+                document.getElementById("register-user-content-passw-all").style.display = "none"
+                document.getElementById("register-user-content-address").style.display = "none"
+                document.getElementById("register-user-content-neighborhood-div").style.display = "none"
+                document.getElementById("register-user-content-complement-div").style.display = "none"
+                document.getElementById("register-user-content-zip-div").style.display = "none"
+            } else {
+                document.getElementById("register-user-content-passw-all").style.display = "flex"
+                document.getElementById("register-user-content-address").style.display = "flex"
+                document.getElementById("register-user-content-neighborhood-div").style.display = "block"
+                document.getElementById("register-user-content-complement-div").style.display = "block"
+                document.getElementById("register-user-content-zip-div").style.display = "block"
+            }
 
         }
 
         function verificaRetorno() {
-
-        const verify = document.getElementById("mensagem_retorno").value;
-
-        if (verify == "Cadastrado") {
-        alert("Usúario cadastrado com sucesso! Realize o login abaixo. ")
-        }
+            const verify = 1
+            //const verify = document.getElementById("mensagem_retorno").value;
+                
+            if (verify == "Cadastrado") {
+                alert("Usúario cadastrado com sucesso! Realize o login abaixo. ")
+            }
 
         }
 
@@ -184,15 +227,114 @@
         $('#register-user-content-zip').mask('00000-000', {reverse: true});
 
         $('#register-user-content-email').mask("A", {
-        translation: {
-        "A": { pattern: /[\w@\-.+]/, recursive: true }
-        }
+            translation: {
+                "A": {pattern: /[\w@\-.+]/, recursive: true}
+            }
         });
 
 
         verificaRetorno()
 
         displayNoneRegister(true)
+        
+         $( "#formLogin" ).validate({
+        rules: {
+            email: {
+                required: true,
+                email:true
+            },
+            senha: {
+                required:true,
+                minlength:6
+            }
+        },
+        messages:{
+            email: {
+                required: "Invalido",
+                email: "email invalido"
+            },
+            senha: {
+                required:"Invalido",
+                minlength:"Minimo de 6 digitos "
+            }
+        }
+        });
+
+        $( "#formCadastrar" ).validate({
+        rules: {
+            nome_usuario:{
+                required: true,
+                minlength:5
+            },
+            email_usuario:{
+                required:true,
+                email:true
+            },
+            cpf_usuario:{
+                required:true,
+                minlength:14
+            },
+            senha_usuario:{
+                required:true,
+                minlength:6
+            },
+            confirmaSenha_usuario:{
+                equalTo:"#register-user-content-passw"
+            },
+            rua:{
+                required:true
+            },
+            numero:{
+                required:true,
+                digits:true
+            },
+            bairro:{
+                required:true,
+                minlength:6
+            },
+            cep: {
+                minlength:9
+                
+            }
+        },
+        messages:{
+            nome_usuario:{
+                required: "Invalido",
+                minlength:"Minimo de 5 digitos "
+            },
+            email_usuario:{
+                required:"Invalido",
+                email:"Invalido"
+            },
+            cpf_usuario:{
+                required:"Invalido",
+                minlength:"Cpf Invalido",
+            },
+            senha_usuario:{
+                required:"Invalido",
+                minlength:"Minimo de 6 digitos"
+            },
+            confirmaSenha_usuario:{
+                equalTo:"Senha Diferente"
+            },
+            rua:{
+                required:"Invalido"
+            },
+            numero:{
+                required:"Invalido",
+                digits: "Apenas numeros"
+            },
+            bairro:{
+                required:"Invalido",
+                minlength:"Minimo de 6 digitos"
+            },
+            cep:{
+                minlength:"Invalido"
+            }
+        }
+        });
+
+
     </script>
 
 </html>
