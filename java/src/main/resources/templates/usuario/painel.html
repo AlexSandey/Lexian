@@ -31,12 +31,12 @@
                 <input type="text" placeholder="" id='search_input'>
 
                 <div id='search_button'>
-                    <img src="images/search_button.png" alt="">
+                    <img src="/images/search_button.png" alt="">
                 </div>
 
             </div>
         </header>
-        <input type="hidden" name="mensagem_alert" id="mensagem_alert" th:if="${session['mensagem'] != null}" th:value="${session['mensagem']}"  > 
+        <input type="hidden" name="mensagem_alert" id="mensagem_alert" th:if="${session['mensagem'] != null}" th:value="${session['mensagem']}" th:unless="${'Bem Vindo!'}" > 
         <div id='content'>
             <div id='painel-cliente-div'>
                 <div id='painel-cliente-header'>
@@ -58,13 +58,19 @@
                         </div>
                         <div id="painel-cliente-menu">
                             <button class="button-painel-cliente-menu" id='painel-cliente-menu-endereco-entrega' onclick="alteraTela('endereco')">
-                                Endereços de Entrega
+                                Adicionar Endereços de Entrega
                             </button>
                         </div>
                         <div id="painel-cliente-menu">
                             <button class="button-painel-cliente-menu" id='painel-cliente-menu-meus-pedidos' onclick="alteraTela('pedidos')">
                                 Meus Pedidos
                             </button> 
+                        </div>
+                        <div id="painel-cliente-menu" style="margin-top: 120px">
+                            <button class="button-painel-cliente-menu" id='painel-cliente-menu-meus-pedidos'
+                                    onclick="window.location.href = '/cliente/logout'">
+                                Sair
+                            </button>
                         </div>
 
                     </div>
@@ -96,6 +102,7 @@
                                         <label>Endereço de Faturamento</label>
                                     </div>
                                     <div id='painel-cliente-infos-view-atualizar-cadastro-dados-cadastrais-content'>
+                                        <input type="hidden" name="idEndereco_cliente" id="idEndereco_cliente" th:value="${session['endereco'].idEndereco}" >
                                         <div>
                                             <label for="rua_cliente">Rua: </label><input type="text" name="rua_cliente" id="rua_cliente" th:value="${session['endereco'].rua}"  >
                                         </div>
@@ -118,25 +125,32 @@
                             </form>
                         </div>
 
-                        <div id='painel-cliente-infos-view-atualizar-endereco-entrega'  style="display: none">
-                            <form id="formLogin" action="/cliente/atualizar" method="POST" enctype="multipart/form-data" >
-                                <div id='painel-cliente-infos-view-atualizar-cadastro-dados-cadastrais'>
-                                    <div id='painel-cliente-infos-view-atualizar-cadastro-dados-cadastrais-header'>
-                                        <label>Dados Cadastrais</label>
-                                    </div>
-                                    <div id='painel-cliente-infos-view-atualizar-cadastro-dados-cadastrais-content'>
-                                        <div>
-                                            <label for="nome_cliente">Nome: </label><input type="text" name="nome_cliente" id="nome_cliente" th:value="${session['usuario'].nome}">
-                                        </div>
-                                        <div>
-                                            <label for="email_cliente">Email: </label><input type="text" name="email_cliente" id="email_cliente" value="teste@hotmail.com" th:value="${session['usuario'].email}" disabled>
-
-                                        </div>
-                                        <div>
-                                            <label for="cpf_cliente">CPF: </label><input type="text" name="cpf_cliente" id="cpf_cliente"  th:value="${session['usuario'].cpf}"  disabled>
-                                        </div>
-                                    </div> 
+                        <div id='painel-cliente-infos-view-atualizar-endereco-entrega'> 
+                            <form id="formLogin" action="/cliente/adicionarEndereco" method="POST" enctype="multipart/form-data" >
+                                <div id='painel-cliente-infos-view-atualizar-cadastro-dados-cadastrais-header'>
+                                    <label>Adicionar Endereço de Entrega</label>
                                 </div>
+                                <div id='painel-cliente-infos-view-atualizar-cadastro-dados-cadastrais-content'>
+                                    <input type="hidden" name="idEndereco_cliente" id="idEndereco_cliente">
+                                    <div>
+                                        <label for="rua_cliente">Rua: </label><input type="text" name="rua_cliente" id="rua_cliente_novo">
+                                    </div>
+                                    <div>
+                                        <label for="numero_cliente">Número: </label><input type="text" name="numero_cliente" id="numero_cliente_novo">
+                                    </div>
+                                    <div>
+                                        <label for="bairro_cliente">Bairro: </label><input type="text" name="bairro_cliente" id="bairro_cliente_novo" >
+                                    </div>
+                                    <div>
+                                        <label for="cep_cliente">CEP: </label><input type="text" name="cep_cliente" id="cep_cliente_novo">
+                                    </div>
+                                    <div>
+                                        <label for="complemento_cliente">Complemento: </label><input type="text" name="complemento_cliente" id="complemento_cliente_novo"                                                                                                 >
+                                    </div>
+                                </div>
+
+                                <input type="submit" name="submit_adicionar" id="submit_adicionar" value="Adicionar Novo Endereço"></input>
+
                             </form>
                         </div>
                         <div id='painel-cliente-infos-view-atualizar-mudar-senha' style="display: none"></div>
@@ -150,39 +164,102 @@
     </body>
 
     <script>
-        
-           function imprimirMensagem(){
-               const mensagem = document.getElementById("mensagem_alert").value
-               if(mensagem){
-                   alert(mensagem)
-               }
-           }
-           
-           function alteraTela(tela){
-               if(tela=="cadastro"){
-                   document.getElementById("painel-cliente-infos-view-atualizar-cadastro").style.display = "block"
-                   document.getElementById("painel-cliente-infos-view-atualizar-endereco-entrega").style.display = "none"
-                   document.getElementById("painel-cliente-infos-view-atualizar-mudar-senha").style.display = "none"
-                   document.getElementById("painel-cliente-infos-view-atualizar-pedidos").style.display = "none"
-               }else if(tela=="endereco"){
-                   document.getElementById("painel-cliente-infos-view-atualizar-cadastro").style.display = "none"
-                   document.getElementById("painel-cliente-infos-view-atualizar-endereco-entrega").style.display = "block"
-                   document.getElementById("painel-cliente-infos-view-atualizar-mudar-senha").style.display = "none"
-                   document.getElementById("painel-cliente-infos-view-atualizar-pedidos").style.display = "none"
-               }else if(tela=="senha"){
-                   document.getElementById("painel-cliente-infos-view-atualizar-cadastro").style.display = "none"
-                   document.getElementById("painel-cliente-infos-view-atualizar-endereco-entrega").style.display = "none"
-                   document.getElementById("painel-cliente-infos-view-atualizar-mudar-senha").style.display = "block"
-                   document.getElementById("painel-cliente-infos-view-atualizar-pedidos").style.display = "none"
-               }else if(tela=="pedidos"){
-                   document.getElementById("painel-cliente-infos-view-atualizar-cadastro").style.display = "none"
-                   document.getElementById("painel-cliente-infos-view-atualizar-endereco-entrega").style.display = "none"
-                   document.getElementById("painel-cliente-infos-view-atualizar-mudar-senha").style.display = "none"
-                   document.getElementById("painel-cliente-infos-view-atualizar-pedidos").style.display = "block"
-               }
-           }
-           
-           imprimirMensagem()
+
+        function imprimirMensagem() {
+            const mensagem = document.getElementById("mensagem_alert").value
+            if (mensagem) {
+                alert(mensagem)
+            }
+        }
+
+        function alteraTela(tela) {
+            if (tela == "cadastro") {
+                document.getElementById("painel-cliente-infos-view-atualizar-cadastro").style.display = "block"
+                document.getElementById("painel-cliente-infos-view-atualizar-endereco-entrega").style.display = "none"
+                document.getElementById("painel-cliente-infos-view-atualizar-mudar-senha").style.display = "none"
+                document.getElementById("painel-cliente-infos-view-atualizar-pedidos").style.display = "none"
+            } else if (tela == "endereco") {
+                document.getElementById("painel-cliente-infos-view-atualizar-cadastro").style.display = "none"
+                document.getElementById("painel-cliente-infos-view-atualizar-endereco-entrega").style.display = "block"
+                ativandoCadastraoEndereco()
+                document.getElementById("painel-cliente-infos-view-atualizar-mudar-senha").style.display = "none"
+                document.getElementById("painel-cliente-infos-view-atualizar-pedidos").style.display = "none"
+            } else if (tela == "senha") {
+                document.getElementById("painel-cliente-infos-view-atualizar-cadastro").style.display = "none"
+                document.getElementById("painel-cliente-infos-view-atualizar-endereco-entrega").style.display = "none"
+                document.getElementById("painel-cliente-infos-view-atualizar-mudar-senha").style.display = "block"
+                document.getElementById("painel-cliente-infos-view-atualizar-pedidos").style.display = "none"
+            } else if (tela == "pedidos") {
+                document.getElementById("painel-cliente-infos-view-atualizar-cadastro").style.display = "none"
+                document.getElementById("painel-cliente-infos-view-atualizar-endereco-entrega").style.display = "none"
+                document.getElementById("painel-cliente-infos-view-atualizar-mudar-senha").style.display = "none"
+                document.getElementById("painel-cliente-infos-view-atualizar-pedidos").style.display = "block"
+            }
+        }
+
+        imprimirMensagem()
+        alteraTela("cadastro")
+
+
+        function ativandoCadastraoEndereco(){
+
+            function limpa_formulário_cep() {
+
+                // Limpa valores do formulário de cep.
+                $("#rua_cliente_novo").val("");
+                $("#bairro_cliente_novo").val("");
+
+            }
+
+            //Quando o campo cep perde o foco.
+            $("#cep_cliente_novo").blur(function () {
+
+                //Nova variável "cep" somente com dígitos.
+                var cep = $(this).val().replace(/\D/g, '');
+
+                //Verifica se campo cep possui valor informado.
+                if (cep != "") {
+
+                    //Expressão regular para validar o CEP.
+                    var validacep = /^[0-9]{8}$/;
+
+                    //Valida o formato do CEP.
+                    if (validacep.test(cep)) {
+
+                        //Preenche os campos com "..." enquanto consulta webservice.
+                        $("#rua_cliente_novo").val("...");
+                        $("#bairro_cliente_novo").val("...");
+
+                        //Consulta o webservice viacep.com.br/
+                        $.getJSON("https://viacep.com.br/ws/" + cep + "/json/?callback=?", function (dados) {
+
+                            if (!("erro" in dados)) {
+                                //Atualiza os campos com os valores da consulta.
+                                $("#rua_cliente_novo").val(dados.logradouro);
+                                $("#bairro_cliente_novo").val(dados.bairro);
+                            } //end if.
+                            else {
+                                //CEP pesquisado não foi encontrado.
+                                limpa_formulário_cep();
+                                alert("CEP não encontrado.");
+                            }
+                        });
+                    } //end if.
+                    else {
+                        //cep é inválido.
+                        limpa_formulário_cep();
+                        alert("Formato de CEP inválido.");
+                    }
+                } //end if.
+                else {
+                    //cep sem valor, limpa formulário.
+                    limpa_formulário_cep();
+                }
+            });
+
+        }
+
+
     </script>
 
 </html>

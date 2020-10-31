@@ -397,7 +397,21 @@ header{
     border-radius: 10px;
     border: none;   
 }
+#register-user-content-neighborhood-entrega{
+    margin: 15px 0 ;
+    padding: 7px;
+    width: 80%;
+    border-radius: 10px;
+    border: none;   
+}
 #register-user-content-street{
+    margin: 15px 0 ;
+    padding: 7px;
+    width: 100%;
+    border-radius: 10px;
+    border: none;   
+}
+#register-user-content-street-entrega{
     margin: 15px 0 ;
     padding: 7px;
     width: 100%;
@@ -425,7 +439,13 @@ header{
     border-radius: 10px;
     border: none;   
 }
-
+#register-user-content-zip-entrega{
+    margin: 15px 0 ;
+    padding: 7px;
+    width: 80%;
+    border-radius: 10px;
+    border: none;   
+}
 #register-user-content-passw-div{
     margin-left: 0;
     width: 50%;
@@ -621,4 +641,10 @@ header{
     
 #painel-cliente-infos-view-atualizar-endereco-entrega{
     display: none
+}
+
+#painel-cliente-infos-view-atualizar-endereco-entrega{
+    width: 90%;
+    margin-top: 50px;
+    
 }

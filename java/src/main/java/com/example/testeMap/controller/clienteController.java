@@ -173,18 +173,27 @@ public class clienteController {
             @RequestParam(name = "bairro_cliente", required = true) String bairro,
             @RequestParam(name = "cep_cliente", required = true) String cep,
             @RequestParam(name = "complemento_cliente") String complemento,
+            @RequestParam(name = "idEndereco_cliente", required = true) int id_endereco,
+
 
             HttpSession session
     ) {
         session.removeAttribute("mensagem");
         Usuario usuario = (Usuario) session.getAttribute("usuario");
         
+        int usuarioID = usuario.getIdUsuario();
+        
+        Endereco endereco = new Endereco(id_endereco, rua, numero, bairro, cep, complemento,"Faturamento",usuarioID);
+
+        
+        ResponseEntity enderecoResp = enderecoService.updateEndereco(id_endereco, endereco);
+        
         ResponseEntity usuarioResp = usuarioService.updateUserJustNome(usuario.getIdUsuario(), nome);
         
         Usuario usuarioReturn = (Usuario) usuarioResp.getBody();
+        Endereco enderecoReturn = (Endereco) enderecoResp.getBody();
         
-        
-        if(usuarioReturn.getIdUsuario() == usuario.getIdUsuario()){
+        if(usuarioReturn.getIdUsuario() == usuario.getIdUsuario() && enderecoReturn.getIdUsuario() == usuario.getIdUsuario()){
             session.setAttribute("mensagem", "Atualizado com Sucesso");
         }else{
             session.setAttribute("mensagem", "Falha no Cadastro");
@@ -193,6 +202,42 @@ public class clienteController {
         return new ModelAndView("redirect:/cliente/painel");
     }
     
+    @GetMapping("/logout")
+    public ModelAndView logoutUsuarioGET(  
+            HttpSession session
+    ) {
+        session.invalidate();
+        return new ModelAndView("redirect:/cliente");
+    }
+    
+    @PostMapping("/adicionarEndereco")
+    public ModelAndView cadastrarEnderecoUsuarioPOST(
+            @RequestParam(name = "rua_cliente") String rua,
+            @RequestParam(name = "numero_cliente", required = true) int numero,
+            @RequestParam(name = "bairro_cliente", required = true) String bairro,
+            @RequestParam(name = "cep_cliente", required = true) String cep,
+            @RequestParam(name = "complemento_cliente") String complemento,
+            HttpSession session
+    ) {
+        Endereco endereco = new Endereco();
+        
+        Usuario usuario = (Usuario) session.getAttribute("usuario");
+        
+        endereco.setRua(rua);
+        endereco.setNumero(numero);
+        endereco.setBairro(bairro);
+        endereco.setCep(cep);
+        endereco.setComplemento(complemento);
+        endereco.setTipo("Entrega");
+        endereco.setIdUsuario(usuario.getIdUsuario());
+        
+        enderecoService.cadastroEndereco(endereco);
+
+        session.setAttribute("mensagem", "Atualizado com Sucesso");
+
+        return new ModelAndView("redirect:/cliente/painel");
+
+    }
     
 }
 

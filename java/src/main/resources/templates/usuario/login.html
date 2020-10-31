@@ -153,8 +153,8 @@
                             <div id='register-revenues-address-div'>
                                 <div id='register-user-content-address'>
                                     <div id='register-user-content-street-div'>
-                                        <label for='register-user-content-street'>Rua: </label><br>
-                                        <input type="text" id='register-user-content-street' name='rua_entrega'>
+                                        <label for='register-user-content-street-entrega'>Rua: </label><br>
+                                        <input type="text" id='register-user-content-street-entrega' name='rua_entrega'>
                                     </div>
                                     <div id='register-user-content-number-div'>
                                         <label for='register-user-content-number'>N°: </label><br>
@@ -163,16 +163,16 @@
                                 </div>
 
                                 <div id='register-user-content-neighborhood-div'>
-                                    <label for='register-user-content-neighborhood'>Bairro: </label><br>
-                                    <input type="text" id='register-user-content-neighborhood' name='bairro_entrega'>
+                                    <label for='register-user-content-neighborhood-entrega'>Bairro: </label><br>
+                                    <input type="text" id='register-user-content-neighborhood-entrega' name='bairro_entrega'>
                                 </div>
                                 <div id='register-user-content-complement-div'>
                                     <label for='register-user-content-complement'>Complemento: </label><br>
                                     <input type="text" id='register-user-content-complement' name='complemento_entrega'>
                                 </div>
                                 <div id='register-user-content-zip-div'>
-                                    <label for='register-user-content-zip'>CEP: </label><br>
-                                    <input type="text" id='register-user-content-zip' name='cep_entrega'>
+                                    <label for='register-user-content-zip-entrega'>CEP: </label><br>
+                                    <input type="text" id='register-user-content-zip-entrega' name='cep_entrega'>
                                 </div>    
                             </div>
                             <input type="submit" id='register-user-content-button' value="Cadastrar"></input>
@@ -225,7 +225,8 @@
 
         $('#register-user-content-cpf').mask('000.000.000-00', {reverse: true});
         $('#register-user-content-zip').mask('00000-000', {reverse: true});
-
+        $('#register-user-content-zip-entrega').mask('00000-000', {reverse: true});
+        
         $('#register-user-content-email').mask("A", {
             translation: {
                 "A": {pattern: /[\w@\-.+]/, recursive: true}
@@ -333,7 +334,108 @@
             }
         }
         });
+        
+        $(document).ready(function() {
 
+            function limpa_formulário_cep() {
+                // Limpa valores do formulário de cep.
+                $("#register-user-content-street").val("");
+                $("#register-user-content-neighborhood").val("");
+                $("#register-user-content-street-entrega").val("");
+                $("#register-user-content-neighborhood-entrega").val("");
+            }
+            
+            //Quando o campo cep perde o foco.
+            $("#register-user-content-zip").blur(function() {
+
+                //Nova variável "cep" somente com dígitos.
+                var cep = $(this).val().replace(/\D/g, '');
+
+                //Verifica se campo cep possui valor informado.
+                if (cep != "") {
+
+                    //Expressão regular para validar o CEP.
+                    var validacep = /^[0-9]{8}$/;
+
+                    //Valida o formato do CEP.
+                    if(validacep.test(cep)) {
+
+                        //Preenche os campos com "..." enquanto consulta webservice.
+                        $("#register-user-content-street").val("...");
+                        $("#register-user-content-neighborhood").val("...");
+
+                        //Consulta o webservice viacep.com.br/
+                        $.getJSON("https://viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
+
+                            if (!("erro" in dados)) {
+                                //Atualiza os campos com os valores da consulta.
+                                $("#register-user-content-street").val(dados.logradouro);
+                                $("#register-user-content-neighborhood").val(dados.bairro);
+                            } //end if.
+                            else {
+                                //CEP pesquisado não foi encontrado.
+                                limpa_formulário_cep();
+                                alert("CEP não encontrado.");
+                            }
+                        });
+                    } //end if.
+                    else {
+                        //cep é inválido.
+                        limpa_formulário_cep();
+                        alert("Formato de CEP inválido.");
+                    }
+                } //end if.
+                else {
+                    //cep sem valor, limpa formulário.
+                    limpa_formulário_cep();
+                }
+            });
+            
+            $("#register-user-content-zip-entrega").blur(function() {
+
+                //Nova variável "cep" somente com dígitos.
+                var cep = $(this).val().replace(/\D/g, '');
+
+                //Verifica se campo cep possui valor informado.
+                if (cep != "") {
+
+                    //Expressão regular para validar o CEP.
+                    var validacep = /^[0-9]{8}$/;
+
+                    //Valida o formato do CEP.
+                    if(validacep.test(cep)) {
+
+                        //Preenche os campos com "..." enquanto consulta webservice.
+                        $("#register-user-content-street-entrega").val("...");
+                        $("#register-user-content-neighborhood-entrega").val("...");
+
+                        //Consulta o webservice viacep.com.br/
+                        $.getJSON("https://viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
+
+                            if (!("erro" in dados)) {
+                                //Atualiza os campos com os valores da consulta.
+                                $("#register-user-content-street-entrega").val(dados.logradouro);
+                                $("#register-user-content-neighborhood-entrega").val(dados.bairro);
+                            } //end if.
+                            else {
+                                //CEP pesquisado não foi encontrado.
+                                limpa_formulário_cep();
+                                alert("CEP não encontrado.");
+                            }
+                        });
+                    } //end if.
+                    else {
+                        //cep é inválido.
+                        limpa_formulário_cep();
+                        alert("Formato de CEP inválido.");
+                    }
+                } //end if.
+                else {
+                    //cep sem valor, limpa formulário.
+                    limpa_formulário_cep();
+                }
+            });
+        });
 
     </script>
 

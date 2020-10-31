@@ -6,6 +6,7 @@
 package com.example.testeMap.services;
 
 import com.example.testeMap.model.entidades.Endereco;
+import com.example.testeMap.model.entidades.Usuario;
 import com.example.testeMap.repository.enderecoRepository;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
@@ -40,12 +41,20 @@ public class enderecoService {
              Endereco endereco) {
         return enderecoRepository.findById(id)
                 .map(enderecoUpdate -> {
-                    enderecoUpdate.setIdUsuario(id);
-                   
+                    enderecoUpdate.setIdEndereco(id);
+                    enderecoUpdate.setRua(endereco.getRua());
+                    enderecoUpdate.setNumero(endereco.getNumero());
+                    enderecoUpdate.setBairro(endereco.getBairro());
+                    enderecoUpdate.setCep(endereco.getCep());
+                    enderecoUpdate.setComplemento(endereco.getComplemento());
+                    enderecoUpdate.setIdUsuario(endereco.getIdUsuario());
+                    
                     Endereco updated = enderecoRepository.save(enderecoUpdate);
                     return ResponseEntity.ok().body(updated);
                 }).orElse(ResponseEntity.notFound().build());
     }
+
+    
     
     public List<Endereco> filtroCep(String nome) {
         return enderecoRepository.filtroCEP(nome);
