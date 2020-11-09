@@ -5,7 +5,9 @@
  */
 package com.example.testeMap.controller;
 
+import com.example.testeMap.model.entidades.Imagem;
 import com.example.testeMap.model.entidades.Produto;
+import com.example.testeMap.services.imagemService;
 import com.example.testeMap.services.produtoService;
 import java.io.File;
 import java.util.List;
@@ -40,9 +42,11 @@ public class produtoController {
     private static String UPLOADED_FOLDER = "c://imagens//";
     
     private produtoService produtoService;
-
-    public produtoController(produtoService produtoService) {
+    private imagemService imagemService;
+    
+    public produtoController(produtoService produtoService, imagemService imagemService) {
         this.produtoService = produtoService;
+        this.imagemService = imagemService;
     }
 
     @PostMapping("/cadastrar")
@@ -54,48 +58,14 @@ public class produtoController {
         @RequestParam(name = "descricao_produto", required = true) String descricao,
         @RequestParam(name = "valor_produto", required = true) String valor,
         @RequestParam(name = "cadastro_ativo", required = true) boolean ativo,
-        @RequestParam(required = true) MultipartFile imagem1,
-        @RequestParam(required = true) MultipartFile imagem2,
-        @RequestParam(required = true) MultipartFile imagem3,
-        @RequestParam(required = true) MultipartFile imagem4,
-        @RequestParam(required = true) MultipartFile imagem5
+        @RequestParam("imagem") MultipartFile[] imagens
     ){
 
-       try{
+      
        
-        byte[] bytes1 = imagem1.getBytes();
-        byte[] bytes2 = imagem2.getBytes();
-        byte[] bytes3 = imagem3.getBytes();
-        byte[] bytes4 = imagem4.getBytes();
-        byte[] bytes5 = imagem5.getBytes();
+        Produto produto =  new Produto();   
         
-        String nameImagem1 = imagem1.getOriginalFilename();
-        String nameImagem2 = imagem2.getOriginalFilename();
-        String nameImagem3 = imagem3.getOriginalFilename();
-        String nameImagem4 = imagem4.getOriginalFilename();
-        String nameImagem5 = imagem5.getOriginalFilename();
-    
-
-        String folderIMG_DB = "IMAGESARCHIVE\\";
-        
-        String folderIMG = "src\\main\\resources\\static\\IMAGESARCHIVE\\";
-
-        Path path1 = Paths.get(folderIMG + nameImagem1);
-        Path path2 = Paths.get(folderIMG + nameImagem2);
-        Path path3 = Paths.get(folderIMG + nameImagem3);
-        Path path4 = Paths.get(folderIMG + nameImagem4);
-        Path path5 = Paths.get(folderIMG + nameImagem5);
-
-        
-//        Files.write(path1, bytes1);
-//        Files.write(path2, bytes2);
-//        Files.write(path3, bytes3);
-//        Files.write(path4, bytes4);
-//        Files.write(path5, bytes5);
-        
-        Produto produto =  new Produto();
-        
-        Float valorConvertido = Float.parseFloat(valor.replace(".", "").replace(",", "."));
+        Float valorConvertido = Float.parseFloat(valor.replace(".", "").replace(",", "."));  
         
         produto.setNomeProduto(nomeProduto);
         produto.setQtde(qtde);   
@@ -104,16 +74,37 @@ public class produtoController {
         produto.setDescricao(descricao);
         produto.setValor(valorConvertido);
         produto.setAtivo(ativo);
-        produto.setImagem1("http://localhost:8080/" + folderIMG_DB + nameImagem1);
-        produto.setImagem2("http://localhost:8080/" + folderIMG_DB + nameImagem2);
-        produto.setImagem3("http://localhost:8080/" + folderIMG_DB + nameImagem3);
-        produto.setImagem4("http://localhost:8080/" + folderIMG_DB + nameImagem4);
-        produto.setImagem5("http://localhost:8080/" + folderIMG_DB + nameImagem5);
-        
+           
         Produto produtoCadastrado =  produtoService.CadastrarProduto(produto);
-       
-        produtoService.CadastrarProduto(produto);
         
+        
+        
+        try{
+            
+            for(MultipartFile uploadedFile : imagens) {
+                int idProduto = produtoCadastrado.getIdProduto();
+                String folderIMG_DB = "IMAGESARCHIVE\\";
+                String folderIMG = "src\\main\\resources\\static\\IMAGESARCHIVE\\"+idProduto+"\\";
+                
+                byte[] bytes = uploadedFile.getBytes();
+                
+                String nameImagem = uploadedFile.getOriginalFilename();
+                Path path = Paths.get(folderIMG + nameImagem);
+                
+                File file = new File(folderIMG);
+                
+                file.mkdir();
+                
+                Files.write(path, bytes);
+                
+                Imagem imagem =  new Imagem();  
+                
+                imagem.setCaminho("http://localhost:8080/" + folderIMG_DB + "\\" + idProduto + "\\" + nameImagem);
+                imagem.setIdProduto(idProduto);
+                imagemService.cadastroImagem(imagem);
+                
+            }
+
         }catch (IOException e) {
         
         } 
@@ -132,17 +123,6 @@ public class produtoController {
     }
     
     
-    
-    
-    
-    /*@RequestMapping(method = RequestMethod.POST, path = "/atualizar/{id}")
-    public ModelAndView AcessarCadastro(@PathVariable("id") int id) {
-       List<Produto> produto = (List<Produto>) produtoService.filtroID(id);
-
-       return new ModelAndView("produto/cadastrarProduto").addObject("objeto", produto);
-    }*/
-    
-    
     @RequestMapping(value = "/atualizar/{id}", method = RequestMethod.GET)
     public ModelAndView findById(@PathVariable int id) {
         ResponseEntity<Produto> produtoResponse =  produtoService.filtroID(id);
@@ -153,7 +133,7 @@ public class produtoController {
 
     }
 
-    @RequestMapping(value = "/visualizar/{id}", method = RequestMethod.GET)
+        @RequestMapping(value = "/visualizar/{id}", method = RequestMethod.GET)
     public ModelAndView findByIdVisualizar(@PathVariable int id) {
         ResponseEntity<Produto> produtoResponse =  produtoService.filtroID(id);
         
@@ -181,44 +161,40 @@ public class produtoController {
         @RequestParam(name = "descricao_produto") String descricao,
         @RequestParam(name = "valor_produto") float valor,
         @RequestParam(name = "cadastro_ativo") boolean ativo,
-        @RequestParam MultipartFile imagem1,
-        @RequestParam MultipartFile imagem2,
-        @RequestParam MultipartFile imagem3,
-        @RequestParam MultipartFile imagem4,
-        @RequestParam MultipartFile imagem5
+        @RequestParam("imagem") MultipartFile[] imagens
     ){
 
        try{
        
-        byte[] bytes1 = imagem1.getBytes();
-        byte[] bytes2 = imagem2.getBytes();
-        byte[] bytes3 = imagem3.getBytes();
-        byte[] bytes4 = imagem4.getBytes();
-        byte[] bytes5 = imagem5.getBytes();
-        
-        String nameImagem1 = imagem1.getOriginalFilename();
-        String nameImagem2 = imagem2.getOriginalFilename();
-        String nameImagem3 = imagem3.getOriginalFilename();
-        String nameImagem4 = imagem4.getOriginalFilename();
-        String nameImagem5 = imagem5.getOriginalFilename();
-    
-
-        String folderIMG_DB = "IMAGESARCHIVE\\";
-        
-        String folderIMG = "src\\main\\resources\\static\\IMAGESARCHIVE\\";
-
-        Path path1 = Paths.get(folderIMG + nameImagem1);
-        Path path2 = Paths.get(folderIMG + nameImagem2);
-        Path path3 = Paths.get(folderIMG + nameImagem3);
-        Path path4 = Paths.get(folderIMG + nameImagem4);
-        Path path5 = Paths.get(folderIMG + nameImagem5);
-
-        
-        Files.write(path1, bytes1);
-        Files.write(path2, bytes2);
-        Files.write(path3, bytes3);
-        Files.write(path4, bytes4);
-        Files.write(path5, bytes5);
+        for(MultipartFile uploadedFile : imagens) {
+                int idProduto = id;
+                String folderIMG_DB = "IMAGESARCHIVE\\";
+                String folderIMG = "src\\main\\resources\\static\\IMAGESARCHIVE\\"+idProduto+"\\";
+                
+                byte[] bytes = uploadedFile.getBytes();
+                
+                String nameImagem = uploadedFile.getOriginalFilename();
+                Path path = Paths.get(folderIMG + nameImagem);
+                
+                File file = new File(folderIMG);
+                
+                file.delete();
+                
+                file.mkdir();
+                
+                Files.write(path, bytes);
+                
+                Imagem imagem =  new Imagem();  
+                
+                imagem.setCaminho("http://localhost:8080/" + folderIMG_DB + "\\" + idProduto + "\\" + nameImagem);
+                imagem.setIdProduto(idProduto);
+                imagemService.cadastroImagem(imagem);
+                
+         }   
+           
+           
+           
+           
         
         Produto produto =  new Produto();
         produto.setIdProduto(id);
@@ -229,11 +205,7 @@ public class produtoController {
         produto.setDescricao(descricao);
         produto.setValor(valor);
         produto.setAtivo(ativo);
-        produto.setImagem1("http://localhost:8080/" + folderIMG_DB + nameImagem1);
-        produto.setImagem2("http://localhost:8080/" + folderIMG_DB + nameImagem2);
-        produto.setImagem3("http://localhost:8080/" + folderIMG_DB + nameImagem3);
-        produto.setImagem4("http://localhost:8080/" + folderIMG_DB + nameImagem4);
-        produto.setImagem5("http://localhost:8080/" + folderIMG_DB + nameImagem5);
+
         
         ResponseEntity produtoAtualizar =  produtoService.updateProd(id,produto);
        

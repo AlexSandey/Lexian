@@ -164,12 +164,12 @@ header{
 #valoresProduto #btn_default{
     background-color: #724EBA;
 	color: #fff;
-	width: 40% !important;
 	border-radius: 20px;
-    padding: 10px 0;
+    padding: 10px 10px;
 	font-family: OpenSans-Regular;
     font-size: 14pt;
     margin-top: 50px;
+    cursor: pointer;
 }
 
 
@@ -235,7 +235,7 @@ header{
 }
 .miniatura img{
     width: 100%;
-      
+    cursor: pointer;
 }
 
 #conteudoGaleria{

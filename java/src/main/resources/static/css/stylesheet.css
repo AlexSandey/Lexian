@@ -193,6 +193,7 @@ header{
     width: 100%;
     height: 100%;
     border-radius: 10px;
+    display: flex;
     background-color:  #87aef8 ;
 }
 #added-cart-product-info{
@@ -646,5 +647,337 @@ header{
 #painel-cliente-infos-view-atualizar-endereco-entrega{
     width: 90%;
     margin-top: 50px;
-    
+}
+
+#telainicial-oferta-header{
+    text-align: center;
+    padding-top: 40px;
+}
+
+#telainicial-oferta-header label{
+    font-family: Rokkit-Regular;
+    background-color: #47329a;
+    color: #fff;
+    padding: 15px 15px 0 15px;
+    border-radius: 15px 15px 0 0px;
+    font-size: 16pt;    
+}
+
+#telainicial-oferta-content{
+    border: transparent 40px solid;
+    height: 350px;
+    background-color: #87aef8;
+    border-radius: 15px;
+    width: 70%;   
+    display: flex;
+}
+
+#telainicial-oferta-content-carts{
+    width: 30%;
+    border-radius: 15px;
+    background-color: #4448AA;
+}
+
+#telainicial-oferta-content-carts-image{
+    width: 100%;
+    border-radius: 15px;
+    height: 50%;
+    display: flex;
+    background-color: #fff;
+}
+#telainicial-oferta-content-carts-image img{
+    height: 100%;
+}
+
+#telainicial-oferta-content-carts-content-titulo{
+    font-family: Rokkit-Regular;
+    border: #4448AA 10px solid;
+    text-align: center;
+    color: #fff;
+    font-size: 16pt;
+}
+
+#telainicial-oferta-content-carts-content-preco{
+    text-align: center;
+    font-family: Rokkit-Regular;
+    color: #fff;
+    font-size: 16pt;
+}
+
+#telainicial-oferta-content-carts-content-comprar{
+    margin-top: 10px;
+    display: flex;
+}
+
+#telainicial-oferta-content-carts-content-comprar{
+    background-color: #919bf3;
+    border-radius: 10px;
+    border: none;
+    padding: 10px;
+    font-family: Rokkit-Regular;
+    color: #fff;
+    font-size: 16pt;    
+    cursor: pointer;
+}
+
+
+#telainicial-produtos{
+    width: 70%;
+    margin-top: 25px;
+    border: transparent 40px solid;
+    border-radius: 15px;
+    height: 350px;
+    display: flex;
+}
+
+header{
+    width: 70%;
+    background-color: #4448AA;
+    padding-bottom: 50px;
+}
+
+#bottons_up{
+    display: flex;
+}
+
+.header_bottons{
+    background-color: #87aef8;
+    font-family: Rokkit-Regular;
+    border: none;   
+    color: #45495a;
+    padding: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+
+}
+
+#login_and_register button{
+    height: 30px;
+    cursor:pointer;
+}
+#shopping-carts button{
+    height: 50px;
+    font-size: 20pt;
+    cursor:pointer;
+}
+#search{
+    margin-top: 20px;
+    margin-left: 200px;
+    display: flex;
+}
+
+#search label{
+    background-color: #87aef8;
+    padding: 15px;
+    border-radius: 5px;
+    font-size: 16pt;
+    margin-right: 50px;
+    margin-left: 0;
+    font-family: Rokkit-Regular;
+}
+
+#search #search_input{
+    width: 50%;
+    padding: 10px;
+    margin-right: 0;
+}
+
+#search #search_button{
+    width: 50px;
+    height: 50px;
+    background-color: #87aef8;
+    margin-left: 0;
+}
+
+#search #search_button img{
+    width: 100%; 
+}
+
+#tittle-offer{
+    display: inline;
+}
+
+#tittle-offer-label{
+    padding: 10px 100px;
+    border-radius: 10px 10px 0px 0px;
+    font-family: Rokkit-Regular;
+    font-size: 20pt;
+    background-color: #87aef8;
+    color: #45495a;
+}
+
+#content{
+    width: 70%;
+    background-color: #919bf3;
+}
+
+#offer-body{
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+}
+
+#offer-header{
+    width: 100%;
+    display: flex;
+    padding-top: 50px;
+}
+
+#offer-carrousel{
+    background-color: #4448AA;
+    width: 80%;
+    border-radius: 10px;
+    display: flex;
+}
+
+#offer-card{
+    width: 200px;
+    height: 300px;
+    margin-top: 20px;
+    margin-bottom: 50px;
+
+}
+
+#offer-card-image{
+    height: 150px;
+    width: 200px;
+}
+#offer-card-image img{
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+}
+
+#offer-card-info{
+    margin-top: -30px 0;
+    padding: 10px;
+    background-color: #87aef8;
+    text-align: center; 
+    color: #fff;
+    font-family: Rokkit-Regular;
+    font-size: 18pt;
+}
+
+#offer-sale-button{
+    display: flex;
+    background-color: #87aef8;
+    padding-bottom: 20px;
+    border-radius: 0px 0px 10px 10px;
+}
+
+#offer-sale-button-img img{
+    width: 100%;
+}
+
+#offer-sale-button-img{
+    padding-left: 5px;
+    height: 30px;
+    width: 30px;
+    margin-right: 0;
+    background-color: #fff;
+    border-radius: 10px 0 0px 10px;
+}
+
+#offer-sale-button-link{
+    margin-left: 0;
+    border: none;
+    font-size: 15pt;
+    background-color: #47329a;
+    color: #fff;
+    border-radius: 0 10px 10px 0px;
+}
+
+#added-products{
+    padding: 20px 0;
+    width: 80%;
+}
+
+#added-header{
+    padding: 10px 0 ;
+    color: #45495a;
+    font-family: Rokkit-Regular;
+    font-size: 18pt;
+    background-color: #87aef8;
+    width: 100%;
+    border-radius: 10px 10px 10px 10px;
+}
+
+
+#added-cart-product{
+    height: 150px;
+    width: 80%;
+    border: #87aef8 20px solid;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+#added-cart-product-content{
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    background-color:  #87aef8 ;
+}
+#added-cart-product-info{
+    width: 60%;
+    height: 100%;
+    display: flex;
+    margin-left: 0;
+    border-radius: 10px;
+}
+#added-cart-product-info-img{
+    width: 30%;
+    height: 100%;
+    background-color:  #87aef8;
+    border-radius: 10px 0px 0px 10px;
+}
+#added-cart-product-info-img img{
+    width: 100%;
+    height: 100%;
+    border-radius: 10px 0 0px 10px;
+}
+#added-cart-product-info-content{
+    width: 70%;
+    border: transparent 15px solid;
+    background-color: #919bf3;
+    border-radius: 0px 10px 10px 0px;
+
+}
+
+#added-cart-product-info-content label{
+    padding: 15px;
+    text-align: center;
+    color: #fff;
+    font-family: Rokkit-Regular;
+    font-size: 15pt;
+}
+
+
+#added-cart-product-amost{
+    width: 20%;
+    border: #919bf3 30px solid;
+    border-radius: 10px;
+    margin-left: 10px;
+    text-align: center;
+    display: block;
+}
+#added-cart-product-amost label{
+    color: #fff;
+    font-family: Rokkit-Regular;
+    font-size: 15pt;
+}
+#added-cart-product-amost input{
+    width: 50%;
+}
+
+#added-cart-product-total{
+    width: 20%;
+    border: #919bf3 5px solid;
+    border-radius: 10px;
+    margin-left: 10px;
+    text-align: center;
+    display: block;
+}
+#added-cart-product-total label{
+    color: #fff;
+    font-family: Rokkit-Regular;
+    font-size: 15pt;
 }

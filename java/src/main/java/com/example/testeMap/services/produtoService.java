@@ -51,11 +51,6 @@ public class produtoService {
                     prodAtualizacao.setCategoria(prod.getCategoria());
                     prodAtualizacao.setDescricao(prod.getDescricao());
                     prodAtualizacao.setValor(prod.getValor());
-                    prodAtualizacao.setImagem1(prod.getImagem1());
-                    prodAtualizacao.setImagem2(prod.getImagem2());
-                    prodAtualizacao.setImagem3(prod.getImagem3());
-                    prodAtualizacao.setImagem4(prod.getImagem4());
-                    prodAtualizacao.setImagem5(prod.getImagem5());
                     prodAtualizacao.setAtivo(prod.isAtivo());
                     Produto updated = produtoRepository.save(prodAtualizacao);
                     return ResponseEntity.ok().body(updated);
