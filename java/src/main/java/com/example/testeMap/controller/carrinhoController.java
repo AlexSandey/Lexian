@@ -26,58 +26,105 @@ import org.springframework.web.servlet.ModelAndView;
  *
  * @author AlexSandey, Devakian
  */
-
 @RestController
 @RequestMapping("/carrinho")
 public class carrinhoController {
+
     private produtoService produtoService;
-    
+
     private imagemService imagemService;
 
     public carrinhoController(produtoService produtoService, imagemService imagemService) {
         this.produtoService = produtoService;
-        this.imagemService = imagemService; 
-        
+        this.imagemService = imagemService;
     }
-    
+
     @GetMapping
     public ModelAndView carregarCarrinhoView(
-            
             HttpSession session
     ) {
-       int teste = 1;
-       
-       List<ItensCarrinho> carrinho = (List<ItensCarrinho>) session.getAttribute("carrinho");
-       
-       return new ModelAndView("produto/shopping-cart").addObject(carrinho);
+
+        List<ItensCarrinho> carrinho = (List<ItensCarrinho>) session.getAttribute("carrinho");
+
+        return new ModelAndView("produto/carrinho").addObject(carrinho);
     }
-    
-    @PostMapping("/adicionar")
+
+    @GetMapping("/adicionar")
     public ModelAndView adicionarCarrinho(
             @RequestParam(name = "adicionarCarrinho", required = false) int adicionarCarrinho,
             HttpSession session
     ) {
-       
-       List<ItensCarrinho> carrinho =  (List<ItensCarrinho>) session.getAttribute("carrinho");
-       
-       
-       if(carrinho == null){
-            carrinho =  new  ArrayList<ItensCarrinho>();
-       }
 
-       ResponseEntity<Produto> produtoCadastrado =  produtoService.filtroID(adicionarCarrinho);
-       
-       Produto produto = produtoCadastrado.getBody();
-       
-       String caminho = imagemService.caminhoImagemMin(produto.getIdProduto());
-       
-       ItensCarrinho itensCarrinho = new ItensCarrinho(produto.getIdProduto(), produto.getNomeProduto(), 1, caminho, produto.getValor());
+        List<ItensCarrinho> carrinho = (List<ItensCarrinho>) session.getAttribute("carrinho");
 
-       
-       carrinho.add(itensCarrinho);
-       
-       session.setAttribute("carrinho", carrinho);
-           
-       return new ModelAndView("redirect:/carrinho");
+        if (carrinho == null) {
+            carrinho = new ArrayList<ItensCarrinho>();
+        }
+
+        boolean verifica = false;
+
+        for (ItensCarrinho item : carrinho) {
+
+            if (item.getIdProduto() == adicionarCarrinho) {
+                verifica = true;
+                item.setQtde(item.getQtde() + 1);
+            }
+
+        }
+
+        if (verifica == false) {
+            ResponseEntity<Produto> produtoCadastrado = produtoService.filtroID(adicionarCarrinho);
+
+            Produto produto = produtoCadastrado.getBody();
+
+            String caminho = imagemService.caminhoImagemMin(produto.getIdProduto());
+
+            ItensCarrinho itensCarrinho = new ItensCarrinho(produto.getIdProduto(), produto.getNomeProduto(), 1, caminho, produto.getValor());
+
+            carrinho.add(itensCarrinho);
+        }
+
+        session.setAttribute("carrinho", carrinho);
+
+        return new ModelAndView("redirect:/carrinho");
     }
+    
+    
+    @PostMapping("/atualizar")
+    public ModelAndView atualizarQuantidadeCarrinhoView(
+            @RequestParam(name = "qtde_produto", required = false) int qtde_produto,
+            @RequestParam(name = "id_produto", required = false) int id_produto,
+            HttpSession session
+    ) {
+
+        List<ItensCarrinho> carrinho = (List<ItensCarrinho>) session.getAttribute("carrinho");
+        
+        
+        try{
+           for (ItensCarrinho item : carrinho) {
+
+            if (item.getIdProduto() == id_produto) {
+                if(qtde_produto == 0){
+                    carrinho.remove(item);
+                }else{
+                    item.setQtde(qtde_produto);
+                }
+                
+            }
+
+        } 
+        }catch(Exception e ){
+           
+            return new ModelAndView("redirect:/carrinho");
+
+        }
+        
+        
+        
+        
+        
+        
+        return new ModelAndView("redirect:/carrinho");
+    }
+    
 }

@@ -903,17 +903,19 @@ header{
 
 
 #added-cart-product{
-    height: 150px;
+    height: auto !important;
     width: 80%;
     border: #87aef8 20px solid;
+    background-color:  #87aef8;
     border-radius: 10px;
     margin-bottom: 10px;
 }
 
 #added-cart-product-content{
     width: 100%;
-    height: 100%;
+    height: 150px;
     border-radius: 10px;
+    margin-bottom: 20px;
     background-color:  #87aef8 ;
 }
 #added-cart-product-info{
