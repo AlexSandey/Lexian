@@ -64,6 +64,9 @@
                                 <label for='access-user-content-passw'>Senha: </label><br>
                                 <input type="password" id='access-user-content-passw' name='senha'>
                             </div>
+                            
+                            <input type='hidden' name="encaminharCarrinho"id="acaoLogin" th:if="${session['encaminharLogin'] == true}" th:value="encaminharCarrinho"> 
+
                             <button type="submit" id='access-user-content-button'>Entrar</button>
 
                             <div id='access-user-content-remember-div'>
@@ -214,12 +217,19 @@
         }
 
         function verificaRetorno() {
-            const verify = 1
-            //const verify = document.getElementById("mensagem_retorno").value;
-                
+            
+            const verify = document.getElementById("mensagem_retorno").value;
+            const carrinho = document.getElementById("acaoLogin").value;
+            
             if (verify == "Cadastrado") {
                 alert("Usúario cadastrado com sucesso! Realize o login abaixo. ")
             }
+            
+            if(carrinho == "encaminharCarrinho"){
+                alert("Efetue login cou cadastre-se para continuar a compra.")
+            }
+            
+            
 
         }
 
@@ -234,7 +244,6 @@
         });
 
 
-        verificaRetorno()
 
         displayNoneRegister(true)
         
@@ -436,6 +445,8 @@
                 }
             });
         });
+        
+        verificaRetorno()
 
     </script>
 

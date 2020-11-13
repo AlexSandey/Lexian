@@ -65,6 +65,10 @@ public class enderecoService {
       public Endereco filtroTipoAndId(String tipo, int id) {
         return enderecoRepository.filtroTipoAndId(tipo, id);
     }
+      
+      public List<Endereco> filtroTipoAndIdList(String tipo, int id) {
+        return enderecoRepository.filtroTipoAndIdList(tipo, id);
+    }
     
     
     

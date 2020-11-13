@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -43,10 +44,22 @@ public class carrinhoController {
     public ModelAndView carregarCarrinhoView(
             HttpSession session
     ) {
+        
+        
+        try{
+            
+            List<ItensCarrinho> carrinho;
+            
+            carrinho = (List<ItensCarrinho>) session.getAttribute("carrinho");
+            
+            return new ModelAndView("produto/carrinho").addObject(carrinho);
 
-        List<ItensCarrinho> carrinho = (List<ItensCarrinho>) session.getAttribute("carrinho");
+        }catch(Exception e){
+           
+            return new ModelAndView("redirect:/carrinho/erro");
 
-        return new ModelAndView("produto/carrinho").addObject(carrinho);
+        }
+        
     }
 
     @GetMapping("/adicionar")
@@ -98,8 +111,7 @@ public class carrinhoController {
     ) {
 
         List<ItensCarrinho> carrinho = (List<ItensCarrinho>) session.getAttribute("carrinho");
-        
-        
+
         try{
            for (ItensCarrinho item : carrinho) {
 
@@ -113,17 +125,33 @@ public class carrinhoController {
             }
 
         } 
-        }catch(Exception e ){
-           
+        }catch(Exception e){
             return new ModelAndView("redirect:/carrinho");
+        }
+ 
+        return new ModelAndView("redirect:/carrinho");
+    }
+    
+    @GetMapping("/dadosdecompra")
+    public ModelAndView dadosDeCompra(
+            HttpSession session,
+            RedirectAttributes redirAttr
+    ) {
+        
+        List<ItensCarrinho> carrinho = (List<ItensCarrinho>) session.getAttribute("carrinho");
+        
+        boolean verificarLogin = session.getAttribute("usuario") != null;
+        
+        if(verificarLogin==false){        
+               
+            redirAttr.addFlashAttribute("encaminharLogin", true);
 
+            return new ModelAndView("redirect:http://localhost:8080/cliente");
         }
         
+        int teste = 1;
         
-        
-        
-        
-        
+
         return new ModelAndView("redirect:/carrinho");
     }
     

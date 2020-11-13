@@ -6,6 +6,7 @@
 package com.example.testeMap.controller;
 
 import com.example.testeMap.model.entidades.Endereco;
+import com.example.testeMap.model.entidades.ItensCarrinho;
 import com.example.testeMap.model.entidades.Usuario;
 import com.example.testeMap.services.ServiceExc;
 import com.example.testeMap.services.enderecoService;
@@ -31,33 +32,36 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
  * @author AlexSandey
  */
 @RestController
-@RequestMapping("/cliente")
-public class clienteController {
+@RequestMapping("/pedido")
+public class pedidoController {
 
     private usuarioService usuarioService;
     private enderecoService enderecoService;
 
-    public clienteController(usuarioService usuarioService, enderecoService enderecoService) {
+    public pedidoController(usuarioService usuarioService, enderecoService enderecoService) {
         this.usuarioService = usuarioService;
         this.enderecoService = enderecoService;
     }
 
     @GetMapping("")
-    public ModelAndView loginUsuarioGET(
-            RedirectAttributes redirAttr,
-            @RequestAttribute(name = "encaminharLogin", required = false) boolean encaminharLogin
-    
+    public ModelAndView dadosPedidoGET(
+            HttpSession session
     ) {
-        try{
-            if(encaminharLogin==true){
-                redirAttr.addFlashAttribute("encaminharLogin", true);
-                return new ModelAndView("usuario/login");        
-            }
-        }catch(Exception e){
-            return new ModelAndView("usuario/login");        
+        Usuario usuarioSessao = (Usuario) session.getAttribute("usuario");
+
+        List<ItensCarrinho> carrinho = (List<ItensCarrinho>) session.getAttribute("carrinho");
+        float total = 0;
+        
+        for (ItensCarrinho produto : carrinho) {
+            total += produto.getValor()*produto.getQtde();
         }
 
-        return new ModelAndView("usuario/login");
+        List<Endereco> enderecoEntrega = enderecoService.filtroTipoAndIdList("Entrega", usuarioSessao.getIdUsuario());
+
+        session.setAttribute("enderecoEntrega", enderecoEntrega);
+        session.setAttribute("total", total);
+
+        return new ModelAndView("pedido/painelPedido").addObject(session);
     }
 
     @PostMapping("/cadastrar")
@@ -146,13 +150,13 @@ public class clienteController {
 
                 return new ModelAndView("redirect:/cliente/painel");
             }
-            
+
         } catch (Exception e) {
             redirAttr.addFlashAttribute("msgErro", "erroLogin");
 
             return new ModelAndView("redirect:/cliente/login");
         }
-        
+
         redirAttr.addFlashAttribute("msgErro", "erroLogin");
 
         return new ModelAndView("redirect:/cliente/login");
@@ -170,7 +174,6 @@ public class clienteController {
 
         Endereco enderecoBanco = enderecoService.filtroTipoAndId("Faturamento", usuarioSessao.getIdUsuario());
 
-        
         session.removeAttribute("usuario");
 
         session.setAttribute("usuario", usuarioBanco);

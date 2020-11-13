@@ -102,22 +102,22 @@
                                         <label>Endereço de Faturamento</label>
                                     </div>
                                     <div id='painel-cliente-infos-view-atualizar-cadastro-dados-cadastrais-content'>
-                                        <input type="hidden" name="idEndereco_cliente" id="idEndereco_cliente" th:value="${session['endereco'].idEndereco}" >
+                                        <input type="hidden" name="idEndereco_cliente" id="idEndereco_cliente" th:value="${session['enderecoFaturamento'].idEndereco}" >
                                         <div>
-                                            <label for="rua_cliente">Rua: </label><input type="text" name="rua_cliente" id="rua_cliente" th:value="${session['endereco'].rua}"  >
+                                            <label for="rua_cliente">Rua: </label><input type="text" name="rua_cliente" id="rua_cliente" th:value="${session['enderecoFaturamento'].rua}"  >
                                         </div>
                                         <div>
-                                            <label for="numero_cliente">Número: </label><input type="text" name="numero_cliente" id="numero_cliente" th:value="${session['endereco'].numero}" >
+                                            <label for="numero_cliente">Número: </label><input type="text" name="numero_cliente" id="numero_cliente" th:value="${session['enderecoFaturamento'].numero}" >
 
                                         </div>
                                         <div>
-                                            <label for="bairro_cliente">Bairro: </label><input type="text" name="bairro_cliente" id="bairro_cliente" th:value="${session['endereco'].bairro}" >
+                                            <label for="bairro_cliente">Bairro: </label><input type="text" name="bairro_cliente" id="bairro_cliente" th:value="${session['enderecoFaturamento'].bairro}" >
                                         </div>
                                         <div>
-                                            <label for="cep_cliente">CEP: </label><input type="text" name="cep_cliente" id="cep_cliente" th:value="${session['endereco'].cep}" >
+                                            <label for="cep_cliente">CEP: </label><input type="text" name="cep_cliente" id="cep_cliente" th:value="${session['enderecoFaturamento'].cep}" >
                                         </div>  
                                         <div>
-                                            <label for="complemento_cliente">Complemento: </label><input type="text" name="complemento_cliente" id="complemento_cliente" th:value="${session['endereco'].complemento}" >
+                                            <label for="complemento_cliente">Complemento: </label><input type="text" name="complemento_cliente" id="complemento_cliente" th:value="${session['enderecoFaturamento'].complemento}" >
                                         </div>  
                                     </div>
                                 </div>
