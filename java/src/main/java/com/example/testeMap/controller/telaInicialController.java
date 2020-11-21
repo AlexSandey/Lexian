@@ -6,6 +6,7 @@
 package com.example.testeMap.controller;
 
 import com.example.testeMap.model.entidades.Imagem;
+import com.example.testeMap.model.entidades.ItensCarrinho;
 import com.example.testeMap.model.entidades.Produto;
 import com.example.testeMap.services.imagemService;
 import com.example.testeMap.services.produtoService;
@@ -33,6 +34,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 
 
 @RestController
@@ -55,9 +57,14 @@ public class telaInicialController {
     ){
 
         List<Produto> produto = produtoService.carregarProdutos();
-
+        List<ItensCarrinho> itemProdutos = new ArrayList();
+        for(Produto itemProduto : produto){
+            String caminhoImagem = imagemService.caminhoImagemMin(itemProduto.getIdProduto());
+            ItensCarrinho item = new ItensCarrinho(itemProduto.getIdProduto(), itemProduto.getNomeProduto(), caminhoImagem, itemProduto.getValor());
+            itemProdutos.add(item);
+        }
            
-        return new ModelAndView("produto/principal").addObject("produtos", produto); 
+        return new ModelAndView("index").addObject("produtos", itemProdutos); 
     }
 
 }

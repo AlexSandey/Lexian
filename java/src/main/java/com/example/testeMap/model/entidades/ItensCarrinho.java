@@ -38,7 +38,13 @@ public class ItensCarrinho {
         this.imagem = imagem;
         this.valor = valor;
     }
-    
+    public ItensCarrinho(int idProduto, String nomeProduto, String imagem, float valor) {
+        super();
+        this.idProduto = idProduto;
+        this.nomeProduto = nomeProduto;
+        this.imagem = imagem;
+        this.valor = valor;
+    }
     public int getIdProduto() {
         return idProduto;
     }

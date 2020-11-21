@@ -48,6 +48,8 @@ public class Produto {
     @Column(name = "ativo")
     private boolean ativo;
 
+    //private String fotoPrincipal;
+    
     public Produto() {
     }
     
@@ -63,6 +65,19 @@ public class Produto {
         this.ativo = ativo;
 
     }
+    /*public Produto(String fotoPrincipal, Produto produto) {
+        super();
+        
+        this.fotoPrincipal = fotoPrincipal;
+        this.nomeProduto = produto.getNomeProduto();
+        this.qtde = produto.getQtde();
+        this.marca = produto.getMarca();
+        this.categoria = produto.getCategoria();
+        this.descricao = produto.getDescricao();
+        this.valor = produto.getValor();
+        this.ativo = produto.isAtivo();
+
+    }*/
     public Produto(int idProduto, String nomeProduto, int qtde, String marca, String categoria, String descricao, float valor, boolean ativo) {
         super();
         this.idProduto = idProduto;
@@ -140,6 +155,14 @@ public class Produto {
         this.qtde = qtde;
     }
 
+    /*public String fotoPrincipal() {
+        return fotoPrincipal;
+    }
+
+    public void fotoPrincipal(String fotoPrincipal) {
+        this.fotoPrincipal = fotoPrincipal;
+    }*/
+    
     public boolean isAtivo() {
         return ativo;
     }
