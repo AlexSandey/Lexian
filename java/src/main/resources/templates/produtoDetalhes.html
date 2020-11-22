@@ -1,0 +1,128 @@
+<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+<link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet" />
+ <script th:src="@{/vendor/bootstrap/js/bootstrap.min.js}"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>eCommerce Product Detail</title>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
+    <link th:href="@{/css/detalhesProduto.css}" rel="stylesheet" />
+
+
+    
+  </head>
+
+  <body>
+        <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">Lexian - Loja de Informática</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+        aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Login
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Carrinho</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+	<div class="container-fluid">
+        <div class="content-wrapper">	
+            <div class="container">
+                <div class="card">
+                    <div class="container-fliud">
+                        <div class="wrapper row">
+                            <div class="preview col-md-6">
+                                
+                                <div class="preview-pic tab-content">
+                                  <div class="tab-pane active" id="pic-1"><img th:src="${itemProduto[1][0].caminho}" /></div>
+                                  <div class="tab-pane" th:each="imagem, stat: ${itemProduto[1]}" th:if="${imagem != itemProduto[1][0]}" th:id="|pic-${stat.index+1}|"><img th:src="${imagem.caminho}" /></div>
+                                  
+
+                                </div>
+                                <ul class="preview-thumbnail nav nav-tabs">
+                                    
+                                  <li><a data-target='#pic-1' data-toggle="tab"><img th:src="${itemProduto[1][0].caminho}" /></a></li>
+                                  <li th:each="imagem, stat: ${itemProduto[1]}" th:if="${imagem != itemProduto[1][0]}"><a th:attr="data-target='#pic-'+${stat.index+1}" data-toggle="tab"><img th:src="${imagem.caminho}" /></a></li>
+                                  
+
+                                </ul>
+                                
+                            </div>
+                            <div class="details col-md-6">
+                                <h3  th:text="${itemProduto[0].marca}" class="product-title"></h3>&nbsp;<h3 th:text="${itemProduto[0].nomeProduto}" class="product-title"></h3><br><br>
+                                
+                                <h4 class="price">PREÇO Á VISTA (BOLETO): R$ <span th:text="${itemProduto[0].valor}"></span></h4>
+        
+                                <div class="action">
+                                    <button class="add-to-cart btn btn-default" type="button">+ Carrinho</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid">		
+                <div class="col-md-12 product-info">
+                        <ul id="myTab" class="nav nav-tabs">
+                            
+                            <li class="active nav-item"><a href="#service-one" data-toggle="tab" class="nav-link active">DESCRIÇÃO</a></li>
+                            <li class="nav-item"><a href="#service-two" data-toggle="tab" class="nav-link" >F.A.Q</a></li>
+                            
+                        </ul>
+                    <div id="myTabContent" class="tab-content">
+                            <div class="tab-pane fade in active show" id="service-one">
+                             
+                                <section class="container product-info">
+                                    <p th:utext="${itemProduto[0].descricao}">
+                                        
+                                    </p>
+                                </section>
+                                              
+                            </div>
+                        <div class="tab-pane fade" id="service-two">
+                            
+                            <section class="container product-info">
+                                ESTAMOS NA F.A.Q
+        
+                                <h3>Corsair Gaming Series GS600 Features:</h3>
+                                <li>It supports the latest ATX12V v2.3 standard and is backward compatible with ATX12V 2.2 and ATX12V 2.01 systems</li>
+                                <li>An ultra-quiet 140mm double ball-bearing fan delivers great airflow at an very low noise level by varying fan speed in response to temperature</li>
+                                <li>80Plus certified to deliver 80% efficiency or higher at normal load conditions (20% to 100% load)</li>
+                                <li>0.99 Active Power Factor Correction provides clean and reliable power</li>
+                                <li>Universal AC input from 90~264V — no more hassle of flipping that tiny red switch to select the voltage input!</li>
+                                <li>Extra long fully-sleeved cables support full tower chassis</li>
+                                <li>A three year warranty and lifetime access to Corsair’s legendary technical support and customer service</li>
+                                <li>Over Current/Voltage/Power Protection, Under Voltage Protection and Short Circuit Protection provide complete component safety</li>
+                                <li>Dimensions: 150mm(W) x 86mm(H) x 160mm(L)</li>
+                                <li>MTBF: 100,000 hours</li>
+                                <li>Safety Approvals: UL, CUL, CE, CB, FCC Class B, TÜV, CCC, C-tick</li>
+                            </section>
+                            
+                        </div>
+    
+                    </div>
+                    <hr>
+                </div>
+            </div>
+        </div>
+    </div>
+  </body>
+</html>
+
+

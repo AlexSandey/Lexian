@@ -6,7 +6,6 @@
 package com.example.testeMap.repository;
 
 
-import com.example.testeMap.Utils.ProdFiltroCatg;
 import com.example.testeMap.model.entidades.ItensCarrinho;
 import com.example.testeMap.model.entidades.Produto;
 import java.util.List;

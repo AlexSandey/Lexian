@@ -5,7 +5,6 @@
  */
 package com.example.testeMap.controller;
 
-import com.example.testeMap.Utils.ProdFiltroCatg;
 import com.example.testeMap.model.entidades.Imagem;
 import com.example.testeMap.model.entidades.ItensCarrinho;
 import com.example.testeMap.model.entidades.Produto;

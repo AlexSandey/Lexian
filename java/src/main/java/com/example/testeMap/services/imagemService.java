@@ -37,6 +37,10 @@ public class imagemService {
         imagemRepository.delete(imagem);
         return imagem;
     }
+    
+    public List<Imagem> imagemProdutosPorID(int id) {
+        return imagemRepository.filtroImagemById(id);
+    }
      
 
 }

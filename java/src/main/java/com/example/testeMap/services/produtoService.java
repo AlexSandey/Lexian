@@ -5,7 +5,6 @@
  */
 package com.example.testeMap.services;
 
-import com.example.testeMap.Utils.ProdFiltroCatg;
 import com.example.testeMap.model.entidades.Produto;
 import com.example.testeMap.repository.produtoRepository;
 import java.util.List;

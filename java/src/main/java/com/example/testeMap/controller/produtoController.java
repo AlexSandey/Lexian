@@ -6,6 +6,7 @@
 package com.example.testeMap.controller;
 
 import com.example.testeMap.model.entidades.Imagem;
+import com.example.testeMap.model.entidades.ItensCarrinho;
 import com.example.testeMap.model.entidades.Produto;
 import com.example.testeMap.services.imagemService;
 import com.example.testeMap.services.produtoService;
@@ -33,6 +34,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 
 
 @RestController
@@ -136,10 +138,16 @@ public class produtoController {
         @RequestMapping(value = "/visualizar/{id}", method = RequestMethod.GET)
     public ModelAndView findByIdVisualizar(@PathVariable int id) {
         ResponseEntity<Produto> produtoResponse =  produtoService.filtroID(id);
-        
         Produto produto = produtoResponse.getBody();
         
-        return new ModelAndView("produto/visualizarProduto").addObject("produtos", produto);
+        List<Imagem> imagens = imagemService.imagemProdutosPorID(id);
+
+        List itemProduto = new ArrayList();
+        
+        itemProduto.add(produto);
+        itemProduto.add(imagens);
+
+        return new ModelAndView("produtoDetalhes").addObject("itemProduto", itemProduto);
 
     }
     

@@ -20,5 +20,8 @@ public interface imagemRepository extends CrudRepository<Imagem, Integer>{
     
     @Query(value="SELECT caminho FROM imagem WHERE id_imagem = ( Select Min(id_imagem) from imagem where id_produto like %:id% )",nativeQuery=true)
     public String filtroMinImagem(int id);
+    
+    @Query(value="SELECT * FROM imagem WHERE id_produto like %:id%",nativeQuery=true)
+    public List<Imagem> filtroImagemById(int id);
 
 }
