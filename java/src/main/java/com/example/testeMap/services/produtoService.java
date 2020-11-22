@@ -5,6 +5,7 @@
  */
 package com.example.testeMap.services;
 
+import com.example.testeMap.Utils.ProdFiltroCatg;
 import com.example.testeMap.model.entidades.Produto;
 import com.example.testeMap.repository.produtoRepository;
 import java.util.List;
@@ -68,6 +69,17 @@ public class produtoService {
         return produtoRepository.filtroCategoria(categoria);
     }
 
+        public List<Produto> filtroIndexRamdom(){
+            return produtoRepository.filtroIndexRamdom();
+        }
+        public List<Produto> filtro5MaisVendidosGeral(){
+            return produtoRepository.filtro5MaisVendidosGeral();
+        }
+        
+        public List<Produto> filtro5MaisVendidosCategoria(String categoria){
+            return produtoRepository.filtro5MaisVendidosCategoria(categoria);
+        }
+        
     public Optional<Produto> filtroId(int id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

@@ -5,6 +5,7 @@
  */
 package com.example.testeMap.controller;
 
+import com.example.testeMap.Utils.ProdFiltroCatg;
 import com.example.testeMap.model.entidades.Imagem;
 import com.example.testeMap.model.entidades.ItensCarrinho;
 import com.example.testeMap.model.entidades.Produto;
@@ -35,6 +36,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Optional;
 
 
 @RestController
@@ -53,18 +55,71 @@ public class telaInicialController {
 
     
     @GetMapping
-    public ModelAndView AtualizarProduto( 
+    public ModelAndView telaInicial( 
     ){
 
-        List<Produto> produto = produtoService.carregarProdutos();
-        List<ItensCarrinho> itemProdutos = new ArrayList();
-        for(Produto itemProduto : produto){
+        //List<Produto> produtoMaisVend = produtoService.filtro5MaisVendidosGeral();  
+        List<Produto> produtoMaisVend = produtoService.carregarProdutos();     
+        List<Produto> prodDisp = produtoService.filtroIndexRamdom();
+        List<ItensCarrinho> prodMaisVendidos = new ArrayList();
+        List<ItensCarrinho> prodInicial = new ArrayList();
+        
+        for(Produto itemAleatorio : prodDisp){
+            String caminhoImagem = imagemService.caminhoImagemMin(itemAleatorio.getIdProduto());
+            ItensCarrinho item = new ItensCarrinho(itemAleatorio.getIdProduto(), itemAleatorio.getNomeProduto(), caminhoImagem, itemAleatorio.getValor());
+            prodInicial.add(item);
+        }
+        
+        
+        for(Produto itemProduto : produtoMaisVend){
+            
             String caminhoImagem = imagemService.caminhoImagemMin(itemProduto.getIdProduto());
             ItensCarrinho item = new ItensCarrinho(itemProduto.getIdProduto(), itemProduto.getNomeProduto(), caminhoImagem, itemProduto.getValor());
-            itemProdutos.add(item);
+            prodMaisVendidos.add(item);
         }
+
+        
+
+        List<List<ItensCarrinho>> itemsPedido = new ArrayList<>();
+        itemsPedido.add(prodMaisVendidos);
+        itemsPedido.add(prodInicial);
            
-        return new ModelAndView("index").addObject("produtos", itemProdutos); 
+        
+        return new ModelAndView("index").addObject("produtos", itemsPedido); 
+    }
+    
+    @GetMapping("/categoria/{categoria}")
+    public ModelAndView telaFiltrada(@PathVariable String categoria ){
+
+        List<Produto> produtoMaisVend = produtoService.filtro5MaisVendidosCategoria(categoria);  
+        //List<Produto> produtoMaisVend = produtoService.filtroCategoria(categoria);     
+        List<Produto> prodDisp = produtoService.filtroCategoria(categoria);
+        
+        List<ItensCarrinho> prodMaisVendidos = new ArrayList();
+        List<ItensCarrinho> prodInicial = new ArrayList();
+        
+        for(Produto itemAleatorio : prodDisp){
+            String caminhoImagem = imagemService.caminhoImagemMin(itemAleatorio.getIdProduto());
+            ItensCarrinho item = new ItensCarrinho(itemAleatorio.getIdProduto(), itemAleatorio.getNomeProduto(), caminhoImagem, itemAleatorio.getValor());
+            prodInicial.add(item);
+        }
+        
+        
+        for(Produto itemProduto : produtoMaisVend){
+            
+            String caminhoImagem = imagemService.caminhoImagemMin(itemProduto.getIdProduto());
+            ItensCarrinho item = new ItensCarrinho(itemProduto.getIdProduto(), itemProduto.getNomeProduto(), caminhoImagem, itemProduto.getValor());
+            prodMaisVendidos.add(item);
+        }
+
+        
+
+        List<List<ItensCarrinho>> itemsPedido = new ArrayList<>();
+        itemsPedido.add(prodMaisVendidos);
+        itemsPedido.add(prodInicial);
+           
+        
+        return new ModelAndView("index").addObject("produtos", itemsPedido); 
     }
 
 }
