@@ -51,13 +51,31 @@ public class clienteController {
         try{
             if(encaminharLogin==true){
                 redirAttr.addFlashAttribute("encaminharLogin", true);
-                return new ModelAndView("usuario/login");        
+                return new ModelAndView("login");        
             }
         }catch(Exception e){
-            return new ModelAndView("usuario/login");        
+            return new ModelAndView("login");        
         }
 
-        return new ModelAndView("usuario/login");
+        return new ModelAndView("login");
+    }
+    
+     @GetMapping("registrar")
+    public ModelAndView registrarUsuarioGET(
+            RedirectAttributes redirAttr,
+            @RequestAttribute(name = "encaminharLogin", required = false) boolean encaminharLogin
+    
+    ) {
+        try{
+            if(encaminharLogin==true){
+                redirAttr.addFlashAttribute("encaminharLogin", true);
+                return new ModelAndView("registrar");        
+            }
+        }catch(Exception e){
+            return new ModelAndView("registrar");        
+        }
+
+        return new ModelAndView("registrar");
     }
 
     @PostMapping("/cadastrar")
@@ -71,15 +89,22 @@ public class clienteController {
             @RequestParam(name = "bairro", required = true) String bairro,
             @RequestParam(name = "cep", required = true) String cep,
             @RequestParam(name = "complemento") String complemento,
-            @RequestParam(name = "verify-revenues-choice") int verify,
-            @RequestParam(name = "rua_entrega") String rua_entrega,
-            @RequestParam(name = "numero_entrega") int numero_entrega,
-            @RequestParam(name = "bairro_entrega") String bairro_entrega,
-            @RequestParam(name = "cep_entrega") String cep_entrega,
-            @RequestParam(name = "complemento_entrega") String complemento_entrega,
+            @RequestParam(name = "confirmarEndereco") int confirmarEndereco,
+            @RequestParam(name = "rua_entrega",required =false) String rua_entrega,
+            @RequestParam(name = "numero_entrega",required =false) int numero_entrega,
+            @RequestParam(name = "bairro_entrega",required =false) String bairro_entrega,
+            @RequestParam(name = "cep_entrega",required =false) String cep_entrega,
+            @RequestParam(name = "complemento_entrega",required =false) String complemento_entrega,
             RedirectAttributes redirAttr
     ) throws NoSuchAlgorithmException {
 
+        
+        String trataCep = cep.replaceAll("-", "");
+        String trataCepEntrega = cep_entrega.replaceAll("-", "");
+        String trataCPF = cpf.replaceAll("-", "");
+        trataCPF = trataCPF.replace(".", "");
+       
+        
         List<Usuario> validaCpf = usuarioService.validaCpf(cpf);
 
         if (!validaCpf.isEmpty()) {
@@ -95,20 +120,20 @@ public class clienteController {
 
         String senha_hash = number.toString(16);
 
-        Usuario usuario = new Usuario(nome, email, senha_hash, "Cliente", cpf, true);
+        Usuario usuario = new Usuario(nome, email, senha_hash, "Cliente", trataCPF, true);
         Usuario usuarioID = usuarioService.cadastroUsuario(usuario);
 
-        if (verify == 1) {
-            Endereco enderecoCad = new Endereco(rua, numero, bairro, cep, complemento, "Entrega", usuarioID.getIdUsuario());
+        if (confirmarEndereco == 1) {
+            Endereco enderecoCad = new Endereco(rua, numero, bairro, trataCep, complemento, "Entrega", usuarioID.getIdUsuario());
             enderecoService.cadastroEndereco(enderecoCad);
         }
 
-        if (verify == 0) {
-            Endereco enderecoCad = new Endereco(rua_entrega, numero_entrega, bairro_entrega, cep_entrega, complemento_entrega, "Entrega", usuarioID.getIdUsuario());
+        if (confirmarEndereco == 0) {
+            Endereco enderecoCad = new Endereco(rua_entrega, numero_entrega, bairro_entrega, trataCepEntrega, complemento_entrega, "Entrega", usuarioID.getIdUsuario());
             enderecoService.cadastroEndereco(enderecoCad);
         }
 
-        Endereco enderecoCad = new Endereco(rua, numero, bairro, cep, complemento, "Faturamento", usuarioID.getIdUsuario());
+        Endereco enderecoCad = new Endereco(rua, numero, bairro, trataCep, complemento, "Faturamento", usuarioID.getIdUsuario());
         enderecoService.cadastroEndereco(enderecoCad);
 
         //redirAttr.addFlashAttribute("msgSucesso", "Cadastro realizado com sucesso! Realize o login Abaixo");
@@ -144,18 +169,17 @@ public class clienteController {
                     return new ModelAndView("redirect:http://localhost:8080/carrinho/dadosdecompra");
                 }
 
-                return new ModelAndView("redirect:/cliente/painel");
+                return new ModelAndView("redirect:http://localhost:8080");
             }
             
         } catch (Exception e) {
             redirAttr.addFlashAttribute("msgErro", "erroLogin");
 
-            return new ModelAndView("redirect:/cliente/login");
+            return new ModelAndView("redirect:/cliente");
         }
         
         redirAttr.addFlashAttribute("msgErro", "erroLogin");
-
-        return new ModelAndView("redirect:/cliente/login");
+        return new ModelAndView("redirect:/cliente");
     }
 
     @GetMapping("/painel")

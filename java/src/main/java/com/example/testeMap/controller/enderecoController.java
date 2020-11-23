@@ -42,6 +42,8 @@ public class enderecoController {
             @RequestParam(name = "tipo", required = true) String tipo,
             @RequestParam(name = "idUsuario", required = true) int idUsuario
     ) {
+        String trataCEP = cep.replaceAll("-", "");
+        
         Endereco endereco = new Endereco();
 
         endereco.setRua(rua);

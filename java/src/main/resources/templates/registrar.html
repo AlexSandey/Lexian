@@ -1,0 +1,537 @@
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script th:src="@{../vendor/jquery/jquery.min.js}"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"> 
+<script href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js" ></script>
+
+
+
+<!------ Include the above in your HEAD tag ---------->
+
+<!DOCTYPE html>
+
+<head>
+    <link th:href="@{../css/registrar.css}" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</head>
+
+<body>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">Lexian - Loja de Informática</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                    aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/cliente">Login
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Carrinho</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <form class="form-horizontal" id="formCadastrar" action="./cadastrar" method="POST" enctype="multipart/form-data">
+
+        <div class="col-md-11 control-label">
+            <p class="help-block">
+            <h11>*</h11> Campo Obrigatório
+            </p>
+        </div>
+
+
+        <!-- Text input-->
+        <div class="form-group">
+            <label class="col-md-2 control-label" for="Nome">Nome <h11>*</h11></label>
+            <div class="col-md-8">
+                <input id="Nome" name="nome_usuario" placeholder="" class="form-control input-md" required="" type="text">
+            </div>
+        </div>
+
+        <!-- Prepended text-->
+        <div class="form-group">
+            <label class="col-md-2 control-label" for="prependedtext">Email <h11>*</h11></label>
+            <div class="col-md-5">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                    <input id="prependedtext" name="email_usuario" class="form-control" placeholder="email@email.com" required=""
+                           type="text" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+                </div>
+            </div>
+        </div>
+
+        <!-- Text input-->
+        <div class="form-group">
+            <label class="col-md-2 control-label">CPF <h11>*</h11></label>
+            <div class="col-md-2">
+                <input id="cpf" name="cpf_usuario" placeholder="Apenas números" class="form-control input-md" required="" type="text"
+                       maxlength="12" >
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-2 control-label">Senha <h11>*</h11></label>
+            <div class="col-md-2">
+                <input id="senha" name="senha_usuario" placeholder="Senha" class="form-control input-md" required="" type="password"
+                       >
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-2 control-label" >Confirmar Senha <h11>*</h11></label>
+                <div class="col-md-2">
+                    <input id="confirmarsenha" name="confirmarSenha" placeholder="Senha" class="form-control input-md" required="" type="password" 
+                           >
+                </div>
+            </div>
+        </div>
+
+
+        <div id="endereco_faturamento">
+            <div class="form-group">
+                <div class="col-md-2 control-label">
+                    <h3>Endereço Faturamento</h3>
+                </div>
+            </div>
+
+
+
+
+
+            <!-- Search input-->
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="CEP">CEP <h11>*</h11></label>
+                <div class="col-md-2">
+                    <input id="cep" name="cep" placeholder="Apenas números" class="form-control input-md" required="" value=""
+                           type="search" maxlength="9" >
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-primary" onclick="pesquisacep(cep.value)">Pesquisar</button>
+                </div>
+
+                <label class="col-md-1 control-label" for="radios">Deseja usar como endereco entrega? <h11>*</h11></label>
+                <div class="col-md-4" id="confirmarEndereco">
+                    <label required="" class="radio-inline" for="radios-0">
+                        <input name="confirmarEndereco" value="1" type="radio" onchange="mesmoEndereco(this.value)">
+                        Sim
+                    </label>
+                    <label class="radio-inline" for="radios-1">
+                        <input name="confirmarEndereco" value="0" type="radio" onchange="mesmoEndereco(this.value)">
+                        Não
+                    </label>
+                </div>
+
+            </div>
+
+
+            <!-- Prepended text-->
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="prependedtext">Endereço</label>
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <span class="input-group-addon">Rua</span>
+                        <input id="rua" name="rua" class="form-control" placeholder="" required="" readonly="readonly" type="text">
+                    </div>
+
+                </div>
+                <div class="col-md-2">
+                    <div class="input-group">
+                        <span class="input-group-addon">Nº <h11>*</h11></span>
+                        <input id="numero" name="numero" class="form-control" placeholder="" required="" type="number">
+                    </div>
+
+                </div>
+
+                <div class="col-md-3">
+                    <div class="input-group">
+                        <span class="input-group-addon">Bairro</span>
+                        <input id="bairro" name="bairro" class="form-control" placeholder="" required="" readonly="readonly"
+                               type="text">
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-2 control-label"></label>
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <span class="input-group-addon">Cidade</span>
+                        <input id="cidade" name="cidade" class="form-control" placeholder="" required="" readonly="readonly"
+                               type="text">
+                    </div>
+
+                </div>
+
+                <div class="col-md-2">
+                    <div class="input-group">
+                        <span class="input-group-addon">Estado</span>
+                        <input id="estado" name="estado" class="form-control" placeholder="" required="" readonly="readonly"
+                               type="text">
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="Nome">Complemento</label>
+                <div class="col-md-2">
+                    <input id="complemento" name="complemento" placeholder="Complemento" class="form-control input-md" required="" type="text"
+                           maxlength="11" pattern="[0-9]+$">
+                </div>
+            </div>
+        </div>
+
+        <div id="endereco_entrega">
+            <div class="form-group">
+                <div class="col-md-2 control-label">
+                    <h3>Endereço De entrega</h3>
+                </div>
+            </div>
+
+
+            <!-- Search input-->
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="CEP">CEP <h11>*</h11></label>
+                <div class="col-md-2">
+                    <input id="cep_entrega" name="cep_entrega" placeholder="Apenas números" class="form-control input-md" required="" value=""
+                           type="search" maxlength="9">
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-primary" onclick="pesquisacepentrega(cep_entrega.value)">Pesquisar</button>
+                </div>
+
+            </div>
+
+
+            <!-- Prepended text-->
+            <div class="form-group">
+                <label class="col-md-2 control-label">Endereço</label>
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <span class="input-group-addon">Rua</span>
+                        <input id="rua_entrega" name="rua_entrega" class="form-control" placeholder="" required="" readonly="readonly" type="text">
+                    </div>
+
+                </div>
+                <div class="col-md-2">
+                    <div class="input-group">
+                        <span class="input-group-addon">Nº <h11>*</h11></span>
+                        <input id="numero_entrega" name="numero_entrega" class="form-control" placeholder="" required="" type="text">
+                    </div>
+
+                </div>
+
+                <div class="col-md-3">
+                    <div class="input-group">
+                        <span class="input-group-addon">Bairro</span>
+                        <input id="bairro_entrega" name="bairro_entrega" class="form-control" placeholder="" required="" readonly="readonly"
+                               type="text">
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="prependedtext"></label>
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <span class="input-group-addon">Cidade</span>
+                        <input id="cidade_entrega" name="cidade_entrega" class="form-control" placeholder="" required="" readonly="readonly"
+                               type="text">
+                    </div>
+
+                </div>
+
+                <div class="col-md-2">
+                    <div class="input-group">
+                        <span class="input-group-addon">Estado</span>
+                        <input id="estado_entrega" name="estado_entrega" class="form-control" placeholder="" required="" readonly="readonly"
+                               type="text">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="Nome">Complemento</label>
+                <div class="col-md-2">
+                    <input id="complemento_entrega" name="complemento_entrega" placeholder="Complemento" class="form-control input-md" required="" type="text"
+                           maxlength="11" pattern="[0-9]+$">
+                </div>
+            </div>
+
+
+        </div>
+        <!-- Button (Double) -->
+        <div>
+            <label class="col-md-2 control-label" for="Cadastrar"></label>
+            <div class="col-md-8">
+                <button id="cadastrar" name="cadastrar" class="btn btn-success" type="submit">Cadastrar</button>
+            </div>
+        </div>
+
+
+
+    </form>
+
+</body>
+<script>
+    
+  $(document).ready(function(){
+        $('#cpf').mask('000.000.000-00',);
+        $('#cep').mask('00000-000', {reverse: true});
+        $('#cep_entrega').mask('00000-000', {reverse: true});
+        
+        $('#register-user-content-email').mask("A", {
+            translation: {
+                "A": {pattern: /[\w@\-.+]/, recursive: true}
+            }
+        });
+    });
+
+    function limpa_formulario_cep() {
+        //Limpa valores do formulário de cep.
+        document.getElementById('rua').value = ("");
+        document.getElementById('bairro').value = ("");
+        document.getElementById('cidade').value = ("");
+        document.getElementById('estado').value = ("");
+
+    }
+    
+    function limpa_formulario_cep_entrega() {
+        //Limpa valores do formulário de cep.
+        document.getElementById('rua_entrega').value = ("");
+        document.getElementById('bairro_entrega').value = ("");
+        document.getElementById('cidade_entrega').value = ("");
+        document.getElementById('estado_entrega').value = ("");
+
+    }
+
+    function meu_callback(conteudo) {
+        if (!("erro" in conteudo)) {
+            //Atualiza os campos com os valores.
+            document.getElementById('rua').value = (conteudo.logradouro);
+            document.getElementById('bairro').value = (conteudo.bairro);
+            document.getElementById('cidade').value = (conteudo.localidade);
+            document.getElementById('estado').value = (conteudo.uf);
+        } //end if.
+        else {
+            //CEP não Encontrado.
+            limpa_formulario_cep();
+            alert("CEP não encontrado.");
+            document.getElementById('cep').value = ("");
+        }
+    }
+    
+        function meu_callbackentrega(conteudo) {
+        if (!("erro" in conteudo)) {
+            //Atualiza os campos com os valores.
+            document.getElementById('rua_entrega').value = (conteudo.logradouro);
+            document.getElementById('bairro_entrega').value = (conteudo.bairro);
+            document.getElementById('cidade_entrega').value = (conteudo.localidade);
+            document.getElementById('estado_entrega').value = (conteudo.uf);
+        } //end if.
+        else {
+            //CEP não Encontrado.
+            limpa_formulario_cep();
+            alert("CEP não encontrado.");
+            document.getElementById('cep').value = ("");
+        }
+    }
+
+    function pesquisacep(valor) {
+
+        //Nova variável "cep" somente com dígitos.
+        var cep = valor.replace(/\D/g, '');
+
+        //Verifica se campo cep possui valor informado.
+        if (cep !== "") {
+
+            //Expressão regular para validar o CEP.
+            var validacep = /^[0-9]{8}$/;
+
+            //Valida o formato do CEP.
+            if (validacep.test(cep)) {
+
+                //Preenche os campos com "..." enquanto consulta webservice.
+                document.getElementById('rua').value = "...";
+                document.getElementById('bairro').value = "...";
+                document.getElementById('cidade').value = "...";
+                document.getElementById('estado').value = "...";
+
+                //Cria um elemento javascript.
+                var script = document.createElement('script');
+
+                //Sincroniza com o callback.
+                script.src = '//viacep.com.br/ws/' + cep + '/json/?callback=meu_callback';
+
+                //Insere script no documento e carrega o conteúdo.
+                document.body.appendChild(script);
+
+            } //end if.
+            else {
+                //cep é inválido.
+                limpa_formulario_cep();
+                alert("Formato de CEP inválido.");
+            }
+        } //end if.
+        else {
+            //cep sem valor, limpa formulário.
+            limpa_formulario_cep();
+        }
+    }
+
+    function pesquisacepentrega(valor) {
+
+        //Nova variável "cep" somente com dígitos.
+        var cep = valor.replace(/\D/g, '');
+
+        //Verifica se campo cep possui valor informado.
+        if (cep !== "") {
+
+            //Expressão regular para validar o CEP.
+            var validacep = /^[0-9]{8}$/;
+
+            //Valida o formato do CEP.
+            if (validacep.test(cep)) {
+
+                //Preenche os campos com "..." enquanto consulta webservice.
+                document.getElementById('rua_entrega').value = "...";
+                document.getElementById('bairro_entrega').value = "...";
+                document.getElementById('cidade_entrega').value = "...";
+                document.getElementById('estado_entrega').value = "...";
+
+                //Cria um elemento javascript.
+                var script = document.createElement('script');
+
+                //Sincroniza com o callback.
+                script.src = '//viacep.com.br/ws/' + cep + '/json/?callback=meu_callbackentrega';
+
+                //Insere script no documento e carrega o conteúdo.
+                document.body.appendChild(script);
+
+            } //end if.
+            else {
+                //cep é inválido.
+                limpa_formulario_cep_entrega();
+                alert("Formato de CEP inválido.");
+            }
+        } //end if.
+        else {
+            //cep sem valor, limpa formulário.
+            limpa_formulario_cep_entrega();
+        }
+    }
+
+    function mesmoEndereco(valor) {
+        if (valor == 1) {
+            document.getElementById('rua_entrega').value = document.getElementById('rua').value;
+            document.getElementById('bairro_entrega').value = document.getElementById('bairro').value;
+            document.getElementById('cidade_entrega').value = document.getElementById('cidade').value;
+            document.getElementById('estado_entrega').value = document.getElementById('estado').value;
+            document.getElementById('numero_entrega').value = document.getElementById('numero').value;
+            document.getElementById('complemento_entrega').value = document.getElementById('complemento').value;
+            document.getElementById('cep_entrega').value = document.getElementById('cep').value;
+        } else {
+            document.getElementById('rua_entrega').value = ("");
+            document.getElementById('bairro_entrega').value = ("");
+            document.getElementById('cidade_entrega').value = ("");
+            document.getElementById('estado_entrega').value = ("");
+            document.getElementById('cep_entrega').value = ("");
+            document.getElementById('complemento_entrega').value = ("");
+            document.getElementById('numero_entrega').value = ("");
+        }
+    }
+
+
+    function formatar(mascara, documento) {
+        var i = documento.value.length;
+        var saida = mascara.substring(0, 1);
+        var texto = mascara.substring(i);
+
+        if (texto.substring(0, 1) != saida) {
+            documento.value += texto.substring(0, 1);
+        }
+
+    }
+    
+    
+
+    function idade() {
+        var data = document.getElementById("dtnasc").value;
+        var dia = data.substr(0, 2);
+        var mes = data.substr(3, 2);
+        var ano = data.substr(6, 4);
+        var d = new Date();
+        var ano_atual = d.getFullYear(),
+                mes_atual = d.getMonth() + 1,
+                dia_atual = d.getDate();
+
+        ano = +ano,
+                mes = +mes,
+                dia = +dia;
+
+        var idade = ano_atual - ano;
+
+        if (mes_atual < mes || mes_atual == mes_aniversario && dia_atual < dia) {
+            idade--;
+        }
+        return idade;
+    }
+
+
+    function exibe(i) {
+
+
+
+        document.getElementById(i).readOnly = true;
+
+
+
+
+    }
+
+    function desabilita(i) {
+
+        document.getElementById(i).disabled = true;
+    }
+    function habilita(i) {
+        document.getElementById(i).disabled = false;
+    }
+
+
+    function showhide() {
+        var div = document.getElementById("newpost");
+
+        if (idade() >= 18) {
+
+            div.style.display = "none";
+        } else if (idade() < 18) {
+            div.style.display = "inline";
+        }
+
+    }
+    
+
+    
+</script>
+
+</html>

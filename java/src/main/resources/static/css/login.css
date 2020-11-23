@@ -1,0 +1,20 @@
+/*!
+ * Start Bootstrap - Shop Homepage (https://startbootstrap.com/template/shop-homepage)
+ * Copyright 2013-2020 Start Bootstrap
+ * Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-shop-homepage/blob/master/LICENSE)
+ */
+
+ @font-face{
+  font-family: ubuntu;
+  src: url(../fonts/Ubuntu-Regular.ttf);
+}
+
+ body {
+  font-family: 'ubuntu';
+  overflow-x: hidden; 
+  background: url(https://themes.kabum.com.br/conteudo/layout/1413/bg.jpg?int_banner_name=THEME-RTX-SERIE30&int_banner_position=tematizacao_listagem);
+}
+#login {
+  padding-top: 200px;
+}
+

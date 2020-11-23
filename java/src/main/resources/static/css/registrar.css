@@ -1,0 +1,23 @@
+/*!
+ * Start Bootstrap - Shop Homepage (https://startbootstrap.com/template/shop-homepage)
+ * Copyright 2013-2020 Start Bootstrap
+ * Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-shop-homepage/blob/master/LICENSE)
+ */
+
+ @font-face{
+  font-family: ubuntu;
+  src: url(../fonts/Ubuntu-Regular.ttf);
+}
+body {
+  font-family: 'ubuntu';
+  overflow-x: hidden; 
+}
+ h11 {
+  color:red;
+}
+
+
+
+.panel-heading{
+  font-size:150%;
+}
