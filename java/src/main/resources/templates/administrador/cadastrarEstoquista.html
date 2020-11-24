@@ -1,0 +1,155 @@
+<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="css/clientePainel.css">
+ <link th:href="@{/css/administradorPainel.css}" rel="stylesheet" />
+
+
+<!------ Include the above in your HEAD tag ---------->
+
+<div id="throbber" style="display:none; min-height:120px;"></div>
+<div id="noty-holder"></div>
+<div id="wrapper">
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://bryanrojasq.wordpress.com">
+                <img src="http://placehold.it/200x50&text=LOGO" alt="LOGO">
+            </a>
+        </div>
+        <!-- Top Menu Items -->
+        <ul class="nav navbar-right top-nav">
+            <li><a href="#" data-placement="bottom" data-toggle="tooltip" data-original-title="Stats"><i
+                        class="fa fa-bar-chart-o"></i>
+                </a>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin User <b
+                        class="fa fa-angle-down"></b></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#"><i class="fa fa-fw fa-user"></i> Edit Profile</a></li>
+                    <li><a href="#"><i class="fa fa-fw fa-cog"></i> Change Password</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#"><i class="fa fa-fw fa-power-off"></i> Logout</a></li>
+                </ul>
+            </li>
+        </ul>
+        <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav side-nav">
+                <li>
+                    <a data-toggle="collapse" data-target="#submenu-1"><i class="fa fa-fw fa-users"></i> ESTOQUISTA <i
+                            class="fa fa-fw fa-angle-down pull-right"></i></a>
+                    <ul id="submenu-1" class="collapse">
+                        <li><a href="admin/cadastrar-estoquista"><i class="fa fa-user-plus"></i>
+                                ADICIONAR</a></li>
+                        <li><a href="admin/listar-estoquista"><i class="fa fa-user"></i> ATUALIZAR
+                                / DESATIVAR</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#" data-toggle="collapse" data-target="#submenu-2"><i class="fa fa-fw fa-star"></i> MENU 2
+                        <i class="fa fa-fw fa-angle-down pull-right"></i></a>
+                    <ul id="submenu-2" class="collapse">
+                        <li><a href="#"><i class="fa fa-angle-double-right"></i> SUBMENU 2.1</a></li>
+                        <li><a href="#"><i class="fa fa-angle-double-right"></i> SUBMENU 2.2</a></li>
+                        <li><a href="#"><i class="fa fa-angle-double-right"></i> SUBMENU 2.3</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="investigaciones/favoritas"><i class="fa fa-fw fa-user-plus"></i> MENU 3</a>
+                </li>
+                <li>
+                    <a href="sugerencias"><i class="fa fa-fw fa-paper-plane-o"></i> MENU 4</a>
+                </li>
+                <li>
+                    <a href="faq"><i class="fa fa-fw fa fa-question-circle"></i> MENU 5</a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </nav>
+
+    <div id="page-wrapper">
+        <div class="container-fluid">
+            <!-- Page Heading -->
+            <h3>ADICIONAR ESTOQUISTA</h3>
+            <div class="row" id="main">
+                <div class="col-sm-12 col-md-12 well " id="adicionar_estoquista" >
+                    <form class="form-horizontal" action="admin/cadastrar-estoquista" method="POST">
+                        <div class="col-md-11 control-label">
+                            <p class="help-block">
+                                <h11>*</h11> Campo Obrigatório
+                            </p>
+                        </div>
+                        <!-- Text input-->
+                        <div class="form-group">
+                            <label class="col-md-2 control-label" for="Nome">Nome <h11>*</h11></label>
+                            <div class="col-md-8">
+                                <input id="Nome" name="nome_usuario" placeholder="" class="form-control input-md"
+                                    required="" type="text">
+                            </div>
+                        </div>
+
+                        <!-- Prepended text-->
+                        <div class="form-group">
+                            <label class="col-md-2 control-label" for="prependedtext">Email <h11>*</h11></label>
+                            <div class="col-md-5">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                                    <input id="prependedtext" name="email_usuario" class="form-control"
+                                        placeholder="email@email.com" required="" type="text"
+                                        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Text input-->
+                        <div class="form-group">
+                            <label class="col-md-2 control-label" for="Nome">CPF <h11>*</h11></label>
+                            <div class="col-md-2">
+                                <input id="cpf" name="cpf_usuario" placeholder="Apenas números"
+                                    class="form-control input-md" required="" type="text" maxlength="11"
+                                    pattern="[0-9]+$">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-2 control-label" for="Nome">Senha <h11>*</h11></label>
+                            <div class="col-md-2">
+                                <input id="cpf" name="senha_usuario" placeholder="Senha" class="form-control input-md"
+                                    required="" type="text" maxlength="11" pattern="[0-9]+$">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label" for="Nome">Confirmar Senha <h11>*</h11></label>
+                                <div class="col-md-2">
+                                    <input id="cpf" name="confirmarSenha" placeholder="Senha"
+                                        class="form-control input-md" required="" type="text" maxlength="11"
+                                        pattern="[0-9]+$">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label" for="Cadastrar"></label>
+                            <div class="col-md-8">
+                                <button id="Cadastrar" name="Cadastrar" class="btn btn-success"
+                                    type="Submit">Cadastrar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+    </div>
+    <!-- /#page-wrapper -->
+</div><!-- /#wrapper -->

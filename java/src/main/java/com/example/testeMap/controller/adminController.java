@@ -32,14 +32,19 @@ public class adminController {
         this.usuarioService = usuarioService;
     }
 
-    @PostMapping("/cadastrar-usuario")
-    public ModelAndView cadastrarUsuarioPOST(
+    
+    @GetMapping("/cadastrar-estoquista")
+    public ModelAndView cadastrarEstoquistaGET()
+    {
+       return new ModelAndView("administrador/cadastrarEstoquista"); 
+    }
+    
+    @PostMapping("/cadastrar-estoquista")
+    public ModelAndView cadastrarEstoquistaPOST(
         @RequestParam(name = "nome_usuario", required = true) String nome,
         @RequestParam(name = "email_usuario", required = true) String email,
         @RequestParam(name = "senha_usuario", required = true) String senha,
-        @RequestParam(name = "cpf_usuario", required = true) String cpf,
-        @RequestParam(name = "perfil_usuario", required = true) String perfil,
-        @RequestParam(name = "status_usuario", required = true) boolean status
+        @RequestParam(name = "cpf_usuario", required = true) String cpf
     )
     {
         
@@ -49,21 +54,15 @@ public class adminController {
         usuario.setEmail(email);   
         usuario.setSenha(senha);
         usuario.setCpf(cpf);
-        usuario.setPerfil(perfil);
-        usuario.setStatus(status);
+        usuario.setPerfil("Estoquista");
+        usuario.setStatus(true);
         
         usuarioService.cadastroUsuario(usuario);
         
-       return new ModelAndView("produto/cadastrarUsuario"); 
+       return new ModelAndView("redirect:admin/cadastrar-esstoquista"); 
 
     }
-    
-    @GetMapping("/cadastrar")
-    public ModelAndView cadastrarUsuarioGET()
-    {
-       return new ModelAndView("produto/cadastrarUsuario"); 
-    }
-    
+
     @RequestMapping(method = RequestMethod.GET, path = "/lista")
     public ModelAndView carregarUsuarios() {
         List<Usuario> usuario = usuarioService.carregarUsuarios();
@@ -110,16 +109,7 @@ public class adminController {
        return "<script>window.location.href = 'http://localhost:8080/usuario/lista'</script>";
 
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<Usuario> filtroID(@PathVariable int id) {
         return usuarioService.filtroID(id);

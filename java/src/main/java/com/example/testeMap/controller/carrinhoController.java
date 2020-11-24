@@ -52,7 +52,7 @@ public class carrinhoController {
             
             carrinho = (List<ItensCarrinho>) session.getAttribute("carrinho");
             
-            return new ModelAndView("produto/carrinho").addObject(carrinho);
+            return new ModelAndView("carrinho").addObject(carrinho);
 
         }catch(Exception e){
            
