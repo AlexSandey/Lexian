@@ -28,7 +28,7 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="#">Lexian - Loja de Informática</a>
+            <a href="http://localhost:8080/">Lexian - Loja de Informática<a/>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                     aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -41,7 +41,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Carrinho</a>
+                        <a class="nav-link" href="/carrinho">Carrinho</a>
                     </li>
                 </ul>
             </div>
@@ -50,7 +50,8 @@
 
 
     <form class="form-horizontal" id="formCadastrar" action="./cadastrar" method="POST" enctype="multipart/form-data">
-
+        <input type="hidden" id="mensagem_retorno" th:if="${msgSucesso != null}" th:value="${msgSucesso}">
+        
         <div class="col-md-11 control-label">
             <p class="help-block">
             <h11>*</h11> Campo Obrigatório
@@ -195,7 +196,7 @@
                 <label class="col-md-2 control-label" for="Nome">Complemento</label>
                 <div class="col-md-2">
                     <input id="complemento" name="complemento" placeholder="Complemento" class="form-control input-md" required="" type="text"
-                           maxlength="11" pattern="[0-9]+$">
+                           >
                 </div>
             </div>
         </div>
@@ -218,6 +219,7 @@
                 <div class="col-md-2">
                     <button type="button" class="btn btn-primary" onclick="pesquisacepentrega(cep_entrega.value)">Pesquisar</button>
                 </div>
+                <a>Teste</a>
 
             </div>
 
@@ -273,8 +275,7 @@
             <div class="form-group">
                 <label class="col-md-2 control-label" for="Nome">Complemento</label>
                 <div class="col-md-2">
-                    <input id="complemento_entrega" name="complemento_entrega" placeholder="Complemento" class="form-control input-md" required="" type="text"
-                           maxlength="11" pattern="[0-9]+$">
+                    <input id="complemento_entrega" name="complemento_entrega" placeholder="Complemento" class="form-control input-md" required="" type="text">
                 </div>
             </div>
 
