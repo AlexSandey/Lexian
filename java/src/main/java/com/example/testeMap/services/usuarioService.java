@@ -45,6 +45,9 @@ public class usuarioService {
        public List<Usuario> carregarUsuarios() {
         return (List<Usuario>) usuarioRepository.findAll();
     }
+       public List<Usuario> carregarEstoquistas() {
+        return (List<Usuario>) usuarioRepository.listarEstoquista();
+    }
     
     public ResponseEntity updateUser(int id,
              Usuario usuario) {

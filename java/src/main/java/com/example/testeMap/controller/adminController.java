@@ -1,4 +1,4 @@
-/*
+    /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -8,6 +8,9 @@ package com.example.testeMap.controller;
 import com.example.testeMap.model.entidades.Produto;
 import com.example.testeMap.model.entidades.Usuario;
 import com.example.testeMap.services.usuarioService;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,29 +48,38 @@ public class adminController {
         @RequestParam(name = "email_usuario", required = true) String email,
         @RequestParam(name = "senha_usuario", required = true) String senha,
         @RequestParam(name = "cpf_usuario", required = true) String cpf
-    )
+    ) throws NoSuchAlgorithmException
     {
         
         Usuario usuario =  new Usuario();
         
         usuario.setNome(nome);
-        usuario.setEmail(email);   
-        usuario.setSenha(senha);
+        usuario.setEmail(email); 
+        
+        MessageDigest md = MessageDigest.getInstance("MD5");
+
+        byte[] messageDigest = md.digest(senha.getBytes());
+
+        BigInteger number = new BigInteger(1, messageDigest);
+
+        String senha_hash = number.toString(16);
+        
+        usuario.setSenha(senha_hash);
         usuario.setCpf(cpf);
         usuario.setPerfil("Estoquista");
         usuario.setStatus(true);
         
         usuarioService.cadastroUsuario(usuario);
         
-       return new ModelAndView("redirect:admin/cadastrar-esstoquista"); 
+       return new ModelAndView("redirect:cadastrar-estoquista"); 
 
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = "/lista")
+    @GetMapping("/listar-estoquistas")
     public ModelAndView carregarUsuarios() {
-        List<Usuario> usuario = usuarioService.carregarUsuarios();
+        List<Usuario> estoquistas = usuarioService.carregarEstoquistas();
 
-        return new ModelAndView("produto/listarUsuario").addObject("usuarios", usuario); 
+        return new ModelAndView("administrador/listaEstoquista").addObject("estoquistas", estoquistas); 
     }
     
     @RequestMapping(value = "/atualizar/{id}", method = RequestMethod.GET)

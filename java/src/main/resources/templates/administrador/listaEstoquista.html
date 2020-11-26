@@ -1,0 +1,189 @@
+<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<link th:href="@{/css/administradorPainel.css}" rel="stylesheet" />
+<link th:href="@{/css/listarEstoquista.css}" rel="stylesheet" />
+
+<!------ Include the above in your HEAD tag ---------->
+
+<div id="throbber" style="display:none; min-height:120px;"></div>
+<div id="noty-holder"></div>
+<div id="wrapper">
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://bryanrojasq.wordpress.com">
+                <img src="@{/img/lexian.png}" alt="LOGO">
+            </a>
+        </div>
+        <!-- Top Menu Items -->
+        <ul class="nav navbar-right top-nav">
+            <li><a href="#" data-placement="bottom" data-toggle="tooltip" data-original-title="Stats"><i
+                        class="fa fa-bar-chart-o"></i>
+                </a>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin User <b
+                        class="fa fa-angle-down"></b></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#"><i class="fa fa-fw fa-user"></i> Edit Profile</a></li>
+                    <li><a href="#"><i class="fa fa-fw fa-cog"></i> Change Password</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#"><i class="fa fa-fw fa-power-off"></i> Logout</a></li>
+                </ul>
+            </li>
+        </ul>
+        <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav side-nav">
+                <li>
+                    <a data-toggle="collapse" data-target="#submenu-1"><i class="fa fa-fw fa-users"></i> ESTOQUISTA <i
+                            class="fa fa-fw fa-angle-down pull-right"></i></a>
+                    <ul id="submenu-1" class="collapse">
+                        <li><a href="cadastrar-estoquista"><i class="fa fa-user-plus"></i>
+                                ADICIONAR</a></li>
+                        <li><a href="listar-estoquistas"><i class="fa fa-user"></i> ATUALIZAR
+                                / DESATIVAR</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#" data-toggle="collapse" data-target="#submenu-2"><i class="fa fa-fw fa-star"></i> MENU 2
+                        <i class="fa fa-fw fa-angle-down pull-right"></i></a>
+                    <ul id="submenu-2" class="collapse">
+                        <li><a href="#"><i class="fa fa-angle-double-right"></i> SUBMENU 2.1</a></li>
+                        <li><a href="#"><i class="fa fa-angle-double-right"></i> SUBMENU 2.2</a></li>
+                        <li><a href="#"><i class="fa fa-angle-double-right"></i> SUBMENU 2.3</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="investigaciones/favoritas"><i class="fa fa-fw fa-user-plus"></i> MENU 3</a>
+                </li>
+                <li>
+                    <a href="sugerencias"><i class="fa fa-fw fa-paper-plane-o"></i> MENU 4</a>
+                </li>
+                <li>
+                    <a href="faq"><i class="fa fa-fw fa fa-question-circle"></i> MENU 5</a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </nav>
+
+    <div id="page-wrapper">
+        <div class="container-fluid">
+            <!-- Page Heading -->
+            <h3>LISTA DE ESTOQUISTAS</h3>
+            <div class="row" id="main">
+                <div class="panel filterable">
+                    <div class="panel-heading.">
+                        <div class="pull-right">
+
+                        </div>
+                    </div>
+                    <table class="tablenb">
+                        <thead>
+                            <tr class="filters">
+                                <th></th>
+                                <th><input type="text" class="form-control" placeholder="Pesquisar por Nome" enabled></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th class="text-center"><button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#myModal">Dodaj</a></button></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+
+                            <tr>
+                                <td class="text-center">ID</td>
+                                <td class="text-center">Nome</td>
+                                <td class="text-center">CPF</td>
+                                <td class="text-center">Função</td>
+                                <td class="text-center">Status</td>
+                                <td class="text-center">Editar</td>
+                                <td class="text-center">Desativar</td>
+
+                            </tr>
+                            <tr th:each="estoquista, stat: ${estoquistas}">
+                                <td class=" text-center" th:text="${estoquista.idUsuario}"></td>
+                                <td class="text-center" th:text="${estoquista.nome}"></td>
+                                <td class="text-center" th:text="${estoquista.cpf}"></td>
+                                <td class="text-center" th:text="${estoquista.perfil}"></td>
+                                <td class="text-center" th:text="${estoquista.status}"></td>
+                                <th class="text-center"><button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#edytuj">Editar</a></button></th>
+                                <th class="text-center"><button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#usun">Desativar</a></button></th>
+                            </tr>
+                           
+                    </table>
+                </div>
+            </div>
+            <!-- Modal Dodaj -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                        </div>
+                        <div class="modal-body">
+                            ...
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal EDYTUJ -->
+            <div class="modal fade" id="edytuj" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                        </div>
+                        <div class="modal-body">
+                            ...
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal USUŃ -->
+            <div class="modal fade" id="usun" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                        </div>
+                        <div class="modal-body">
+                            ...
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.container-fluid -->
+        </div>
+        <!-- /#page-wrapper -->
+    </div><!-- /#wrapper -->
