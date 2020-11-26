@@ -1,0 +1,86 @@
+/*!
+ * Start Bootstrap - Shop Homepage (https://startbootstrap.com/template/shop-homepage)
+ * Copyright 2013-2020 Start Bootstrap
+ * Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-shop-homepage/blob/master/LICENSE)
+ */
+
+ body{
+  background:#f5f5f5;
+  margin-top:20px;}
+
+.filtro-endereco .caixa-endereco {
+-webkit-box-shadow: 0 0 35px 0 rgba(130, 130, 130, 0.2);
+        box-shadow: 0 0 35px 0 rgba(130, 130, 130, 0.2);
+border-radius: 10px;
+padding: 10px 35px;
+}
+
+ul {
+list-style: none; 
+}
+
+
+
+.dados-endereco ul li {
+font-weight: 600;
+opacity: 0.75;
+border-bottom: 1px solid #ccc;
+padding: 10px 5px;
+}
+
+
+.dados-endereco ul li {
+  border-bottom: 0;
+  padding: 0;
+}
+
+
+.dados-endereco ul li i {
+font-size: 20px;
+position: relative;
+top: 1px;
+}
+.mb-30 {
+  margin-bottom: 30px;
+}
+
+
+.produtosCarrinho .caixa-produtos {
+-webkit-box-shadow: 0 0 35px 0 rgba(130, 130, 130, 0.2);
+        box-shadow: 0 0 35px 0 rgba(130, 130, 130, 0.2);
+border-radius: 10px;
+padding: 10px 35px;
+}
+
+ul {
+list-style: none; 
+}
+
+
+
+.dados-produto ul li {
+font-weight: 600;
+opacity: 0.75;
+border-bottom: 1px solid #ccc;
+padding: 10px 5px;
+}
+
+
+.dados-produto ul li {
+  border-bottom: 0;
+  padding: 0;
+}
+
+
+.dados-produtos ul li i {
+font-size: 20px;
+position: relative;
+top: 1px;
+}
+.mb-30 {
+  margin-bottom: 30px;
+}
+
+.produtosCarrinho #imgProduto{
+  width: 30%;
+}
