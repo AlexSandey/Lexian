@@ -35,6 +35,9 @@ public class Pedido {
     @Column(name = "metodo_pagamento")
     private String metodoPagamento;
     
+    @Column(name = "nome_cartao")
+    private String nomeCartao;
+    
     @Column(name = "cartao_num")
     private String numCartao;
     
@@ -51,16 +54,19 @@ public class Pedido {
     public Pedido(){
     }
 
-    public Pedido(int idUsuario, int idEndereco, float valorTotal, String metodoPagamento, String numCartao, int parcelas, String boleto, int status) {
+    public Pedido(int idPedido, int idUsuario, int idEndereco, float valorTotal, String metodoPagamento, String nomeCartao, String numCartao, int parcelas, String boleto, int status) {
+        this.idPedido = idPedido;
         this.idUsuario = idUsuario;
         this.idEndereco = idEndereco;
         this.valorTotal = valorTotal;
         this.metodoPagamento = metodoPagamento;
+        this.nomeCartao = nomeCartao;
         this.numCartao = numCartao;
         this.parcelas = parcelas;
         this.boleto = boleto;
         this.status = status;
     }
+
 
 
     public int getIdPedido() {
@@ -102,6 +108,15 @@ public class Pedido {
     public void setMetodoPagamento(String metodoPagamento) {
         this.metodoPagamento = metodoPagamento;
     }
+
+    public String getNomeCartao() {
+        return nomeCartao;
+    }
+
+    public void setNomeCartao(String nomeCartao) {
+        this.nomeCartao = nomeCartao;
+    }
+    
 
     public String getNumCartao() {
         return numCartao;

@@ -5,6 +5,7 @@
  */
 package com.example.testeMap.controller;
 
+import com.example.testeMap.model.entidades.Cartao;
 import com.example.testeMap.model.entidades.Endereco;
 import com.example.testeMap.model.entidades.ItemPedido;
 import com.example.testeMap.model.entidades.ItensCarrinho;
@@ -14,6 +15,7 @@ import com.example.testeMap.services.ItemPedidoService;
 import com.example.testeMap.services.PedidoService;
 import com.example.testeMap.services.enderecoService;
 import com.example.testeMap.services.usuarioService;
+import com.example.testeMap.util.autenticar;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import javax.servlet.http.HttpSession;
@@ -50,6 +52,7 @@ public class pedidoController {
             HttpSession session
     ) {
         try {
+            if (autenticar.porSessao(session, "Cliente")) {
             Usuario usuarioSessao = (Usuario) session.getAttribute("usuario");
                        
             List<ItensCarrinho> carrinho = (List<ItensCarrinho>) session.getAttribute("carrinho");
@@ -64,7 +67,10 @@ public class pedidoController {
             session.setAttribute("enderecoEntrega", enderecoEntrega);
             session.setAttribute("total", total);
 
-            return new ModelAndView("pedido/painelPedido").addObject(session);
+            return new ModelAndView("/realizarPagamento").addObject(session);
+            }else{
+               return new ModelAndView("redirect:/cliente");
+            }
             
         } catch (Exception e) {
             
@@ -80,6 +86,7 @@ public class pedidoController {
             @RequestParam(name = "enderecoEscolhido", required = false) int idEndereco,
             // CALCULO SERA FEITO ATRAVES DO CARRINHO DA SESSION @RequestParam(name = "valor_total", required = true) float valorTotal,
             @RequestParam(name = "metodoPagamento") String metodoPagamento,
+            @RequestParam(name = "nomeCartao") String nomeCartao,
             @RequestParam(name = "numeroCartao", required = true) String numCartao,
             @RequestParam(name = "parcelaCartao", required = true) int parcela,
             HttpSession session,
@@ -104,8 +111,9 @@ public class pedidoController {
         String boleto = "341917900101043.510047";
         
         int idStatus = 1;
-        Pedido novoPedido = new Pedido(idUsuario, idEndereco, valorTotal,
-                metodoPagamento, numCartao, parcela, boleto, idStatus);
+        
+        Pedido novoPedido = new Pedido(idStatus, idUsuario, idEndereco, valorTotal, metodoPagamento, nomeCartao, numCartao, parcela, boleto, idStatus);
+        
 
         Pedido CadPedido = PedidoService.CadastrarPedido(novoPedido);
 
@@ -118,6 +126,31 @@ public class pedidoController {
 
         //redirAttr.addFlashAttribute("msgSucesso", "Cadastro realizado com sucesso! Realize o login Abaixo");
         return new ModelAndView("redirect:/");
+    }
+    
+    @PostMapping("/confirmarDados")
+    public ModelAndView confirmarPedidoPOST(
+            // ID USUARIO VEM DA SESSION >>>> @RequestParam(name = "id_usuario", required = true) int idUsuario,
+            @RequestParam(name = "enderecoEscolhido", required = false) int idEndereco,
+            // CALCULO SERA FEITO ATRAVES DO CARRINHO DA SESSION @RequestParam(name = "valor_total", required = true) float valorTotal,
+            @RequestParam(name = "metodoPagamento") String metodoPagamento,
+            @RequestParam(name = "nomeCartao") String nomeCartao,
+            @RequestParam(name = "numeroCartao", required = true) String numCartao,
+            @RequestParam(name = "parcelaCartao", required = true) int parcela,
+            HttpSession session,
+            RedirectAttributes redirAttr
+    ) throws NoSuchAlgorithmException {
+
+        Cartao cartao = new Cartao(nomeCartao, numCartao,parcela);
+        
+        Endereco endEntrega = (Endereco)(List<Endereco>)enderecoService.filtroID(idEndereco);
+        
+        session.setAttribute("cartao", cartao);
+        session.setAttribute("endSelecionado", endEntrega);
+
+
+        //redirAttr.addFlashAttribute("msgSucesso", "Cadastro realizado com sucesso! Realize o login Abaixo");
+        return new ModelAndView("redirect:/confirmarPagamento");
     }
 
 }

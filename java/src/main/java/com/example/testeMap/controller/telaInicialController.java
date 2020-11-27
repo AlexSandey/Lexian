@@ -84,6 +84,8 @@ public class telaInicialController {
         itemsPedido.add(prodInicial);
            
         
+        
+        
         return new ModelAndView("index").addObject("produtos", itemsPedido); 
     }
     
