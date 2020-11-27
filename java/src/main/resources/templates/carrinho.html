@@ -89,151 +89,153 @@
                                 <hr>
                             </form>
 
-                            <div class="row">
-                                <div class="col-sm">
-                                    <label class="col control-label" for="CEP">Pesquisar CEP de Entrega</label>
-                                    <br>
-                                    <div class="col-2">
-                                        <input id="cep" name="cep" placeholder="Apenas números" class="form-control input-lg" required=""
-                                               value="" type="search" maxlength="9" pattern="[0-9]+$">
-                                    </div>
-                                    <br>
-                                    <div class="col">
-                                        <button type="button" class="btn btn-primary" onclick="pesquisacep(cep.value)">Pesquisar</button>
-                                    </div>  
+                            <form id="formPagamento" action="/pagamento" method="GET" enctype="multipart/form-data" >
+                                <div class="row">
+                                    <div class="col-sm">
+                                        <label class="col control-label" for="CEP">Pesquisar CEP de Entrega</label>
+                                        <br>
+                                        <div class="col-2">
+                                            <input id="cep" name="cep" placeholder="Apenas números" class="form-control input-lg" required=""
+                                                   value="" type="search" maxlength="9" pattern="[0-9]+$">
+                                        </div>
+                                        <br>
+                                        <div class="col">
+                                            <button type="button" class="btn btn-primary" onclick="pesquisacep(cep.value)">Pesquisar</button>
+                                        </div>  
 
-                                    <div class="col" id="teste">
-                                        <label class="col-md-1 control-label" for="radios">Fretes disponíveis?</label>
-                                        <div class="col-md-4" id="valorFete">
-                                            <input name="valorFete" value="1" type="radio"  id="sedexInput">
-                                            <label required="" class="radio-inline" for="radios-0" id="sedex">
-                                                Sedex
-                                            </label>
-                                            <input name="valorFete" value="0" type="radio"  id="iconexInput">
-                                            <label class="radio-inline" for="radios-1" id="iconex">
-                                                ICONEX
-                                            </label>
-                                            <input name="valorFete" value="0" type="radio"  id="loggiInput">    
-                                            <label class="radio-inline" for="radios-2" id="loggi">
-                                                Loggi
-                                            </label>
+                                        <div class="col" id="teste">
+                                            <label class="col-md-1 control-label" for="radios">Fretes disponíveis?</label>
+                                            <div class="col-md-4" id="valorFete">
+                                                <input name="valorFete" value="1" type="radio"  id="sedexInput">
+                                                <label required="" class="radio-inline" for="radios-0" id="sedex">
+                                                    Sedex
+                                                </label>
+                                                <input name="valorFete" value="0" type="radio"  id="iconexInput">
+                                                <label class="radio-inline" for="radios-1" id="iconex">
+                                                    ICONEX
+                                                </label>
+                                                <input name="valorFete" value="0" type="radio"  id="loggiInput">    
+                                                <label class="radio-inline" for="radios-2" id="loggi">
+                                                    Loggi
+                                                </label>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <hr>
-                        </div>
-                    </div>
-                    <div class="panel-footer">
-                        <div class="row text-center">
-                            <div class="col-xs-9">
-                                <h4 class="text-right">Total <strong>AQUI VAI A SOMA DE TODO CARRINHO</strong></h4>
-                                <input type="hidden" name="valor_produtos" value="AQUI VAI UM LOOP SOMANDO"></label><br>
-                            </div>
-                            <div class="col-xs-3">
-                                <button type="button" class="btn btn-success btn-block"  href="http://localhost:8080/pedido">
-                                    Finalizar Compra
-                                </button>
-                            </div>
+                                <hr>
+                                </div>
+                                </div>
+                                <div class="panel-footer">
+                                    <div class="row text-center">
+                                        <div class="col-xs-9">
+                                            <h4 class="text-right">Total <strong>AQUI VAI A SOMA DE TODO CARRINHO</strong></h4>
+                                            <input type="hidden" name="valor_produtos" value="AQUI VAI UM LOOP SOMANDO"></label><br>
+                                        </div>
+                                        <div class="col-xs-3">
+                                            <button type="submit" class="btn btn-success btn-block"  href="http://localhost:8080/pedido">
+                                                Finalizar Compra
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-</body>
-<script>
-    function removerProduto(id) {
+    </body>
+    <script>
+        function removerProduto(id) {
 
-        var confirmacao = confirm("Produto Removido !");
+            var confirmacao = confirm("Produto Removido !");
 
-        if (confirmacao == true) {
-            document.getElementById("quant" + id).value = 0;
-            document.getElementById("form" + id).submit();
-        }
-
-    }
-
-    function limpa_formulario_cep() {
-        //Limpa valores do formulário de cep.
-
-
-    }
-
-    function meu_callback(conteudo) {
-        if (!("erro" in conteudo)) {
-            //Atualiza os campos com os valores.
-            var cep = document.getElementById('cep').value;
-            var digCep = parseInt(cep.charAt(2));
-
-            if (digCep / 2 == 0) {
-                document.getElementById('sedex').innerHTML = "Sedex RS 10,00 - Prazo 7 dias";
-                document.getElementById('sedexInput').value = 10.00;
-                document.getElementById('iconex').innerHTML = "Iconex RS 18,00 - Prazo 3 dias";
-                document.getElementById('iconexInput').value = 18.00;
-                document.getElementById('loggi').innerHTML = "Loggi RS 23,0 - Prazo 2 dias";
-                document.getElementById('loggiInput').innerHTML = 23.00;
-            } else {
-                document.getElementById('sedex').innerHTML = "Sedex RS 13,00 - Prazo 7 dias" ;
-                document.getElementById('sedexInput').value = 13.00;
-                document.getElementById('iconex').innerHTML = "Iconex RS 23,00 - Prazo 3 dias";
-                document.getElementById('iconexInput').value = 23.00;
-                document.getElementById('loggi').innerHTML = "Loggi RS 28,0 - Prazo 2 dias";
-                document.getElementById('loggiInput').value = 28.00;
+            if (confirmacao == true) {
+                document.getElementById("quant" + id).value = 0;
+                document.getElementById("form" + id).submit();
             }
 
-
-        } //end if.
-        else {
-            //CEP não Encontrado.
-            limpa_formulario_cep();
-            alert("CEP não encontrado.");
-            document.getElementById('cep').value = ("");
         }
-    }
 
-    function pesquisacep(valor) {
-
-        //Nova variável "cep" somente com dígitos.
-        var cep = valor.replace(/\D/g, '');
-
-        //Verifica se campo cep possui valor informado.
-        if (cep !== "") {
-
-            //Expressão regular para validar o CEP.
-            var validacep = /^[0-9]{8}$/;
-
-            //Valida o formato do CEP.
-            if (validacep.test(cep)) {
-
-                //Preenche os campos com "..." enquanto consulta webservice.
-                document.getElementById('sedex').value = "...";
+        function limpa_formulario_cep() {
+            //Limpa valores do formulário de cep.
 
 
-                //Cria um elemento javascript.
-                var script = document.createElement('script');
+        }
 
-                //Sincroniza com o callback.
-                script.src = '//viacep.com.br/ws/' + cep + '/json/?callback=meu_callback';
+        function meu_callback(conteudo) {
+            if (!("erro" in conteudo)) {
+                //Atualiza os campos com os valores.
+                var cep = document.getElementById('cep').value;
+                var digCep = parseInt(cep.charAt(2));
 
-                //Insere script no documento e carrega o conteúdo.
-                document.body.appendChild(script);
-
+                if (digCep / 2 == 0) {
+                    document.getElementById('sedex').innerHTML = "Sedex RS 10,00 - Prazo 7 dias";
+                    document.getElementById('sedexInput').value = 10.00;
+                    document.getElementById('iconex').innerHTML = "Iconex RS 18,00 - Prazo 3 dias";
+                    document.getElementById('iconexInput').value = 18.00;
+                    document.getElementById('loggi').innerHTML = "Loggi RS 23,0 - Prazo 2 dias";
+                    document.getElementById('loggiInput').innerHTML = 23.00;
+                } else {
+                    document.getElementById('sedex').innerHTML = "Sedex RS 13,00 - Prazo 7 dias";
+                    document.getElementById('sedexInput').value = 13.00;
+                    document.getElementById('iconex').innerHTML = "Iconex RS 23,00 - Prazo 3 dias";
+                    document.getElementById('iconexInput').value = 23.00;
+                    document.getElementById('loggi').innerHTML = "Loggi RS 28,0 - Prazo 2 dias";
+                    document.getElementById('loggiInput').value = 28.00;
+                }
 
 
             } //end if.
             else {
-                //cep é inválido.
+                //CEP não Encontrado.
                 limpa_formulario_cep();
-                alert("Formato de CEP inválido.");
+                alert("CEP não encontrado.");
+                document.getElementById('cep').value = ("");
             }
-        } //end if.
-        else {
-            //cep sem valor, limpa formulário.
-            limpa_formulario_cep();
         }
-    }
+
+        function pesquisacep(valor) {
+
+            //Nova variável "cep" somente com dígitos.
+            var cep = valor.replace(/\D/g, '');
+
+            //Verifica se campo cep possui valor informado.
+            if (cep !== "") {
+
+                //Expressão regular para validar o CEP.
+                var validacep = /^[0-9]{8}$/;
+
+                //Valida o formato do CEP.
+                if (validacep.test(cep)) {
+
+                    //Preenche os campos com "..." enquanto consulta webservice.
+                    document.getElementById('sedex').value = "...";
 
 
-</script>
+                    //Cria um elemento javascript.
+                    var script = document.createElement('script');
+
+                    //Sincroniza com o callback.
+                    script.src = '//viacep.com.br/ws/' + cep + '/json/?callback=meu_callback';
+
+                    //Insere script no documento e carrega o conteúdo.
+                    document.body.appendChild(script);
+
+
+
+                } //end if.
+                else {
+                    //cep é inválido.
+                    limpa_formulario_cep();
+                    alert("Formato de CEP inválido.");
+                }
+            } //end if.
+            else {
+                //cep sem valor, limpa formulário.
+                limpa_formulario_cep();
+            }
+        }
+
+
+    </script>
 </html>
