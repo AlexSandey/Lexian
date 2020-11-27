@@ -1,0 +1,111 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+   <link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet" />
+  <link th:href="@{/css/login.css}" rel="stylesheet" />
+  <title>Document</title>
+</head>
+
+<body>
+
+  <!------ Include the above in your HEAD tag ---------->
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="http://localhost:8080/">Lexian - Loja de Informática</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+        aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="/cliente">Login
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/carrinho">Carrinho</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+
+
+  <div class="container" id="login">
+
+
+    <div class="row justify-content-center align-items-center " >
+      <aside class="col-sm-4 text-center">
+
+        <div class="card text-center">
+          <article class="card-body">
+            <h4 class="card-title text-center mb-4 mt-1">[ADMIN] - Realize seu Login</h4>
+            <hr>
+            <form id="formLogin" action="/admin/login" method="POST" enctype="multipart/form-data" >
+              <div class="form-group">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                  </div>
+                  <input name="email" class="form-control" placeholder="Email" type="email">
+                </div> <!-- input-group.// -->
+              </div> <!-- form-group// -->
+              <div class="form-group">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                  </div>
+                  <input name="senha" class="form-control" placeholder="******" type="password">
+                </div> <!-- input-group.// -->
+              </div> <!-- form-group// -->
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-block"> Login </button>
+              </div> <!-- form-group// -->
+            </form>
+          </article>
+        </div> <!-- card.// -->
+      </aside> <!-- col.// -->
+    </div> <!-- row.// -->
+  </div>
+  <!--container end.//-->
+
+
+</body>
+<script>
+      $("#formLogin").validate({
+    rules: {
+      email: {
+        required: true,
+        email: true
+      },
+      senha: {
+        required: true,
+        minlength: 6
+      }
+    },
+    messages: {
+      email: {
+        required: "Invalido",
+        email: "email invalido"
+      },
+      senha: {
+        required: "Invalido",
+        minlength: "Minimo de 6 digitos "
+      }
+    }
+  });
+  
+
+  
+</script>
+
+</html>

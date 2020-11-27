@@ -5,9 +5,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 class TesteMapApplicationTests {
-
 	@Test
 	void contextLoads() {
 	}
-
 }

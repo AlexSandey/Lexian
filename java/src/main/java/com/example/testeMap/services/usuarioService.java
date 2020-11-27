@@ -81,7 +81,9 @@ public class usuarioService {
     public List<Usuario> filtroNome(String nome) {
         return usuarioRepository.filtroNome(nome);
     }
-    
+    public List<Usuario> filtroNomeEstoquista(String nome) {
+        return usuarioRepository.filtroNomeEstoquista(nome);
+    }
      public List<Usuario> filtroCpf(String cpf) {
         return usuarioRepository.filtroCpf(cpf);
     }

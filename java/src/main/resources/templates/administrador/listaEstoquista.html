@@ -91,15 +91,14 @@
                         <thead>
                             <tr class="filters">
                                 <th></th>
-                                <th><input type="text" class="form-control" placeholder="Pesquisar por Nome" enabled></th>
+                                <th><input id="pesquisar_nome" type="text" class="form-control" placeholder="Pesquisar por Nome" enabled></th>
+                                <th class="text-center"><button onclick="pesquisarPorNome()" type="button" class="btn btn-success btn-sm" >Pesquisar</button></th>
                                 <th></th>
                                 <th></th>
                                 <th></th>
                                 <th></th>
                                 <th></th>
                                 <th></th>
-                                <th></th>
-                                <th class="text-center"><button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#myModal">Dodaj</a></button></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -121,7 +120,7 @@
                                 <td class="text-center" th:text="${estoquista.cpf}"></td>
                                 <td class="text-center" th:text="${estoquista.perfil}"></td>
                                 <td class="text-center" th:text="${estoquista.status}"></td>
-                                <th class="text-center"><button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#edytuj">Editar</a></button></th>
+                                <th class="text-center"><button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal_editar">Editar</a></button></th>
                                 <th class="text-center"><button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#usun">Desativar</a></button></th>
                             </tr>
                            
@@ -147,15 +146,56 @@
                 </div>
             </div>
             <!-- Modal EDYTUJ -->
-            <div class="modal fade" id="edytuj" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal fade" id="modal_editar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                            <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                            <h4 class="modal-title" id="myModalLabel">Editar Dados Estoquista</h4>
                         </div>
                         <div class="modal-body">
-                            ...
+                            <div class="row" id="main">
+                <div class="col-sm-12 col-md-12 well " id="adicionar_estoquista" >
+                    <form class="form-horizontal" action="cadastrar-estoquista" method="POST">
+                        <div class="col-md-11 control-label">
+                            <p class="help-block">
+                                <h11>*</h11> Campo Obrigatório
+                            </p>
+                        </div>
+                        <!-- Text input-->
+                        <div class="form-group">
+                            <label class="col-md-2 control-label" for="Nome">Nome <h11>*</h11></label>
+                            <div class="col-md-8">
+                                <input id="Nome" name="nome_usuario" placeholder="" class="form-control input-md"
+                                    required="" type="text">
+                            </div>
+                        </div>
+
+                        <!-- Prepended text-->
+                        <div class="form-group">
+                            <label class="col-md-2 control-label" for="prependedtext">Email <h11>*</h11></label>
+                            <div class="col-md-5">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                                    <input id="prependedtext" name="email_usuario" class="form-control"
+                                        placeholder="email@email.com" required="" type="text"
+                                        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Text input-->
+                        <div class="form-group">
+                            <label class="col-md-2 control-label" for="Nome">CPF <h11>*</h11></label>
+                            <div class="col-md-8">
+                                <input id="cpf" name="cpf_usuario" placeholder="Apenas números"
+                                    class="form-control" required="" type="text" maxlength="11"
+                                    pattern="[0-9]+$">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -187,3 +227,11 @@
         </div>
         <!-- /#page-wrapper -->
     </div><!-- /#wrapper -->
+    <script>
+        function pesquisarPorNome(){
+            let nome = document.getElementById("pesquisar_nome").value;
+            
+            window.location.href = 'http://localhost:8080/admin/filtroNome/'+nome;
+            
+        }
+    </script> 
