@@ -25,6 +25,8 @@ public interface enderecoRepository extends CrudRepository<Endereco, Integer>{
 
     @Query(value="select * from endereco where tipo like %:tipo% and id_usuario like %:id%",nativeQuery=true)
     public Endereco filtroTipoAndId(String tipo, int id);
+    @Query(value="select * from endereco where tipo like %:tipo% and id_endereco like %:idEnd%",nativeQuery=true)
+    public Endereco filtroEndSelecionado(String tipo, int idEnd);
     
     @Query(value="select * from endereco where tipo like %:tipo% and id_usuario like %:id%",nativeQuery=true)
     public List<Endereco> filtroTipoAndIdList(String tipo, int id);

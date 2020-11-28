@@ -185,13 +185,13 @@
 
                                             <div class="form-group">
                                                 <label for="username">Nome no Cartão:</label>
-                                                <input type="text" class="form-control" name="username" placeholder="" required="">
+                                                <input type="text" class="form-control" name="nomeCartao" placeholder="" required="">
                                             </div> <!-- form-group.// -->
 
                                             <div class="form-group">
                                                 <label for="cardNumber">Número:</label>
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control" name="cardNumber" placeholder="">
+                                                    <input type="text" class="form-control" name="numeroCartao" placeholder="">
                                                     <div class="input-group-append">
                                                         <span class="input-group-text text-muted">
                                                             <i class="fab fa-cc-visa"></i>   <i class="fab fa-cc-amex"></i>  
@@ -219,14 +219,25 @@
                                                         <input type="number" class="form-control" required="">
                                                     </div> <!-- form-group.// -->
                                                 </div>
-                                            </div> <!-- row.// -->
-                                            <button class="subscribe btn btn-primary btn-block" type="button"> Confirm </button>
+                                                <div class="form-group">
+                                                    <label for="parcelaCartao">Example select</label>
+                                                    <select class="form-control" id="parcelaCartao" name="parcelaCartao">
+                                                        <option value="1" selected>1x</option>
+                                                        <option value="2" selected>2x</option>
+                                                        <option value="3" selected>3x</option>
+                                                        <option value="4" selected>4x</option>
+                                                        <option value="5" selected>5x</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <input type='hidden' name="metodoPagamento" value="cartao"><!-- row.// -->
+                                            <button class="subscribe btn btn-primary btn-block" type="submit"> Confirm </button>
 
                                         </div> <!-- tab-pane.// -->
                                         <div class="tab-pane fade" id="nav-tab-paypal">
                                             <p>Paypal is easiest way to pay online</p>
                                             <p>
-                                                <button type="button" class="btn btn-primary"> <i class="fab fa-paypal"></i> Log in my Paypal
+                                                <button  class="btn btn-primary"> <i class="fab fa-paypal"></i> Log in my Paypal
                                                 </button>
                                             </p>
                                             <p><strong>Note:</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod

@@ -131,7 +131,7 @@ public class pedidoController {
     @PostMapping("/confirmarDados")
     public ModelAndView confirmarPedidoPOST(
             // ID USUARIO VEM DA SESSION >>>> @RequestParam(name = "id_usuario", required = true) int idUsuario,
-            @RequestParam(name = "enderecoEscolhido", required = false) int idEndereco,
+            @RequestParam(name = "enderecoEscolhido", required = true) int idEndereco,
             // CALCULO SERA FEITO ATRAVES DO CARRINHO DA SESSION @RequestParam(name = "valor_total", required = true) float valorTotal,
             @RequestParam(name = "metodoPagamento") String metodoPagamento,
             @RequestParam(name = "nomeCartao") String nomeCartao,
@@ -143,14 +143,15 @@ public class pedidoController {
 
         Cartao cartao = new Cartao(nomeCartao, numCartao,parcela);
         
-        Endereco endEntrega = (Endereco)(List<Endereco>)enderecoService.filtroID(idEndereco);
+        Endereco endEntrega = enderecoService.filtroEndSelecionado("Entrega",idEndereco);
         
         session.setAttribute("cartao", cartao);
         session.setAttribute("endSelecionado", endEntrega);
 
 
         //redirAttr.addFlashAttribute("msgSucesso", "Cadastro realizado com sucesso! Realize o login Abaixo");
-        return new ModelAndView("redirect:/confirmarPagamento");
+        return new ModelAndView("/confirmarPagamento");
     }
+    
 
 }

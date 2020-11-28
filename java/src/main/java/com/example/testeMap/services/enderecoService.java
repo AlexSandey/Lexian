@@ -66,6 +66,10 @@ public class enderecoService {
         return enderecoRepository.filtroTipoAndId(tipo, id);
     }
       
+        public Endereco filtroEndSelecionado(String tipo, int id) {
+        return enderecoRepository.filtroEndSelecionado(tipo, id);
+    }
+      
       public List<Endereco> filtroTipoAndIdList(String tipo, int id) {
         return enderecoRepository.filtroTipoAndIdList(tipo, id);
     }
