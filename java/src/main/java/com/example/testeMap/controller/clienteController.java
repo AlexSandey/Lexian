@@ -6,7 +6,9 @@
 package com.example.testeMap.controller;
 
 import com.example.testeMap.model.entidades.Endereco;
+import com.example.testeMap.model.entidades.Pedido;
 import com.example.testeMap.model.entidades.Usuario;
+import com.example.testeMap.services.PedidoService;
 import com.example.testeMap.services.ServiceExc;
 import com.example.testeMap.services.enderecoService;
 import com.example.testeMap.services.usuarioService;
@@ -36,10 +38,12 @@ public class clienteController {
 
     private usuarioService usuarioService;
     private enderecoService enderecoService;
+    private PedidoService pedidoService;
 
-    public clienteController(usuarioService usuarioService, enderecoService enderecoService) {
+    public clienteController(usuarioService usuarioService, enderecoService enderecoService, PedidoService PedidoService) {
         this.usuarioService = usuarioService;
         this.enderecoService = enderecoService;
+        this.pedidoService = PedidoService;
     }
 
     @GetMapping("")
@@ -169,7 +173,7 @@ public class clienteController {
                     return new ModelAndView("redirect:http://localhost:8080/carrinho/dadosdecompra");
                 }
 
-                return new ModelAndView("redirect:http://localhost:8080");
+                return new ModelAndView("redirect:http://localhost:8080/cliente/painel");
             }
             
         } catch (Exception e) {
@@ -188,19 +192,12 @@ public class clienteController {
     ) {
         Usuario usuarioSessao = (Usuario) session.getAttribute("usuario");
 
-        ResponseEntity<Usuario> usuarioBancoResp = usuarioService.filtroID(usuarioSessao.getIdUsuario());
+        List<Pedido> pedidos = pedidoService.carregarPedidoByID(usuarioSessao.getIdUsuario());
 
-        Usuario usuarioBanco = usuarioBancoResp.getBody();
+       
+        session.setAttribute("compraProduto", pedidos);
 
-        Endereco enderecoBanco = enderecoService.filtroTipoAndId("Faturamento", usuarioSessao.getIdUsuario());
-
-        
-        session.removeAttribute("usuario");
-
-        session.setAttribute("usuario", usuarioBanco);
-        session.setAttribute("enderecoFaturamento", enderecoBanco);
-
-        return new ModelAndView("usuario/painel").addObject(session);
+        return new ModelAndView("cliente/listaPedidos").addObject(session);
 
     }
 

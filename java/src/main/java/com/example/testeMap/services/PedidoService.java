@@ -25,7 +25,7 @@ public class PedidoService {
         return pedidoRepository.findById(id).
                 map(record -> ResponseEntity.ok().body(record))
                 .orElse(ResponseEntity.notFound().build());
-    }
+    }    
     
     public ResponseEntity updatePedido(int id,
              Pedido pedido) {
@@ -48,5 +48,9 @@ public class PedidoService {
     
         public List<Pedido> carregarPedido() {
         return (List<Pedido>) pedidoRepository.findAll();
+    }
+        
+    public List<Pedido> carregarPedidoByID(int id) {
+        return (List<Pedido>) pedidoRepository.filtroPedidoById(id);
     }
 }

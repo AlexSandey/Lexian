@@ -16,5 +16,7 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface PedidoRepository extends CrudRepository<Pedido, Integer> {
     
+    @Query(value="SELECT * FROM pedido WHERE id_usuario like %:id%",nativeQuery=true)
+    public List<Pedido> filtroPedidoById(int id);
     
 }

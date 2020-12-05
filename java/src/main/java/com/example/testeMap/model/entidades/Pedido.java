@@ -5,11 +5,14 @@
  */
 package com.example.testeMap.model.entidades;
 
+import java.time.LocalDate;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -49,8 +52,12 @@ public class Pedido {
     
     @Column(name = "id_status")
     private int status;
-
     
+    @Column(name = "data_pedido") 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate  data;
+     
+     
     public Pedido(){
     }
 
@@ -75,6 +82,14 @@ public class Pedido {
 
     public void setIdPedido(int idPedido) {
         this.idPedido = idPedido;
+    }
+    
+    public LocalDate getDatePedido() {
+        return data;
+    }
+
+    public void setDatePedido(LocalDate datePedido) {
+        this.data = datePedido;
     }
 
     public int getIdUsuario() {
