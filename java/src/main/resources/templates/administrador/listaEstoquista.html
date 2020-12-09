@@ -120,7 +120,7 @@
                                 <td class="text-center" th:text="${estoquista.cpf}"></td>
                                 <td class="text-center" th:text="${estoquista.perfil}"></td>
                                 <td class="text-center" th:text="${estoquista.status}"></td>
-                                <th class="text-center"><button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal_editar">Editar</a></button></th>
+                                <th class="text-center"><button type="button" th:onclick="|atualizaModal(${estoquista.idUsuario}, ${estoquista.nome}, ${estoquista.cpf}, ${estoquista.status})|" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal_editar">Editar</a></button></th>
                                 <th class="text-center"><button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#usun">Desativar</a></button></th>
                             </tr>
                            
@@ -233,5 +233,9 @@
             
             window.location.href = 'http://localhost:8080/admin/filtroNome/'+nome;
             
+        }
+        
+        function atualizaModal(obj){
+            console.log(obj)
         }
     </script> 
