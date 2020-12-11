@@ -1,6 +1,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src=" https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
+<script src=" https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/additional-methods.min.js"></script>
 
 <!------ Include the above in your HEAD tag ---------->
 <!DOCTYPE html>
@@ -25,7 +27,7 @@
         <!-- Navigation -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
             <div class="container">
-                <a class="navbar-brand" href="#">Lexian - Loja de Informática</a>
+                <a class="navbar-brand" href="http://localhost:8080/">Lexian - Loja de Informática</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                         aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -33,12 +35,12 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item active">
-                            <a class="nav-link" href="#">Login
+                            <a class="nav-link" href="/cliente">Login
                                 <span class="sr-only">(current)</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Carrinho</a>
+                            <a class="nav-link" href="/carrinho">Carrinho</a>
                         </li>
                     </ul>
                 </div>
@@ -86,7 +88,7 @@
                                                 </div>
                                             </div>
                                             <div class="job-right my-4 flex-shrink-0">
-                                                <input type="radio" name="enderecoEscolhido"  th:value="${enderecoEntrega.idEndereco}">
+                                                <input type="radio" name="enderecoEscolhido"  th:value="${enderecoEntrega.idEndereco}" required>
                                             </div>
                                         </div>
                                     </div>
@@ -102,7 +104,7 @@
                                                 <div class=" dados-endereco">
                                                     <h5 class="text-center text-md-left "><i class="zmdi zmdi-pin mr-2"></i>Cadastrar novo endereco
                                                     </h5>
-                                                    <button class="btn btn-primary btn-block" type="button" th:onclick="|window.location.href='/cliente/registrar|"> Cadastrar </button>
+                                                    <button class="btn btn-primary btn-block" type="button" th:onclick="|window.location.href = '/cliente/painel'|"> Cadastrar </button>
 
                                                 </div>
                                                 <div>
@@ -114,6 +116,53 @@
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12">
+                        <div class="col-lg offset">
+                            <h1>Selecione o Frete</h1>
+                            <div class="row">
+
+                                <div class="col-md-6 ">
+
+                                    <div class="filtro-endereco">
+                                        <div class="col caixa-endereco d-md-flex align-items-center  mb-30">
+                                            <div class="job-left my-4 d-md-flex align-items-center flex-wrap">
+
+                                                <div class=" dados-endereco">
+
+                                                    <h5 class="text-center text-md-left "><i text="Selecione o frete abaixo:"></i>
+                                                    </h5>
+                                                    <ul class="d-md-flex flex-wrap text-capitalize ff-open-sans">
+                                                        <div>
+                                                            <li class="mr-md-4">
+                                                                <i th:text="|${session['fretes'][0].tipo} - R$ ${session['fretes'][0].valor} |"></i><input type="radio" name="freteEscolhido"  th:value="${session['fretes'][0].id}"  th:onchange="|alterarValorFrete(${session['fretes'][0].id})|" > 
+                                                            </li>
+                                                        </div>
+                                                        <div>
+                                                            <li class="mr-md-4">
+                                                                <i th:text="|${session['fretes'][1].tipo} - R$ ${session['fretes'][1].valor} |"></i><input type="radio" name="freteEscolhido"  th:value="${session['fretes'][1].id}" th:onchange="|alterarValorFrete(${session['fretes'][1].id})|"> 
+                                                            </li>
+                                                        </div>
+                                                        <div>
+                                                            <li class="mr-md-4">
+                                                                <i th:text="|${session['fretes'][2].tipo} - R$ ${session['fretes'][2].valor} |"></i><input type="radio" name="freteEscolhido"  th:value="${session['fretes'][2].id}" th:onchange="|alterarValorFrete(${session['fretes'][2].id})|"> 
+                                                            </li>
+                                                        </div>
+
+                                                    </ul>
+                                                </div>
+                                                <div>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -163,35 +212,36 @@
 
                             <h1>Método de pagamento</h1>
 
+                            <input type='hidden' name="metodoPagamento" id="metodoPagamento" value="1"><!-- row.// -->
                             <article class="card">
                                 <div class="card-body p-5">
 
                                     <ul class="nav bg-light nav-pills rounded nav-fill mb-3" role="tablist">
                                         <li class="nav-item">
-                                            <a class="nav-link active" data-toggle="pill" href="#nav-tab-card">
+                                            <a class="nav-link active" data-toggle="pill" href="#nav-tab-card" onclick=alterarPagamento(1)>
                                                 <i class="fa fa-credit-card"></i> Cartão de credito</a></li>
                                         <li class="nav-item">
-                                            <a class="nav-link" data-toggle="pill" href="#nav-tab-boleto">
+                                            <a class="nav-link" data-toggle="pill" href="#nav-tab-boleto" onclick=alterarPagamento(2)>
                                                 <i class="fa fa-university"></i> Boleto Bancário</a></li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" data-toggle="pill" href="#nav-tab-paypal">
-                                                <i class="fab fa-paypal"></i> Paypal</a></li>
+
 
                                     </ul>
 
                                     <div class="tab-content">
+
                                         <div class="tab-pane fade show active" id="nav-tab-card">
                                             <p class="alert alert-success">Some text success or error</p>
 
-                                            <div class="form-group">
-                                                <label for="username">Nome no Cartão:</label>
-                                                <input type="text" class="form-control" name="nomeCartao" placeholder="" required="">
-                                            </div> <!-- form-group.// -->
 
                                             <div class="form-group">
+                                                <label for="username">Nome no Cartão:</label>
+                                                <input type="text" class="form-control" name="nomeCartao" placeholder="" id="nomeCartao" required>
+                                            </div> <!-- form-group.// -->
+
+                                            <div class="form-group" >
                                                 <label for="cardNumber">Número:</label>
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control" name="numeroCartao" placeholder="">
+                                                    <input type="text" class="form-control" name="numeroCartao" placeholder="" id="numeroCartao" required>
                                                     <div class="input-group-append">
                                                         <span class="input-group-text text-muted">
                                                             <i class="fab fa-cc-visa"></i>   <i class="fab fa-cc-amex"></i>  
@@ -206,8 +256,8 @@
                                                     <div class="form-group">
                                                         <label><span class="hidden-xs">Data de validade:</span> </label>
                                                         <div class="input-group">
-                                                            <input type="number" class="form-control" placeholder="MM" name="">
-                                                            <input type="number" class="form-control" placeholder="YY" name="">
+                                                            <input type="number" class="form-control" placeholder="MM" name="" id="mesValidade" required>
+                                                            <input type="number" class="form-control" placeholder="YY" name="" id="anoValidade" required>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -216,12 +266,12 @@
                                                         <label data-toggle="tooltip" title=""
                                                                data-original-title="3 digits code on back side of the card">CVV <i
                                                                 class="fa fa-question-circle"></i></label>
-                                                        <input type="number" class="form-control" required="">
+                                                        <input type="number" class="form-control" id="cvv" required >
                                                     </div> <!-- form-group.// -->
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="parcelaCartao">Example select</label>
-                                                    <select class="form-control" id="parcelaCartao" name="parcelaCartao">
+                                                    <select class="form-control" id="parcelaCartao" name="parcelaCartao" required>
                                                         <option value="1" selected>1x</option>
                                                         <option value="2" selected>2x</option>
                                                         <option value="3" selected>3x</option>
@@ -230,35 +280,21 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            <input type='hidden' name="metodoPagamento" value="cartao"><!-- row.// -->
+
                                             <button class="subscribe btn btn-primary btn-block" type="submit"> Confirm </button>
 
                                         </div> <!-- tab-pane.// -->
-                                        <div class="tab-pane fade" id="nav-tab-paypal">
-                                            <p>Paypal is easiest way to pay online</p>
-                                            <p>
-                                                <button  class="btn btn-primary"> <i class="fab fa-paypal"></i> Log in my Paypal
-                                                </button>
-                                            </p>
-                                            <p><strong>Note:</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                                tempor incididunt ut labore et dolore magna aliqua. </p>
-                                        </div>
+
                                         <div class="tab-pane fade" id="nav-tab-boleto">
-                                            <p>Valors Boleto</p>
+                                            <p>Valores no Boleto</p>
                                             <dl class="param">
-                                                <dt>Valor Produto: </dt>
-                                                <dd> R$ 100,00</dd>
+                                                <dt>Produtos no Carrinho:</dt>
+                                                <dd th:text="|R$ ${session['totalCarrinho']}|"> R$ 00,00</dd>
+                                                <dt>Valor Frete: </dt>
+                                                <dd id="boletoFrete" > R$ 00,00</dd>
                                             </dl>
-                                            <dl class="param">
-                                                <dt>Desconto de 10% : </dt>
-                                                <dd>R$ 10,00</dd>
-                                            </dl>
-                                            <dl class="param">
-                                                <dt>Valor Boleto: </dt>
-                                                <dd>R$ 90,00 </dd>
-                                            </dl>
-                                            <p><strong>Note:</strong> Este desconto só será possivel através do pagamento em boleto </p>
-                                            <button class="subscribe btn btn-primary btn-block" type="button"> Confirm </button>
+
+                                            <button class="subscribe btn btn-primary btn-block" type="submit"> Confirm </button>
                                         </div> <!-- tab-pane.// -->
                                     </div> <!-- tab-content .// -->
 
@@ -273,11 +309,48 @@
             </div>
         </form>
         <!--container end.//-->
-
-
-
-
-
     </body>
 
+    <script>
+
+
+        function alterarPagamento(tipoPagamento) {
+            document.getElementById("metodoPagamento").value = tipoPagamento
+
+            if (tipoPagamento == 1) {
+                document.getElementById("nomeCartao").required = "true"
+                document.getElementById("numeroCartao").required = "true"
+                document.getElementById("mesValidade").required = "true"
+                document.getElementById("anoValidade").required = "true"
+                document.getElementById("cvv").required = "true"
+                document.getElementById("parcelaCartao").required = "true"
+
+            }
+            if (tipoPagamento == 2) {
+                document.getElementById("nomeCartao").removeAttribute("required")
+                document.getElementById("numeroCartao").removeAttribute("required")
+                document.getElementById("mesValidade").removeAttribute("required")
+                document.getElementById("anoValidade").removeAttribute("required")
+                document.getElementById("cvv").removeAttribute("required")
+                document.getElementById("parcelaCartao").removeAttribute("required")
+            }
+        }
+
+        function alterarValorFrete(id) {
+
+            if (id == 1) {
+                document.getElementById("boletoFrete").innerHTML = "R$ 13,00"
+            }
+            if (id == 2) {
+                document.getElementById("boletoFrete").innerHTML = "R$ 16,00"
+            }
+            if (id == 3) {
+                document.getElementById("boletoFrete").innerHTML = "R$ 20,00"
+            }
+
+        }
+
+
+
+    </script>
 </html>

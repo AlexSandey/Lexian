@@ -44,22 +44,24 @@ public class carrinhoController {
     public ModelAndView carregarCarrinhoView(
             HttpSession session
     ) {
-        
-        
-        try{
-            
+
+        try {
+
             List<ItensCarrinho> carrinho;
-            
+
             carrinho = (List<ItensCarrinho>) session.getAttribute("carrinho");
-            
+
+            if (carrinho.size() == 0 || carrinho == null) {
+                return new ModelAndView("carrinhoVazio");
+            }
             return new ModelAndView("carrinho").addObject(carrinho);
 
-        }catch(Exception e){
-           
-            return new ModelAndView("redirect:/carrinho/erro");
+        } catch (Exception e) {
+
+            return new ModelAndView("carrinhoVazio");
 
         }
-        
+
     }
 
     @GetMapping("/adicionar")
@@ -69,6 +71,7 @@ public class carrinhoController {
     ) {
 
         List<ItensCarrinho> carrinho = (List<ItensCarrinho>) session.getAttribute("carrinho");
+        float total = 0;
 
         if (carrinho == null) {
             carrinho = new ArrayList<ItensCarrinho>();
@@ -97,12 +100,16 @@ public class carrinhoController {
             carrinho.add(itensCarrinho);
         }
 
+        for (ItensCarrinho itensCarrinho : carrinho) {
+            total = total + (itensCarrinho.getValor() * itensCarrinho.getQtde());
+        }
+
+        session.setAttribute("totalCarrinho", total);
         session.setAttribute("carrinho", carrinho);
 
         return new ModelAndView("redirect:/carrinho");
     }
-    
-    
+
     @PostMapping("/atualizar")
     public ModelAndView atualizarQuantidadeCarrinhoView(
             @RequestParam(name = "qtde_produto", required = false) int qtde_produto,
@@ -111,48 +118,56 @@ public class carrinhoController {
     ) {
 
         List<ItensCarrinho> carrinho = (List<ItensCarrinho>) session.getAttribute("carrinho");
+        float totalCarrinho = 0;
+        session.removeAttribute("totalCarrinho");
+        try {
+            for (ItensCarrinho item : carrinho) {
 
-        try{
-           for (ItensCarrinho item : carrinho) {
+                if (item.getIdProduto() == id_produto) {
+                    if (qtde_produto == 0) {
+                        carrinho.remove(item);
+                        break;
+                    } else {
+                        item.setQtde(qtde_produto);
+                    }
 
-            if (item.getIdProduto() == id_produto) {
-                if(qtde_produto == 0){
-                    carrinho.remove(item);
-                }else{
-                    item.setQtde(qtde_produto);
                 }
-                
+
             }
 
-        } 
-        }catch(Exception e){
+            for (ItensCarrinho itensCarrinho : carrinho) {
+                totalCarrinho = totalCarrinho + (itensCarrinho.getValor() * itensCarrinho.getQtde());
+            }
+
+            session.setAttribute("totalCarrinho", totalCarrinho);
+
+        } catch (Exception e) {
             return new ModelAndView("redirect:/carrinho");
         }
- 
+
         return new ModelAndView("redirect:/carrinho");
     }
-    
+
     @GetMapping("/dadosdecompra")
     public ModelAndView dadosDeCompra(
             HttpSession session,
             RedirectAttributes redirAttr
     ) {
-        
+
         List<ItensCarrinho> carrinho = (List<ItensCarrinho>) session.getAttribute("carrinho");
-        
+
         boolean verificarLogin = session.getAttribute("usuario") != null;
-        
-        if(verificarLogin==false){        
-               
+
+        if (verificarLogin == false) {
+
             redirAttr.addFlashAttribute("encaminharLogin", true);
 
             return new ModelAndView("redirect:http://localhost:8080/cliente");
         }
-        
+
         int teste = 1;
-        
 
         return new ModelAndView("redirect:/carrinho");
     }
-    
+
 }

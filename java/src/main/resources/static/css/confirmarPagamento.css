@@ -15,6 +15,13 @@ border-radius: 10px;
 padding: 10px 35px;
 }
 
+.caixa-endereco {
+-webkit-box-shadow: 0 0 35px 0 rgba(130, 130, 130, 0.2);
+        box-shadow: 0 0 35px 0 rgba(130, 130, 130, 0.2);
+border-radius: 10px;
+padding: 10px 35px;
+}
+
 ul {
 list-style: none; 
 }

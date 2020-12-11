@@ -76,11 +76,11 @@
                                             <h6><strong th:text="|R$ ${produto.valor}|"> <button class="text-muted" th:onclick="|removerProduto(${produto.idProduto})|"> x</button></strong></h6>
                                         </div>
                                         <div class="col-xs-4">
-                                            <input type="text" class="form-control input-sm" th:id="|quant${produto.idProduto}|" min="0"  th:value="${produto.qtde}" onchange="this.form.submit()">
+                                            <input type="text" class="form-control input-sm" name="qtde_produto" th:id="|quant${produto.idProduto}|" min="0"  th:value="${produto.qtde}" onchange="this.form.submit()">
                                             <input type="hidden" name="id_produto" th:value="${produto.idProduto}">
                                         </div>
                                         <div class="col-xs-2">
-                                            <button type="button" class="btn btn-link btn-xs">
+                                            <button type="button" class="btn btn-link btn-xs" th:onclick="|removerProduto(${produto.idProduto})|">
                                                 <span class="glyphicon glyphicon-trash"> </span>
                                             </button>
                                         </div>
@@ -128,8 +128,7 @@
                                 <div class="panel-footer">
                                     <div class="row text-center">
                                         <div class="col-xs-9">
-                                            <h4 class="text-right">Total <strong>AQUI VAI A SOMA DE TODO CARRINHO</strong></h4>
-                                            <input type="hidden" name="valor_produtos" value="AQUI VAI UM LOOP SOMANDO"></label><br>
+                                            <h4 class="text-right">Total: <strong th:text="|R$ ${session['totalCarrinho']}|" >AQUI VAI A SOMA DE TODO CARRINHO</strong></h4>
                                         </div>
                                         <div class="col-xs-3">
                                             <button type="submit" class="btn btn-success btn-block"  href="http://localhost:8080/pedido">
@@ -170,18 +169,18 @@
 
                 if (digCep / 2 == 0) {
                     document.getElementById('sedex').innerHTML = "Sedex RS 10,00 - Prazo 7 dias";
-                    document.getElementById('sedexInput').value = 10.00;
+                    document.getElementById('sedexInput').value = 1;
                     document.getElementById('iconex').innerHTML = "Iconex RS 18,00 - Prazo 3 dias";
-                    document.getElementById('iconexInput').value = 18.00;
+                    document.getElementById('iconexInput').value = 2;
                     document.getElementById('loggi').innerHTML = "Loggi RS 23,0 - Prazo 2 dias";
-                    document.getElementById('loggiInput').innerHTML = 23.00;
+                    document.getElementById('loggiInput').innerHTML = 3;
                 } else {
                     document.getElementById('sedex').innerHTML = "Sedex RS 13,00 - Prazo 7 dias";
-                    document.getElementById('sedexInput').value = 13.00;
+                    document.getElementById('sedexInput').value = 1;
                     document.getElementById('iconex').innerHTML = "Iconex RS 23,00 - Prazo 3 dias";
-                    document.getElementById('iconexInput').value = 23.00;
+                    document.getElementById('iconexInput').value = 2;
                     document.getElementById('loggi').innerHTML = "Loggi RS 28,0 - Prazo 2 dias";
-                    document.getElementById('loggiInput').value = 28.00;
+                    document.getElementById('loggiInput').value = 3;
                 }
 
 

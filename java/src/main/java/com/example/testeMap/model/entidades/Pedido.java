@@ -35,6 +35,7 @@ public class Pedido {
     @Column(name = "valor_total")
     private float valorTotal;
     
+    
     @Column(name = "metodo_pagamento")
     private String metodoPagamento;
     
@@ -61,7 +62,7 @@ public class Pedido {
     public Pedido(){
     }
 
-    public Pedido(int idPedido, int idUsuario, int idEndereco, float valorTotal, String metodoPagamento, String nomeCartao, String numCartao, int parcelas, String boleto, int status) {
+    public Pedido(int idPedido, int idUsuario, int idEndereco, float valorTotal, String metodoPagamento, String nomeCartao, String numCartao, int parcelas, String boleto, int status,LocalDate data) {
         this.idPedido = idPedido;
         this.idUsuario = idUsuario;
         this.idEndereco = idEndereco;
@@ -72,6 +73,21 @@ public class Pedido {
         this.parcelas = parcelas;
         this.boleto = boleto;
         this.status = status;
+        this.data = data;
+    }
+    
+        public Pedido( int idUsuario, int idEndereco, float valorTotal, String metodoPagamento, String nomeCartao, String numCartao, int parcelas, String boleto, int status,LocalDate data) {
+        
+        this.idUsuario = idUsuario;
+        this.idEndereco = idEndereco;
+        this.valorTotal = valorTotal;
+        this.metodoPagamento = metodoPagamento;
+        this.nomeCartao = nomeCartao;
+        this.numCartao = numCartao;
+        this.parcelas = parcelas;
+        this.boleto = boleto;
+        this.status = status;
+        this.data = data;
     }
 
 

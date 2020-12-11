@@ -26,7 +26,7 @@
         <!-- Navigation -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
             <div class="container">
-                <a class="navbar-brand" href="#">Lexian - Loja de Informática</a>
+                <a class="navbar-brand" href="http://localhost:8080/">Lexian - Loja de Informática</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                         aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -34,12 +34,12 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item active">
-                            <a class="nav-link" href="#">Login
+                            <a class="nav-link" href="/cliente">Login
                                 <span class="sr-only">(current)</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Carrinho</a>
+                            <a class="nav-link" href="/carrinho">Carrinho</a>
                         </li>
                     </ul>
                 </div>
@@ -78,7 +78,7 @@
                                                         <li class="mr-md-4" th:text="|CPF: ${session['usuario'].cpf}|">
 
                                                         </li>
-                                                        <li class="mr-md-4" th:text="|Email:${session['usuario'].email}"> 
+                                                        <li class="mr-md-4" th:text="|Email: ${session['usuario'].email}"> 
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -141,6 +141,42 @@
 
                     <div class="col-lg-12">
                         <div class="col-lg offset">
+                            <h1>Frete selecionado</h1>
+                            <div class="row">
+
+                                <div class="col-md-6 ">
+
+                                    <div class="filtro-endereco">
+                                        <div class="col caixa-endereco d-md-flex align-items-center  mb-30">
+                                            <div class="job-left my-4 d-md-flex align-items-center flex-wrap">
+
+                                                <div class=" dados-endereco">
+
+                                                    <h5 class="text-center text-md-left "><i text="Frete Selecionado:"></i>
+                                                    </h5>
+                                                    <ul class="d-md-flex flex-wrap text-capitalize ff-open-sans">
+                                                        <div>
+                                                            <li class="mr-md-4">
+                                                                <i th:text="|${session['freteEscolhido'].tipo} - ${session['freteEscolhido'].valor}|" th:value="${session['freteEscolhido'].id}"></i><input type="radio" name="freteEscolhido"  th:value="${session['freteEscolhido'].id}" checked> 
+                                                            </li>
+                                                        </div>
+                                                    </ul>
+                                                </div>
+                                                <div>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12">
+                        <div class="col-lg offset">
                             <h1>Produtos</h1>
                             <div class="row">
 
@@ -174,149 +210,136 @@
                         </div>
                     </div>
 
-
-
-
-
-
-
-                    <div class="col-lg-12">
+                    <div class="col-lg-12" id="dadosCartao">
                         <div class="col-lg offset">
-                            <h1>Método de pagamento:</h1>
-                            <input type="hidden" name="metodoPagamento" value="Cartao">
-                            <article class="card">
+                            <h1>Cartão:</h1>
+                            <input type="hidden" name="metodoPagamento" id="metodoPagamento" th:value="${session['metodoPagamento']}">
+
+                            <div class="col caixa-endereco">
                                 <div class="card-body p-5">
 
-                                    <ul class="nav bg-light nav-pills rounded nav-fill mb-3" role="tablist">
-                                        <li class="nav-item">
-                                            <a class="nav-link active" data-toggle="pill" href="#nav-tab-card">
-                                                <i class="fa fa-credit-card"></i> Cartão de credito</a></li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" data-toggle="pill" href="#nav-tab-boleto">
-                                                <i class="fa fa-university"></i> Boleto Bancário</a></li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" data-toggle="pill" href="#nav-tab-paypal">
-                                                <i class="fab fa-paypal"></i> Paypal</a></li>
-
-                                    </ul>
-
                                     <div class="tab-content">
-                                        <div class="tab-pane fade show active" id="nav-tab-card">
-                                            <p class="alert alert-success">Some text success or error</p>
 
-                                            <div class="form-group">
-                                                <label for="username">Nome no Cartão:</label>
-                                                <input type="text" class="form-control" name="nomeCartao"   th:value="${session['cartao'].nomeCartao}">
-                                            </div> <!-- form-group.// -->
+                                        <p class="alert alert-success">Some text success or error</p>
 
-                                            <div class="form-group">
-                                                <label for="cardNumber">Número:</label>
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control" name="numeroCartao"   th:value="${session['cartao'].numeroCartao}">
-                                                    <div class="input-group-append">
-                                                        <span class="input-group-text text-muted">
-                                                            <i class="fab fa-cc-visa"></i>   <i class="fab fa-cc-amex"></i>  
-                                                            <i class="fab fa-cc-mastercard"></i>
-                                                        </span>
-                                                    </div>
+                                        <div class="form-group">
+                                            <label for="username">Nome no Cartão:</label>
+                                            <input type="text" class="form-control" name="nomeCartao"   th:value="${session['cartao'].nomeCartao}" readonly>
+                                        </div> <!-- form-group.// -->
+
+                                        <div class="form-group">
+                                            <label for="cardNumber">Número:</label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" name="numeroCartao"   th:value="${session['cartao'].numeroCartao}" readonly>
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text text-muted">
+                                                        <i class="fab fa-cc-visa"></i>   <i class="fab fa-cc-amex"></i>  
+                                                        <i class="fab fa-cc-mastercard"></i>
+                                                    </span>
                                                 </div>
                                             </div>
-                                            <div class="form-group">
-                                                <label for="parcelaCartao">Parcelas:</label>
-                                                <input type="text" class="form-control" name="parcelaCartao"   th:value="${session['cartao'].parcelas}">
-
-                                            </div><!-- form-group.// -->
-
-
-                                        </div> <!-- tab-pane.// -->
-                                        <div class="tab-pane fade" id="nav-tab-paypal">
-                                            <p>Paypal is easiest way to pay online</p>
-                                            <p>
-                                                <button type="button" class="btn btn-primary"> <i class="fab fa-paypal"></i> Log in my Paypal
-                                                </button>
-                                            </p>
-                                            <p><strong>Note:</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                                tempor incididunt ut labore et dolore magna aliqua. </p>
                                         </div>
-                                        <div class="tab-pane fade" id="nav-tab-boleto">
-                                            <p>Valors Boleto</p>
-                                            <dl class="param">
-                                                <dt>Valor Produto: </dt>
-                                                <dd> R$ 100,00</dd>
-                                            </dl>
-                                            <dl class="param">
-                                                <dt>Desconto de 10% : </dt>
-                                                <dd>R$ 10,00</dd>
-                                            </dl>
-                                            <dl class="param">
-                                                <dt>Valor Boleto: </dt>
-                                                <dd>R$ 90,00 </dd>
-                                            </dl>
-                                            <p><strong>Note:</strong> Este desconto só será possivel através do pagamento em boleto </p>
+                                        <div class="form-group">
+                                            <label for="parcelaCartao">Parcelas:</label>
+                                            <input type="text" class="form-control" name="parcelaCartao"   th:value="${session['cartao'].parcelas}" readonly>
 
-                                        </div> <!-- tab-pane.// -->
-                                    </div> <!-- tab-content .// -->
-
-                                </div> <!-- card-body.// -->
-                            </article> <!-- card.// -->
-
-
-                        </div> <!-- col.// -->
-                    </div>
-
-                </div> <!-- row.// -->
-                <div class="col-lg-12">
-                    <div class="col-lg offset">
-                        <div class="col" id="valoresFinais">
-
-                            <div class="produtosCarrinho">
-                                <div class="col caixa-produtos d-md-flex align-items-center  mb-30">
-                                    <div class="job-left my-4 d-md-flex align-items-center flex-wrap">
-                                        <div class="dados-produto">
-
-                                            <div class="col">
-                                                <h4 id="valorDosProdutos"><small>Valor dos Produtos: R$200,00</small></h4>
-                                                <h4><small>Desconto: R$10,00</small></h4>
-                                                <h4><small>Frete: R$22,00</small></h4>
-                                            </div>
-
-                                            <div class="col">
-                                                <h4>Valor Final: R$212,00</h4>
-                                            </div>
-                                        </div>
-
-                                    </div>
+                                        </div><!-- form-group.// -->
+                                    </div> <!-- card-body.// -->
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                </div>
+                    <div class="col-lg-12" id="dadosBoleto">
+                        <div class="col-lg offset">
+                            <h1>Boleto:</h1>
+                            <div class="col caixa-endereco">
+                                
+
+                                    <div class="col-lg-12">    
+                                        <div class="card-body p-5" id="nav-tab-boleto">
+
+                                            <dl class="param">
+                                                <dt>Valor dos Produtos: </dt>
+                                                <dd th:text="| R$ ${session['totalCarrinho']}|"> R$ 100,00"</dd>
+                                                <dt>Valor do Frete </dt>
+                                                <dd th:text="| R$ ${session['freteEscolhido'].valor}|">R$ 100,00</dd>
+                                                <dt>Valor do boleto: </dt>
+                                                <dd th:text="| R$ ${session['valorFinal']}|"> R$ 100,00</dd>
+                                            </dl>
+
+                                        </div> <!-- tab-pane.// -->
+                                    </div>
+                                
+                            </div>
+                        </div> <!-- tab-pane.// -->
+                    </div>
+
+                    <div class="col-lg-12" id="valoresFinais">
+                        <div class="col-lg offset">
+                            <div class="col" id="valoresFinais">
+
+                                <div class="produtosCarrinho">
+                                    <div class="col caixa-produtos d-md-flex align-items-center  mb-30">
+                                        <div class="job-left my-4 d-md-flex align-items-center flex-wrap">
+                                            <div class="dados-produto">
+
+                                                <div class="col">
+                                                    <h4 id="valorDosProdutos" ><small th:text="|Valor Produtos R$ ${session['totalCarrinho']}|" th:value="${session['valorTotal']}" ></small></h4>
+                                                    <h4><small th:text="|Valor Frete: R$ ${session['freteEscolhido'].valor}|">Desconto: R$10,00</small></h4>
+                                                </div>
+
+                                                <div class="col">
+                                                    <h4 th:text="|Valor Final: R$ ${session['valorFinal']}|">Valor Final: R$212,00</h4>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+   <!--container end.//-->
+                </div> <!-- row.// -->
                 <button class="subscribe btn btn-primary btn-block" type="submit"> Confirm </button>
-                <!--container end.//-->
-            </div>
-        </form>
+            </div> <!-- row.// -->
+</form>
 
 
 
 
 
-    </body>
-    <script>
+</body>
+<script>
+    $(document).ready(function () {
 
-        function somarValores() {
-            var soma = document.getElementByName("valorProduto");
-            var somaTotal = 0;
-            for (data in soma) {
-                somaTotal += soma[data].value;
+        var metodoPagamento = document.getElementById("metodoPagamento").value
 
-            }
-            document.getElementById("valorDosProdutos").value = somaTotal;
-            document.getElementById("valorDosProdutos").innerHTML = somaTotal;
+        if (metodoPagamento == 1) {
+
+            document.getElementById("dadosBoleto").style.display = "none"
         }
+        if (metodoPagamento == 2) {
+            document.getElementById("dadosCartao").style.display = "none"
+            document.getElementById("valoresFinais").style.display = "none"
+        }
+    });
 
-        somarValores();
+//        function somarValores() {
+//            var soma = document.getElementsByName("valorProduto");
+//            var somaTotal = 0;
+//            for (data in soma) {
+//                somaTotal += data[0].value;
+//                console.log(data);
+//            }
+//            document.getElementById("valorDosProdutos").value = somaTotal;
+//            document.getElementById("valorDosProdutos").innerHTML = somaTotal;
+//        }
+//
+//        somarValores();
 
-    </script>
+
+</script>
 
 </html>

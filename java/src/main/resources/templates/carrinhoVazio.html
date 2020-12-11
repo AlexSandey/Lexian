@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>LeXian - Carrinho</title>
+
+        <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+        <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet"
+              id="bootstrap-css">
+        <script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+        <link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet" />
+        <link th:href="@{/css/carrinho.css}" rel="stylesheet" />
+        <!------ Include the above in your HEAD tag ---------->\
+
+
+    </head>
+
+    <body>
+
+
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+            <div class="container">
+                <a class="navbar-brand" href="http://localhost:8080/">Lexian - Loja de Informática</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                        aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="/cliente">Login
+                                <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/carrinho">Carrinho</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <br><br><br><br><br><br><br><br><br><br><br>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <div class="panel-title">
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <h5><span class="glyphicon glyphicon-shopping-cart"></span> Shopping Cart</h5>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <button type="button" class="btn btn-primary btn-sm btn-block">
+                                            <span class="glyphicon glyphicon-share-alt"  href="http://localhost:8080/"></span> Continuar Comoprando
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <h1>Acho que seu está carrinho vazio... Volte a tela inicial para continuar as compras.</h1>
+                            </div>
+                        </div>
+
+                    </div>
+                    <hr>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <div class="row text-center">
+                    <div class="col-xs-9">
+                        <h4 class="text-right">Total: <strong> R$00,00</strong></h4>
+                    </div>
+                    <div class="col-xs-3">
+                        <button type="submit" class="btn btn-success btn-block"  href="http://localhost:8080/pedido">
+                            Finalizar Compra
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+</div>
+</body>
+<script>
+    function removerProduto(id) {
+
+        var confirmacao = confirm("Produto Removido !");
+
+        if (confirmacao == true) {
+            document.getElementById("quant" + id).value = 0;
+            document.getElementById("form" + id).submit();
+        }
+
+    }
+
+    function limpa_formulario_cep() {
+        //Limpa valores do formulário de cep.
+
+
+    }
+
+    function meu_callback(conteudo) {
+        if (!("erro" in conteudo)) {
+            //Atualiza os campos com os valores.
+            var cep = document.getElementById('cep').value;
+            var digCep = parseInt(cep.charAt(2));
+
+            if (digCep / 2 == 0) {
+                document.getElementById('sedex').innerHTML = "Sedex RS 10,00 - Prazo 7 dias";
+                document.getElementById('sedexInput').value = 1;
+                document.getElementById('iconex').innerHTML = "Iconex RS 18,00 - Prazo 3 dias";
+                document.getElementById('iconexInput').value = 2;
+                document.getElementById('loggi').innerHTML = "Loggi RS 23,0 - Prazo 2 dias";
+                document.getElementById('loggiInput').innerHTML = 3;
+            } else {
+                document.getElementById('sedex').innerHTML = "Sedex RS 13,00 - Prazo 7 dias";
+                document.getElementById('sedexInput').value = 1;
+                document.getElementById('iconex').innerHTML = "Iconex RS 23,00 - Prazo 3 dias";
+                document.getElementById('iconexInput').value = 2;
+                document.getElementById('loggi').innerHTML = "Loggi RS 28,0 - Prazo 2 dias";
+                document.getElementById('loggiInput').value = 3;
+            }
+
+
+        } //end if.
+        else {
+            //CEP não Encontrado.
+            limpa_formulario_cep();
+            alert("CEP não encontrado.");
+            document.getElementById('cep').value = ("");
+        }
+    }
+
+    function pesquisacep(valor) {
+
+        //Nova variável "cep" somente com dígitos.
+        var cep = valor.replace(/\D/g, '');
+
+        //Verifica se campo cep possui valor informado.
+        if (cep !== "") {
+
+            //Expressão regular para validar o CEP.
+            var validacep = /^[0-9]{8}$/;
+
+            //Valida o formato do CEP.
+            if (validacep.test(cep)) {
+
+                //Preenche os campos com "..." enquanto consulta webservice.
+                document.getElementById('sedex').value = "...";
+
+
+                //Cria um elemento javascript.
+                var script = document.createElement('script');
+
+                //Sincroniza com o callback.
+                script.src = '//viacep.com.br/ws/' + cep + '/json/?callback=meu_callback';
+
+                //Insere script no documento e carrega o conteúdo.
+                document.body.appendChild(script);
+
+
+
+            } //end if.
+            else {
+                //cep é inválido.
+                limpa_formulario_cep();
+                alert("Formato de CEP inválido.");
+            }
+        } //end if.
+        else {
+            //cep sem valor, limpa formulário.
+            limpa_formulario_cep();
+        }
+    }
+
+
+</script>
+</html>
