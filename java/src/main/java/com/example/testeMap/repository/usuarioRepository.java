@@ -31,7 +31,7 @@ public interface usuarioRepository extends CrudRepository<Usuario, Integer> {
     @Query(value = "select * from usuario where email like %:email% and senha like %:senha%", nativeQuery = true)
     public Usuario BuscaLogin(String email, String senha);
 
-    @Query(value = "select * from usuario where perfil = 'Estoquista' ", nativeQuery = true)
+    @Query(value = "select * from usuario where perfil = 'Estoquista' and status!=0 ", nativeQuery = true)
     public List<Usuario> listarEstoquista();
 
 }

@@ -72,71 +72,54 @@
     <div id="page-wrapper">
         <div class="container-fluid">
             <!-- Page Heading -->
-            <h3>ADICIONAR ESTOQUISTA</h3>
+            <h3>ADICIONAR PRODUTO</h3>
             <div class="row" id="main">
-                <div class="col-sm-12 col-md-12 well " id="adicionar_estoquista" >
-                    <form class="form-horizontal" action="cadastrar-estoquista" method="POST">
-                        <div class="col-md-11 control-label">
-                            <p class="help-block">
-                                <h11>*</h11> Campo Obrigatório
-                            </p>
-                        </div>
-                        <!-- Text input-->
-                        <div class="form-group">
-                            <label class="col-md-2 control-label" for="Nome">Nome <h11>*</h11></label>
-                            <div class="col-md-8">
-                                <input id="Nome" name="nome_usuario" placeholder="" class="form-control input-md"
-                                    required="" type="text">
-                            </div>
-                        </div>
+                <div class="col-sm-12 col-md-12 well " id="adicionar_produto" >
+                    <div id="cadastrar-produto">
+                        <h1>Cadastro de Produto:</h1>
 
-                        <!-- Prepended text-->
-                        <div class="form-group">
-                            <label class="col-md-2 control-label" for="prependedtext">Email <h11>*</h11></label>
-                            <div class="col-md-5">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-                                    <input id="prependedtext" name="email_usuario" class="form-control"
-                                        placeholder="email@email.com" required="" type="text"
-                                        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
-                                </div>
-                            </div>
-                        </div>
+                        <form action="cadastrar-produto"  id="campos-cadastro" method="POST" enctype="multipart/form-data">
+                            <input type="text" id="nome_produto" name="nome_produto" placeholder="Nome do Produto"><br>
+                            <input type="number" id="qtde_produto" name="qtde_produto" placeholder="Quantidade" min="0" step="1"><br>
+                            <input type="text" id="marca_produto" name="marca_produto" placeholder="Marca do Produto"><br>
+                            <select id="categoria_produto" name="categoria_produto" placeholder="Categoria do Produto">
+                                <option value="">Selecione uma Categoria </option>
+                                <option value="placa_de_video">Placa de Video</option>
+                                <option value="processador">Processador</option>
+                                <option value="placa_mae">Placa Mae</option>
+                                <option value="memoria_ram">Memoria Ram</option>
+                                <option value="fonte">Fonte</option>
+                            </select><br>
 
-                        <!-- Text input-->
-                        <div class="form-group">
-                            <label class="col-md-2 control-label" for="Nome">CPF <h11>*</h11></label>
-                            <div class="col-md-2">
-                                <input id="cpf" name="cpf_usuario" placeholder="Apenas números"
-                                    class="form-control input-md" required="" type="text" maxlength="11"
-                                    pattern="[0-9]+$">
-                            </div>
-                        </div>
+                            <label for="imagem1">Imagem 1: </label><br><input type="file" id="imagem1" name="imagem" ><br>
+                            <label for="imagem2">Imagem 2: </label><br><input type="file" id="imagem2" name="imagem" ><br>
+                            <label for="imagem3">Imagem 3: </label><br><input type="file" id="imagem3" name="imagem" ><br>
+                            <label for="imagem4">Imagem 4: </label><br><input type="file" id="imagem4" name="imagem" ><br>
+                            <label for="imagem5">Imagem 5: </label><br><input type="file" id="imagem5" name="imagem"><br><br>
+                            
+                            <label for="faq_produto">F.A.Q do Produto:</label><br><br>
+                            <input type="text" id="pergunta1" name="pergunta1" placeholder="Primeira Pergunta:"><br>
+                            <input type="text" id="resposta1" name="resposta1" placeholder="Primeira Resposta"><br><br>
+                            
+                            <input type="text" id="pergunta2" name="pergunta2" placeholder="Segunda Pergunta:"><br>
+                            <input type="text" id="resposta2" name="resposta2" placeholder="Segunda Resposta"><br><br>
 
-                        <div class="form-group">
-                            <label class="col-md-2 control-label" for="Nome">Senha <h11>*</h11></label>
-                            <div class="col-md-2">
-                                <input id="senha" name="senha_usuario" placeholder="Senha" class="form-control input-md"
-                                    required="" type="password" maxlength="11" pattern="[0-9]+$">
+                            <label for="descricao_produto">Descrição do Produto:</label><br>
+                            <textarea id="descricao_produto" name="descricao_produto">
+
+                            </textarea><br>
+                            <input type="text" id="valor_produto" name="valor_produto" placeholder="Valor do Produto"><br>
+                            <div id="radio-ativo">
+                                <label>Cadastrar Ativo?</label><br>
+                                <label>Sim</label> <input type="radio" name="cadastro_ativo" value="true" checked><br>
+                                <label>Não</label> <input type="radio" name="cadastro_ativo" value="false">
                             </div>
 
-                            <div class="form-group">
-                                <label class="col-md-2 control-label" for="Nome">Confirmar Senha <h11>*</h11></label>
-                                <div class="col-md-2">
-                                    <input id="senha_confirmacao" name="confirmarSenha" placeholder="Senha"
-                                        class="form-control input-md" required="" type="password" maxlength="11"
-                                        pattern="[0-9]+$">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-2 control-label" for="Cadastrar"></label>
-                            <div class="col-md-8">
-                                <button id="Cadastrar" name="Cadastrar" class="btn btn-success"
-                                    type="Submit">Cadastrar</button>
-                            </div>
-                        </div>
-                    </form>
+                            <input type="submit" value="Cadastrar Produto" id="btn_default">
+
+
+                        </form>
+                    </div>
                 </div>
             </div>
             <!-- /.row -->

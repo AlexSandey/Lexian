@@ -49,23 +49,75 @@ public class usuarioService {
         return (List<Usuario>) usuarioRepository.listarEstoquista();
     }
     
-    public ResponseEntity updateUser(int id,
+    public ResponseEntity updateEstoquistaSimples(int id,
              Usuario usuario) {
         return usuarioRepository.findById(id)
                 .map(usuarioUpdate -> {
                     usuarioUpdate.setIdUsuario(id);
                     usuarioUpdate.setNome(usuario.getNome());
                     usuarioUpdate.setEmail(usuario.getEmail());
-                    usuarioUpdate.setSenha(usuario.getSenha());
                     usuarioUpdate.setCpf(usuario.getCpf());
-                    usuarioUpdate.setPerfil(usuario.getPerfil());
-                    usuarioUpdate.setStatus(usuario.isStatus());
                    
                     Usuario updated = usuarioRepository.save(usuarioUpdate);
                     return ResponseEntity.ok().body(updated);
                 }).orElse(ResponseEntity.notFound().build());
     }
+    public ResponseEntity updateEstoquistaSenha(int id,
+             Usuario usuario) {
+        return usuarioRepository.findById(id)
+                .map(usuarioUpdate -> {
+                    usuarioUpdate.setIdUsuario(id);
+                    usuarioUpdate.setNome(usuario.getNome());
+                    usuarioUpdate.setEmail(usuario.getEmail());
+                    usuarioUpdate.setCpf(usuario.getCpf());
+                    usuarioUpdate.setSenha(usuario.getSenha());
+
+                    Usuario updated = usuarioRepository.save(usuarioUpdate);
+                    return ResponseEntity.ok().body(updated);
+                }).orElse(ResponseEntity.notFound().build());
+    }
     
+    public ResponseEntity updateEstoquistaPerfil(int id,
+             Usuario usuario) {
+        return usuarioRepository.findById(id)
+                .map(usuarioUpdate -> {
+                    usuarioUpdate.setIdUsuario(id);
+                    usuarioUpdate.setNome(usuario.getNome());
+                    usuarioUpdate.setEmail(usuario.getEmail());
+                    usuarioUpdate.setCpf(usuario.getCpf());
+                    usuarioUpdate.setPerfil(usuario.getPerfil());
+
+                    Usuario updated = usuarioRepository.save(usuarioUpdate);
+                    return ResponseEntity.ok().body(updated);
+                }).orElse(ResponseEntity.notFound().build());
+    }
+    
+    public ResponseEntity updateEstoquistaSenhaPerfil(int id,
+             Usuario usuario) {
+        return usuarioRepository.findById(id)
+                .map(usuarioUpdate -> {
+                    usuarioUpdate.setIdUsuario(id);
+                    usuarioUpdate.setNome(usuario.getNome());
+                    usuarioUpdate.setEmail(usuario.getEmail());
+                    usuarioUpdate.setCpf(usuario.getCpf()); 
+                    usuarioUpdate.setSenha(usuario.getSenha());
+                    usuarioUpdate.setPerfil(usuario.getPerfil());
+
+                    Usuario updated = usuarioRepository.save(usuarioUpdate);
+                    return ResponseEntity.ok().body(updated);
+                }).orElse(ResponseEntity.notFound().build());
+    }
+        public ResponseEntity removeEstoquista(int id) {
+        return usuarioRepository.findById(id)
+                .map(usuarioUpdate -> {
+                    usuarioUpdate.setStatus(false);
+
+
+                    Usuario updated = usuarioRepository.save(usuarioUpdate);
+                    return ResponseEntity.ok().body(updated);
+                }).orElse(ResponseEntity.notFound().build());
+    }
+        
     public ResponseEntity updateUserJustNome(int id,
              String nome) {
         return usuarioRepository.findById(id)

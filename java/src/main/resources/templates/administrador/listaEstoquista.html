@@ -54,22 +54,14 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="#" data-toggle="collapse" data-target="#submenu-2"><i class="fa fa-fw fa-star"></i> MENU 2
-                        <i class="fa fa-fw fa-angle-down pull-right"></i></a>
+                    <a data-toggle="collapse" data-target="#submenu-2"><i class="fa fa-fw icon-dropbox"></i> PRODUTO <i
+                            class="fa fa-fw fa-angle-down icon-dropbox"></i></a>
                     <ul id="submenu-2" class="collapse">
-                        <li><a href="#"><i class="fa fa-angle-double-right"></i> SUBMENU 2.1</a></li>
-                        <li><a href="#"><i class="fa fa-angle-double-right"></i> SUBMENU 2.2</a></li>
-                        <li><a href="#"><i class="fa fa-angle-double-right"></i> SUBMENU 2.3</a></li>
+                        <li><a href="cadastrar-produto"><i class="fa icon-plus"></i>
+                                ADICIONAR</a></li>
+                        <li><a href="listar-produto"><i class="fa icon-undo"></i> ATUALIZAR
+                                / DESATIVAR</a></li>
                     </ul>
-                </li>
-                <li>
-                    <a href="investigaciones/favoritas"><i class="fa fa-fw fa-user-plus"></i> MENU 3</a>
-                </li>
-                <li>
-                    <a href="sugerencias"><i class="fa fa-fw fa-paper-plane-o"></i> MENU 4</a>
-                </li>
-                <li>
-                    <a href="faq"><i class="fa fa-fw fa fa-question-circle"></i> MENU 5</a>
                 </li>
             </ul>
         </div>
@@ -115,111 +107,111 @@
 
                             </tr>
                             <tr th:each="estoquista, stat: ${estoquistas}">
-                                <td class=" text-center" th:text="${estoquista.idUsuario}"></td>
-                                <td class="text-center" th:text="${estoquista.nome}"></td>
-                                <td class="text-center" th:text="${estoquista.cpf}"></td>
-                                <td class="text-center" th:text="${estoquista.perfil}"></td>
-                                <td class="text-center" th:text="${estoquista.status}"></td>
-                                <th class="text-center"><button type="button" th:onclick="|atualizaModal(${estoquista.idUsuario}, ${estoquista.nome}, ${estoquista.cpf}, ${estoquista.status})|" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal_editar">Editar</a></button></th>
-                                <th class="text-center"><button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#usun">Desativar</a></button></th>
-                            </tr>
-                           
+                                <td class=" text-center" th:text="${estoquista.idUsuario}" ></td>
+                        <input type="hidden"  th:id="|estoq_nome${estoquista.idUsuario}|" th:value="${estoquista.nome}"/>
+                        <input type="hidden"  th:id="|estoq_email${estoquista.idUsuario}|" th:value="${estoquista.email}"/>
+                        <input type="hidden"  th:id="|estoq_cpf${estoquista.idUsuario}|" th:value="${estoquista.cpf}"/>
+                        <input type="hidden"  th:id="|estoq_id${estoquista.idUsuario}|" th:value="${estoquista.idUsuario}"/>
+                        <td class="text-center" th:text="${estoquista.nome}"></td>
+                        <td class="text-center" th:text="${estoquista.cpf}" th:id="|estoq_cpf${estoquista.idUsuario}|" ></td>
+                        <td class="text-center" th:text="${estoquista.perfil}" th:id="|estoq_perfil${estoquista.idUsuario}|" ></td>
+                        <td class="text-center" th:text="${estoquista.status}" th:id="|estoq_status${estoquista.idUsuario}|" ></td>
+                        <th class="text-center"><button type="button" th:onclick="|atualizaModal(${estoquista.idUsuario})|" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal_editar">Editar</a></button></th>
+                        <th class="text-center"><button type="button" th:onclick="|atualizaModalRemov(${estoquista.idUsuario})|"  class="btn btn-danger btn-sm" data-toggle="modal" data-target="#usun">Desativar</a></button></th>
+                        </tr>
+
                     </table>
                 </div>
             </div>
-            <!-- Modal Dodaj -->
-            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                            <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-                        </div>
-                        <div class="modal-body">
-                            ...
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Modal EDYTUJ -->
-            <div class="modal fade" id="modal_editar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                            <h4 class="modal-title" id="myModalLabel">Editar Dados Estoquista</h4>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row" id="main">
-                <div class="col-sm-12 col-md-12 well " id="adicionar_estoquista" >
-                    <form class="form-horizontal" action="cadastrar-estoquista" method="POST">
-                        <div class="col-md-11 control-label">
-                            <p class="help-block">
-                                <h11>*</h11> Campo Obrigatório
-                            </p>
-                        </div>
-                        <!-- Text input-->
-                        <div class="form-group">
-                            <label class="col-md-2 control-label" for="Nome">Nome <h11>*</h11></label>
-                            <div class="col-md-8">
-                                <input id="Nome" name="nome_usuario" placeholder="" class="form-control input-md"
-                                    required="" type="text">
-                            </div>
-                        </div>
 
-                        <!-- Prepended text-->
-                        <div class="form-group">
-                            <label class="col-md-2 control-label" for="prependedtext">Email <h11>*</h11></label>
-                            <div class="col-md-5">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-                                    <input id="prependedtext" name="email_usuario" class="form-control"
-                                        placeholder="email@email.com" required="" type="text"
-                                        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+            <div class="modal fade" id="modal_editar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <form class="form-horizontal" action="atualizar-estoquista" method="POST">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                <h4 class="modal-title" id="myModalLabel">Editar Dados Estoquista</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row" id="main">
+                                    <div class="col-sm-12 col-md-12 well " id="adicionar_estoquista" >
+                                        <input id="id_modal" name="id_usuario" type="hidden" />
+                                        <input type="hidden" name="id_modal"/>
+                                        <div class="col-md-11 control-label">
+                                            <p class="help-block">
+                                            <h11>*</h11> Campo Obrigatório
+                                            </p>
+                                        </div>
+                                        <!-- Text input-->
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label" for="nome_usuario">Nome <h11>*</h11></label>
+                                            <div class="col-md-8">
+                                                <input id="nome_modal" name="nome_usuario" placeholder="" class="form-control input-md"
+                                                       required="" type="text">
+                                            </div>
+                                        </div>
+
+                                        <!-- Text input-->
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label" for="cpf_usuario">CPF <h11>*</h11></label>
+                                            <div class="col-md-8">
+                                                <input id="cpf_modal" name="cpf_usuario" placeholder="Apenas números"
+                                                       class="form-control" required="" type="text" maxlength="11"
+                                                       pattern="[0-9]+$">
+                                            </div>
+                                        </div>
+                                        <button type="button" id="botao_senha" class="btn btn-primary" onclick="ativarModalSenha()">Alterar Senha</button>
+                                        <div class="form-group"  id="senha_modal"  disabled style="display:none">
+                                            <label class="col-md-4 control-label" for="senha_usuario">Nova Senha<h11>*</h11></label>
+                                            <div class="col-md-4">
+                                                <input name="senha_usuario" id="senha_usuario_2" placeholder="*******"
+                                                       class="form-control" type="password" maxlength="11"
+                                                       pattern="[0-9]+$" disabled/>
+                                            </div>
+                                        </div>
+
+                                        <button type="button" id="botao_tipo" class="btn btn-primary" onclick="ativarModalTipo()">Alterar Tipo</button>
+                                        <div class="form-group"  id="tipo_modal"  disabled style="display:none">
+                                            <label class="col-md-4 control-label" for="tipo_usuario">Tipo do Usúario:<h11>*</h11></label>
+                                            <div class="col-md-4">
+                                                <select name="tipo_usuario" class="form-control">
+                                                    <option value="1" selected> Estoquista </option>
+                                                    <option value="2"> Cliente</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <!-- Text input-->
-                        <div class="form-group">
-                            <label class="col-md-2 control-label" for="Nome">CPF <h11>*</h11></label>
-                            <div class="col-md-8">
-                                <input id="cpf" name="cpf_usuario" placeholder="Apenas números"
-                                    class="form-control" required="" type="text" maxlength="11"
-                                    pattern="[0-9]+$">
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                                <button type="submit" class="btn btn-primary">Salvar</button>
                             </div>
                         </div>
-                    </form>
-                </div>
-            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
-                        </div>
+
                     </div>
-                </div>
+                </form>
             </div>
             <!-- Modal USUŃ -->
             <div class="modal fade" id="usun" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                 <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                            <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+
+                    <form class="form-horizontal" action="remover-estoquista" method="POST">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                            </div>
+                            <input type="hidden" id="id_modal_remov" name="id_usuario" />
+                            <div class="modal-body">
+                                TEM CERTEZA QUE DESEJA REMOVER ESTOQUISTA?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Sair</button>
+                                <button type="submit" class="btn btn-primary">Sim</button>
+                            </div>
                         </div>
-                        <div class="modal-body">
-                            ...
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
-                        </div>
-                    </div>
+                    </form>
                 </div>
                 <!-- /.row -->
             </div>
@@ -229,13 +221,42 @@
     </div><!-- /#wrapper -->
     <script>
         function pesquisarPorNome(){
-            let nome = document.getElementById("pesquisar_nome").value;
-            
-            window.location.href = 'http://localhost:8080/admin/filtroNome/'+nome;
-            
+        let nome = document.getElementById("pesquisar_nome").value;
+
+        window.location.href = 'http://localhost:8080/admin/filtroNome/'+nome;
+
+        }
+
+        function atualizaModal(id){
+        document.getElementById('nome_modal').value = document.getElementById('estoq_nome'+id).value
+        document.getElementById('cpf_modal').value = document.getElementById('estoq_cpf'+id).value
+        document.getElementById('id_modal').value = document.getElementById('estoq_id'+id).value
+
+        }
+
+        function atualizaModalRemov(id){
+
+            document.getElementById('id_modal_remov').value = document.getElementById('estoq_id'+id).value
+
         }
         
-        function atualizaModal(obj){
-            console.log(obj)
+        function ativarModalSenha (){
+            if(document.getElementById('senha_modal').style.display == 'none'){
+            document.getElementById('senha_modal').style.display = 'block';
+            document.getElementById("senha_usuario_2").removeAttribute("disabled")
+        }else{
+            document.getElementById('senha_modal').style.display = 'none';
+            document.getElementById('senha_usuario_2').disabled = 'true';
+        }
+        }
+
+        function ativarModalTipo (){
+        if(document.getElementById('tipo_modal').style.display == 'none'){
+        document.getElementById('tipo_modal').style.display = 'block';
+        document.getElementById('tipo_modal').disabled = 'false';
+        }else{
+        document.getElementById('tipo_modal').style.display = 'none';
+        document.getElementById('tipo_modal').disabled = 'true';
+        }
         }
     </script> 

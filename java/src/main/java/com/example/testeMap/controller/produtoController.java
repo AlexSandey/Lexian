@@ -51,71 +51,7 @@ public class produtoController {
         this.imagemService = imagemService;
     }
 
-    @PostMapping("/cadastrar")
-    public ModelAndView CadastrarProduto( 
-        @RequestParam(name = "nome_produto", required = true) String nomeProduto,
-        @RequestParam(name = "qtde_produto", required = true) int qtde,
-        @RequestParam(name = "marca_produto", required = true) String marca,
-        @RequestParam(name = "categoria_produto", required = true) String categoria,
-        @RequestParam(name = "descricao_produto", required = true) String descricao,
-        @RequestParam(name = "valor_produto", required = true) String valor,
-        @RequestParam(name = "cadastro_ativo", required = true) boolean ativo,
-        @RequestParam("imagem") MultipartFile[] imagens
-    ){
 
-      
-       
-        Produto produto =  new Produto();   
-        
-        Float valorConvertido = Float.parseFloat(valor.replace(".", "").replace(",", "."));  
-        
-        produto.setNomeProduto(nomeProduto);
-        produto.setQtde(qtde);   
-        produto.setMarca(marca);
-        produto.setCategoria(categoria);
-        produto.setDescricao(descricao);
-        produto.setValor(valorConvertido);
-        produto.setAtivo(ativo);
-           
-        Produto produtoCadastrado =  produtoService.CadastrarProduto(produto);
-        
-        
-        
-        try{
-            
-            for(MultipartFile uploadedFile : imagens) {
-                int idProduto = produtoCadastrado.getIdProduto();
-                String folderIMG_DB = "IMAGESARCHIVE\\";
-                String folderIMG = "src\\main\\resources\\static\\IMAGESARCHIVE\\"+idProduto+"\\";
-                
-                byte[] bytes = uploadedFile.getBytes();
-                
-                String nameImagem = uploadedFile.getOriginalFilename();
-                Path path = Paths.get(folderIMG + nameImagem);
-                
-                File file = new File(folderIMG);
-                
-                file.mkdir();
-                
-                Files.write(path, bytes);
-                
-                Imagem imagem =  new Imagem();  
-                
-                imagem.setCaminho("http://localhost:8080/" + folderIMG_DB + "\\" + idProduto + "\\" + nameImagem);
-                imagem.setIdProduto(idProduto);
-                imagemService.cadastroImagem(imagem);
-                
-            }
-
-        }catch (IOException e) {
-        
-        } 
-       
-       
-       
-       return new ModelAndView("produto/cadastrarProduto"); 
-       
-    }
     
     
     
